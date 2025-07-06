@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>30 פעילויות חינמיות לקיץ</title>
+    <title>30 Vibes של קיץ בחינם</title>
     
     <!-- Tailwind CSS from CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,63 +14,100 @@
     <!-- Google Fonts: Assistant -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* Applying the Assistant font to the body */
+        /* Applying the Assistant font with bolder weights */
         body {
             font-family: 'Assistant', sans-serif;
+            background-color: #073B4C; /* Dark blue background for a modern feel */
+            color: #F0F8FF;
             scroll-behavior: smooth;
         }
-        /* Custom styles for visual flair */
+        
+        /* Main gradient for titles */
         .gradient-text {
-            background: linear-gradient(to right, #F77F00, #D62828);
+            background: linear-gradient(45deg, #FFD166, #FF6B6B, #14C4B9);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
         }
-        .card-hover-effect {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+        /* Gradient border for cards */
+        .card-gradient-border {
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            background-color: #0d4a5f; /* Slightly lighter than body */
+            transition: all 0.3s ease-in-out;
+            position: relative;
         }
-        .card-hover-effect:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        
+        .card-gradient-border::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            margin: -2px; /* Border width */
+            border-radius: 1.25rem; /* Tailwind's rounded-2xl */
+            background: linear-gradient(45deg, #FFD166, #FF6B6B, #14C4B9);
+        }
+
+        .card-gradient-border:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Custom scrollbar for a modern look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #073B4C;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #14C4B9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF6B6B;
         }
     </style>
 </head>
-<body class="bg-[#FDF0D5] text-[#003049]">
+<body class="antialiased">
 
     <!-- 
-    == STRATEGY BRIEF ==
-    * NARRATIVE: "This summer, fun doesn't cost a thing: 30 simple ideas for big adventures."
-    * DESIGN CONCEPT: Narrative Infographic (Dashboard Grid). Chosen to organize a dense list of activities into clear, digestible, and visually appealing categories. It allows for a quick overview and deep dives into specific ideas, empowering families to plan their summer easily.
-    * VISUAL STYLE: Elegant Minimalism with a touch of Retro. This style feels clean and authoritative (Minimalism) but also warm, friendly, and nostalgic (Retro), perfectly matching the theme of classic family fun.
+    == STRATEGY BRIEF (V2 - "SUMMER VIBE") ==
+    * NARRATIVE: "Your Summer Bucket List just got a glow-up. 30 free vibes for an unforgettable summer."
+    * DESIGN CONCEPT: Vibrant Gradient Infographic. Switched to a dark-mode, neon-accented theme to feel more modern, digital, and energetic. The focus is on dynamic visuals that pop.
+    * VISUAL STYLE: Digital Maximalism / "Gen-Z" Aesthetic. Uses bold gradients, strong typography, dark mode, and dynamic hover effects to create a lively, engaging digital experience, not just a static page.
     * COLOR PALETTE:
-      * #FDF0D5 (Creamy White): Main background. Warm, inviting, and easy on the eyes.
-      * #003049 (Prussian Blue): Main text & headings. High contrast for readability, feels professional.
-      * #D62828 (Imperial Red): Key highlights and icons. An energetic pop of color that draws attention.
-      * #F77F00 (Tangelo Orange): Secondary accent for titles and charts. Fun, vibrant, and summery.
-      * #FCBF49 (Sunglow Yellow): Tertiary accent for icons and chart segments. Playful and bright.
-    * SUCCESS METRICS: The user will feel inspired and equipped with actionable, free ideas for summer activities, reducing the stress of planning and budgeting. Success is when a family sees this and says, "Hey, let's do the living room campout tonight!"
+      * #073B4C (Deep Blue): Main background. Modern, high-contrast, makes colors pop.
+      * #F0F8FF (Alice Blue): Main text. Clean and readable against the dark background.
+      * #14C4B9 (Turquoise): Primary Accent & CTA. Energetic, summery, fresh.
+      * #FF6B6B (Coral Pink): Secondary Accent. Warm, vibrant, youthful.
+      * #FFD166 (Sunny Yellow): Tertiary Accent. Bright, optimistic, pure summer.
+    * SUCCESS METRICS: Users will feel energized and excited by the possibilities, sharing the link with friends as "summer goals." The design should feel less like a parent's guide and more like a cool digital discovery.
     -->
 
     <div class="container mx-auto p-4 sm:p-8 max-w-6xl">
 
         <!-- Header Section -->
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 gradient-text">הקיץ הזה, הכיף לא עולה כסף</h1>
-            <p class="text-lg md:text-xl text-[#003049] max-w-3xl mx-auto">
-                גלו 30 הרפתקאות קיץ חינמיות, יצירתיות ובלתי נשכחות לכל המשפחה. המדריך המלא שלכם לקיץ מלא בחוויות, לא בהוצאות.
+        <header class="text-center mb-16">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 gradient-text tracking-tight">Summer Vibes Only</h1>
+            <p class="text-lg md:text-xl text-[#F0F8FF]/80 max-w-3xl mx-auto">
+                הבאקט ליסט שלך לקיץ קיבל שדרוג. 30 רעיונות בחינם לוייבים בלתי נשכחים.
             </p>
         </header>
 
         <!-- Chart Section -->
-        <section class="mb-16 p-6 bg-white/50 rounded-2xl shadow-lg">
-            <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 text-[#F77F00]">חלוקת הפעילויות לפי סוג</h2>
-            <div class="max-w-sm mx-auto">
+        <section class="mb-20 p-6 bg-[#0d4a5f]/50 rounded-2xl backdrop-blur-sm">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 text-white">ה-Vibe הכללי: איך הפעילויות מתחלקות</h2>
+            <div class="max-w-md mx-auto">
                 <canvas id="activitiesChart"></canvas>
             </div>
-            <p class="text-center text-sm mt-4 text-[#415A77]">
-                המדריך מציע איזון מושלם בין יצירתיות בבית, הרפתקאות בחוץ, והזדמנויות ללמידה והתפתחות.
+             <p class="text-center text-sm mt-4 text-[#F0F8FF]/60">
+                איזון מושלם בין יצירתיות בבית, אקשן בחוץ, ופתיחת הראש לדברים חדשים.
             </p>
         </section>
 
@@ -78,223 +115,212 @@
         <main>
             <!-- Category 1: Creative Home Activities -->
             <section id="home-activities" class="mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#D62828]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                    יצירתיות בתוך הבית
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4 text-[#FF6B6B]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Home Base: יצירתיות בסלון
                 </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Activity Cards will be dynamically inserted here or listed manually -->
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">1. מחנה בסלון</h3>
-                        <p class="text-sm">אוהלים מסדינים, סיפורי "מדורה" ומשחקי קופסה לאור פנסים.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">1. מחנה בסלון</h3>
+                        <p class="text-base text-white/80">אוהל מסדינים, פנסים, וסיפורי אימה (או צ'יזבטים) עד אור הבוקר.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">2. מאסטר שף ביתי</h3>
-                        <p class="text-sm">תחרות בישול עם חומרים שיש במקרר. מי השופט ומי המתמודד?</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">2. קרב מטבחים</h3>
+                        <p class="text-base text-white/80">פותחים מקרר, וכל אחד מאלתר מנה. ההורים שופטים, המפסיד שוטף כלים.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">3. ספא ביתי מפנק</h3>
-                        <p class="text-sm">מסכות פנים ממלפפונים, עיסויים, מוזיקה מרגיעה ואווירה שלווה.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">3. ספא ביתי</h3>
+                        <p class="text-base text-white/80">פלייליסט צ'יל, מסכות פנים ובעיקר - שקט. הרבה שקט.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">4. חדר בריחה "תוצרת בית"</h3>
-                        <p class="text-sm">החביאו אוצר וצרו חידות ומשימות שיובילו אליו ברחבי הבית.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">4. חדר בריחה DIY</h3>
+                        <p class="text-base text-white/80">מחביאים את השלט של הטלוויזיה ויוצרים רמזים הזויים כדי למצוא אותו.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">5. יום צילומים</h3>
-                        <p class="text-sm">הפיקו סרט משפחתי קצר, קליפ או תחרות צילום עם נושאים מצחיקים.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">5. יום קולנוע</h3>
+                        <p class="text-base text-white/80">מפיקים סרטון טיקטוק ויראלי או קליפ מביך לשיר אהוב.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">6. תחרות יצירה</h3>
-                        <p class="text-sm">פיסול בבצק מלח, ציור, או יצירת אמנות מחומרים ממוחזרים.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">6. סדנת יצירה</h3>
+                        <p class="text-base text-white/80">פיסול, ציור, או קולאז' ממגזינים ישנים. הכל הולך.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">7. קולנוע ביתי משודרג</h3>
-                        <p class="text-sm">הכינו פופקורן ביתי, החשיכו את החדר והקרינו סרט על הקיר.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">7. בינג' משודרג</h3>
+                        <p class="text-base text-white/80">מרתון סרטים עם פופקורן, גלידה וכל מה שאסור ביום רגיל.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">8. מסיבת ריקודים</h3>
-                        <p class="text-sm">פלייליסט אהוב, אורות צבעוניים ותחרות ריקודים בסלון.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">8. מסיבת אוזניות</h3>
+                        <p class="text-base text-white/80">כל אחד עם פלייליסט משלו באוזניות, רוקדים ביחד בסלון. מצחיק רצח.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">9. יום המדען המשוגע</h3>
-                        <p class="text-sm">ניסויים פשוטים מהמטבח: הר געש מסודה לשתייה, דיו סתרים מלימון.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">9. מעבדת ניסויים</h3>
+                        <p class="text-base text-white/80">הר געש מסודה לשתייה, דיו סתרים וכל מה שגורם למטבח להיראות כמו אזור אסון.</p>
                     </div>
-                     <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">10. תיאטרון בובות</h3>
-                        <p class="text-sm">הכינו בובות מגרביים או כפות עץ והציגו הצגה מקורית.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">10. תיאטרון צלליות</h3>
+                        <p class="text-base text-white/80">סדין לבן, פנס, וממציאים סיפורים עם הידיים.</p>
                     </div>
                 </div>
             </section>
 
             <!-- Category 2: Free Outdoor Activities -->
             <section id="outdoor-activities" class="mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#D62828]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    הרפתקאות תחת כיפת השמיים
+                 <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4 text-[#14C4B9]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    Out & About: הרפתקאות בחוץ
                 </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">11. פיקניק בפארק</h3>
-                        <p class="text-sm">ארזו אוכל מהבית, שמיכה ומשחקי כדור לבילוי קלאסי.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">11. פיקניק בפארק</h3>
+                        <p class="text-base text-white/80">אוכל מהבית, פריזבי, ורמקול נייד. המתכון הקלאסי.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">12. ציד אוצרות שכונתי</h3>
-                        <p class="text-sm">הכינו רשימת דברים למצוא: עלה בצורת לב, אצטרובל, אבן מיוחדת.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">12. Urban Exploration</h3>
+                        <p class="text-base text-white/80">מגלים סמטאות וגרפיטי בשכונה שלא הכרתם.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">13. יום ספורט</h3>
-                        <p class="text-sm">כדורגל, טניס במגרש ציבורי, או רכיבה על אופניים במסלול קרוב.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">13. יום ספורט</h3>
+                        <p class="text-base text-white/80">כדורסל, סקייטבורד, או סתם ריצה. העיקר לזוז.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">14. גינון ביתי</h3>
-                        <p class="text-sm">שתלו צמחי תבלין באדניות ישנות או פרחים קטנים בגינה.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">14. גינון גרילה</h3>
+                        <p class="text-base text-white/80">שותלים פרח או צמח תבלין באדנית במרפסת או בפינה מוזנחת ליד הבית.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">15. טיול לחוף הים</h3>
-                        <p class="text-sm">בבוקר מוקדם או לקראת שקיעה, עם חטיפים מהבית ובניית ארמונות.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">15. סשן חוף</h3>
+                        <p class="text-base text-white/80">לא רק בטן-גב. צאו לים בזריחה או בשקיעה לריצה או סתם להירגע.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">16. הליכה בשביל קרוב</h3>
-                        <p class="text-sm">גלו את שביל ההליכה הקרוב לביתכם, עם צידנית ומשחקי דרך.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">16. טרק קרוב לבית</h3>
+                        <p class="text-base text-white/80">מגלים מסלול הליכה ביער או בפארק הקרוב. לא צריך לנסוע רחוק.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">17. צפייה בזריחה/שקיעה</h3>
-                        <p class="text-sm">מצאו מקום גבוה בעיר או בטבע ותיהנו מהצגה של הטבע.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">17. ציידי שקיעות</h3>
+                        <p class="text-base text-white/80">מוצאים את הספוט הכי גבוה בעיר ומצלמים את השקיעה המושלמת לאינסטגרם.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">18. איסוף פירות עונתיים</h3>
-                        <p class="text-sm">חפשו עצי תאנה, תות או שסק ציבוריים (במקומות מותרים בלבד).</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">18. קטיף פירות</h3>
+                        <p class="text-base text-white/80">בודקים איפה יש עצי פרי ציבוריים (תאנים, שסק) ויוצאים לשלל.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">19. יום באגם או נחל</h3>
-                        <p class="text-sm">טבילת רגליים, שחייה (במקום מוסדר) וצילומים בטבע.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">19. שכשוך בנחל</h3>
+                        <p class="text-base text-white/80">מוצאים נחל או מעיין קרוב, ופשוט טובלים רגליים במים הקרים.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">20. ביקור בשוק</h3>
-                        <p class="text-sm">לא חייבים לקנות! חקרו את הצבעים, הריחות והקולות של השוק.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">20. סיור שווקים</h3>
+                        <p class="text-base text-white/80">לא לקנות, רק לספוג את האווירה, הצבעים והריחות.</p>
                     </div>
                 </div>
             </section>
 
             <!-- Category 3: Learning and Enrichment Activities -->
             <section id="learning-activities" class="mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#D62828]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-                    למידה, העשרה וסקרנות
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4 text-[#FFD166]">
+                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Next Level: להרחיב את המוח
                 </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">21. יום טיול בעולם</h3>
-                        <p class="text-sm">"טוסו" למדינה אחרת דרך Google Earth, שמעו מוזיקה מקומית.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">21. טיול וירטואלי</h3>
+                        <p class="text-base text-white/80">"קופצים" לטוקיו או לפירמידות עם Google Earth. בלי דרכון, בלי ג'ט לג.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">22. ביקור בספרייה</h3>
-                        <p class="text-sm">מעבר לקריאה, בדקו אם יש פעילויות חינמיות או שעת סיפור.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">22. ביקור בספרייה</h3>
+                        <p class="text-base text-white/80">לא רק ספרים. חפשו פינות שקטות עם ספות נוחות ואינטרנט חינם.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">23. מוזיאון בחינם</h3>
-                        <p class="text-sm">בדקו מתי יש ימי כניסה חופשית למוזיאונים באזורכם.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">23. יום מוזיאון חינם</h3>
+                        <p class="text-base text-white/80">עושים גוגל "מוזיאונים כניסה חינם" ומוצאים את היום הנכון.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">24. לימוד שפה חדשה</h3>
-                        <p class="text-sm">הקדישו 15 דקות ביום ללימוד בסיסי של שפה עם אפליקציות חינמיות.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">24. לימוד שפה חדשה</h3>
+                        <p class="text-base text-white/80">מורידים Duolingo ומנסים ללמוד 5 מילים ביום. יפנית, קלינגונית, מה שבא.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">25. פודקאסט משפחתי</h3>
-                        <p class="text-sm">הקליטו "תוכנית רדיו" משלכם עם ראיונות, סיפורים ומוזיקה.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">25. פודקאסט משפחתי</h3>
+                        <p class="text-base text-white/80">מקליטים בטלפון שיחה על נושא הזוי. רק בשביל הצחוקים.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">26. יום היסטוריה מקומית</h3>
-                        <p class="text-sm">בקרו באתרים היסטוריים חינמיים או אנדרטאות בסביבתכם.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">26. היסטוריה מקומית</h3>
+                        <p class="text-base text-white/80">מוצאים את הבניין הכי ישן בשכונה ומנסים לגלות את הסיפור שלו.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">27. צפייה בכוכבים</h3>
-                        <p class="text-sm">בלילה צלול, צאו החוצה עם שמיכה והשתמשו באפליקציית כוכבים.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">27. ליל כוכבים</h3>
+                        <p class="text-base text-white/80">מתרחקים מאורות העיר, שמים מוזיקה ובוהים בשמיים. אפליקציית כוכבים זה בונוס.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">28. סדנת תיקונים</h3>
-                        <p class="text-sm">למדו יחד לתקן צעצוע שבור, בגד קרוע או פריט קטן בבית.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">28. סדנת תיקונים</h3>
+                        <p class="text-base text-white/80">רואים סרטון ביוטיוב ולומדים לתקן את האוזניות או המטען שנדפק.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">29. יום התנדבות</h3>
-                        <p class="text-sm">עזרו לשכן מבוגר, נקו את הסביבה הקרובה או טיילו עם כלבים מעמותה.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">29. התנדבות ספונטנית</h3>
+                        <p class="text-base text-white/80">מרימים זבל בחוף, עוזרים לשכן עם הקניות. קארמה טובה בחינם.</p>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
-                        <h3 class="font-bold text-lg text-[#F77F00]">30. כתיבת יומן משפחתי</h3>
-                        <p class="text-sm">תעדו יחד את חוויות הקיץ, צרפו ציורים ותמונות למזכרת נצח.</p>
+                    <div class="p-6 rounded-2xl card-gradient-border">
+                        <h3 class="font-bold text-xl text-[#FFD166]">30. יומן קיץ דיגיטלי</h3>
+                        <p class="text-base text-white/80">פותחים קבוצת וואטסאפ פרטית וזורקים לשם תמונות, סרטונים ומחשבות.</p>
                     </div>
                 </div>
             </section>
-
-            <!-- Tips Section -->
-            <section class="mt-16 p-8 bg-[#003049] text-white rounded-2xl shadow-2xl">
-                <h2 class="text-3xl font-bold text-center mb-6 text-[#FCBF49]">טיפים להפיכת כל פעילות למיוחדת</h2>
-                <ul class="space-y-4 max-w-2xl mx-auto list-inside">
-                    <li class="flex items-start gap-3">
-                        <span class="text-[#FCBF49] mt-1">✔</span>
-                        <div><strong class="font-semibold">תנו שמות מעניינים:</strong> "יום הרפתקאות בסלון" במקום "נשארים בבית".</div>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <span class="text-[#FCBF49] mt-1">✔</span>
-                        <div><strong class="font-semibold">צרו אירוע:</strong> הכינו הזמנות, שלטים והכרזות חגיגיות כדי לבנות ציפייה.</div>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <span class="text-[#FCBF49] mt-1">✔</span>
-                        <div><strong class="font-semibold">היכנסו לדמות:</strong> חלוקי טבחים למאסטר שף, פיג'מות לספא, בגדי חוקרים לציד אוצרות.</div>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <span class="text-[#FCBF49] mt-1">✔</span>
-                        <div><strong class="font-semibold">צלמו והנציחו:</strong> צרו אלבום תמונות דיגיטלי או פיזי מיוחד של "קיץ 2024 בחינם".</div>
-                    </li>
-                     <li class="flex items-start gap-3">
-                        <span class="text-[#FCBF49] mt-1">✔</span>
-                        <div><strong class="font-semibold">שתפו חברים:</strong> הזמינו משפחות נוספות להצטרף לפעילויות. כיף גדול יותר ביחד!</div>
-                    </li>
-                </ul>
-            </section>
         </main>
 
-        <footer class="text-center mt-16 text-sm text-[#415A77]">
-            <p>נוצר באהבה כדי להפוך את הקיץ שלכם לבלתי נשכח.</p>
+        <footer class="text-center mt-16 text-sm text-[#F0F8FF]/50">
+            <p>Created to make your summer epic. Now go have fun.</p>
         </footer>
 
     </div>
 
     <script>
-        // Chart.js script
         document.addEventListener('DOMContentLoaded', function () {
             const ctx = document.getElementById('activitiesChart').getContext('2d');
             const activitiesChart = new Chart(ctx, {
-                type: 'doughnut',
+                type: 'polarArea',
                 data: {
                     labels: [
-                        'פעילויות בית יצירתיות',
-                        'הרפתקאות בחוץ',
-                        'למידה והעשרה'
+                        'Home Base',
+                        'Out & About',
+                        'Next Level'
                     ],
                     datasets: [{
                         label: 'מספר פעילויות',
                         data: [10, 10, 10],
                         backgroundColor: [
-                            '#F77F00', // Tangelo Orange
-                            '#D62828', // Imperial Red
-                            '#FCBF49'  // Sunglow Yellow
+                            'rgba(255, 107, 107, 0.7)', // Coral Pink
+                            'rgba(20, 196, 185, 0.7)', // Turquoise
+                            'rgba(255, 209, 102, 0.7)'  // Sunny Yellow
                         ],
-                        borderColor: '#FDF0D5',
-                        borderWidth: 4,
-                        hoverOffset: 8
+                        borderColor: [
+                            '#FF6B6B',
+                            '#14C4B9',
+                            '#FFD166'
+                        ],
+                        borderWidth: 2,
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
-                    cutout: '60%',
+                    scales: {
+                        r: {
+                            grid: {
+                                color: 'rgba(240, 248, 255, 0.2)'
+                            },
+                            angleLines: {
+                                color: 'rgba(240, 248, 255, 0.2)'
+                            },
+                            ticks: {
+                                color: '#F0F8FF',
+                                backdropColor: 'rgba(0,0,0,0.5)',
+                                backdropPadding: 4,
+                                font: { family: "'Assistant', sans-serif" }
+                            }
+                        }
+                    },
                     plugins: {
                         legend: {
                             position: 'bottom',
                             labels: {
-                                color: '#003049',
+                                color: '#F0F8FF',
                                 font: {
                                     family: "'Assistant', sans-serif",
                                     size: 14
@@ -302,7 +328,6 @@
                             }
                         },
                         tooltip: {
-                            // This ensures tooltips work correctly as per the prompt instructions
                             callbacks: {
                                 title: function(tooltipItems) {
                                     const item = tooltipItems[0];
@@ -310,12 +335,8 @@
                                     return Array.isArray(label) ? label.join(' ') : label;
                                 }
                             },
-                            bodyFont: {
-                                family: "'Assistant', sans-serif",
-                            },
-                            titleFont: {
-                                family: "'Assistant', sans-serif",
-                            }
+                            bodyFont: { family: "'Assistant', sans-serif" },
+                            titleFont: { family: "'Assistant', sans-serif" }
                         }
                     }
                 }
