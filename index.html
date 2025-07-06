@@ -3,425 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מעגל הקסמים האבסורדי של התחבורה בישראל</title>
-    <!-- Tailwind CSS CDN -->
+    <title>30 פעילויות חינמיות לקיץ</title>
+    
+    <!-- Tailwind CSS from CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Assistant -->
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Google Fonts: Assistant -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
+        /* Applying the Assistant font to the body */
         body {
             font-family: 'Assistant', sans-serif;
-            background: radial-gradient(circle at top left, #333333 0%, #1A1A1A 70%, #000000 100%); /* Darker radial gradient for more depth */
-            color: #F8F8F8; /* Light text for stark contrast */
-            line-height: 1.7;
-            overflow-x: hidden;
-            position: relative;
+            scroll-behavior: smooth;
         }
-
-        /* Overlay for subtle noise/texture - more visible */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNzUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2hDb2xvcnMiLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMC41Ii8+PC9zdmc+'); /* More visible SVG noise */
-            opacity: 0.8;
-            pointer-events: none;
-            z-index: -1;
+        /* Custom styles for visual flair */
+        .gradient-text {
+            background: linear-gradient(to right, #F77F00, #D62828);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .container {
-            max-width: 1200px;
-            padding: 1.5rem;
+        .card-hover-effect {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-        .section-card {
-            background-color: #FFFFFF; /* Keep cards light */
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(255, 255, 255, 0.7) inset; /* Stronger shadow + thicker inner white border */
-            padding: 2.5rem;
-            margin-bottom: 1.5rem; /* Further reduced margin */
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            overflow: hidden;
-            z-index: 1; /* Ensure cards are above background effects */
-        }
-        .section-card::before {
-            content: '';
-            position: absolute;
-            top: -10%;
-            left: -10%;
-            width: 120%;
-            height: 120%;
-            background: repeating-linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.1) 6px, transparent 6px, transparent 12px); /* More visible diagonal lines */
-            opacity: 0.5;
-            pointer-events: none;
-            z-index: 0;
-            animation: card-noise 4s infinite linear; /* Faster noise */
-        }
-        @keyframes card-noise {
-            0% { background-position: 0 0; }
-            100% { background-position: 120px 120px; }
-        }
-
-        .section-card:hover {
-            transform: translateY(-18px) scale(1.04); /* Even more pronounced lift and scale */
-            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5), 0 0 0 4px rgba(255, 255, 255, 0.9) inset;
-        }
-
-        .section-card h2, .section-card ul {
-            color: #1A1A1A; /* Text inside cards should be dark */
-        }
-        .section-card .catastrophe-highlight {
-            color: #1A1A1A; /* Text inside highlight should be dark */
-        }
-
-
-        .problem-icon {
-            color: #E74C3C; /* Brighter, more alarming red */
-            filter: drop-shadow(0 0 10px rgba(231, 76, 60, 1)); /* Stronger glowing effect */
-            animation: shake 0.4s infinite alternate; /* Faster shake animation */
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-4px); }
-            50% { transform: translateX(4px); }
-            75% { transform: translateX(-4px); }
-        }
-
-        .highlight-text {
-            color: #3498DB; /* Stronger blue for highlights */
-            font-weight: 800;
-        }
-        .catastrophe-highlight {
-            background-color: rgba(231, 76, 60, 0.2); /* Semi-transparent red background */
-            border: 1px solid #E74C3C;
-            padding: 0.2em 0.4em;
-            border-radius: 0.3rem;
-            font-weight: 800;
-            color: #1A1A1A; /* Ensure text inside is dark */
-        }
-
-        .arrow-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 1rem 0; /* Reduced margin */
-            position: relative;
-            height: 60px; /* Fixed height for consistent arrow display */
-        }
-
-        /* SVG Arrow Glitch Effect */
-        .glitch-arrow-path {
-            stroke: #E74C3C; /* Red arrow path */
-            stroke-width: 4;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            filter: drop-shadow(0 0 5px rgba(231, 76, 60, 0.8));
-        }
-        .glitch-arrow-head {
-            fill: #E74C3C; /* Red arrow head */
-            stroke: none;
-            filter: drop-shadow(0 0 5px rgba(231, 76, 60, 0.8));
-        }
-
-        .glitch-effect {
-            animation: arrow-glitch 0.15s infinite alternate; /* Very fast glitch */
-        }
-        @keyframes arrow-glitch {
-            0% { transform: translate(0, 0); opacity: 1; }
-            25% { transform: translate(2px, -2px); opacity: 0.8; }
-            50% { transform: translate(-3px, 3px); opacity: 0.6; }
-            75% { transform: translate(1px, -1px); opacity: 0.9; }
-            100% { transform: translate(0, 0); opacity: 1; }
-        }
-
-
-        .vicious-cycle-diagram {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem; /* Further reduced gap */
-            align-items: center;
-            justify-items: center;
-            position: relative;
-            padding-bottom: 2rem;
-        }
-
-        /* Central cycle animation */
-        .cycle-core {
-            position: relative;
-            width: 18rem;
-            height: 18rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #E74C3C, #C0392B); /* Red gradient */
-            box-shadow: 0 0 60px rgba(192, 57, 43, 1.2), 0 0 25px rgba(255, 255, 255, 0.8) inset; /* Even stronger glow + inner white glow */
-            animation: rotate-cycle 6s linear infinite, pulse-glow 1s infinite alternate; /* Faster rotation, more aggressive pulsing glow */
-            z-index: 10;
-            border: 5px solid rgba(255, 255, 255, 0.8); /* Thicker white border for emphasis */
-        }
-        .cycle-core::before {
-            content: '';
-            position: absolute;
-            inset: 0.75rem;
-            border: 6px dashed rgba(255, 255, 255, 0.6); /* Thicker, more visible dashed inner border */
-            border-radius: 50%;
-            animation: rotate-cycle-reverse 8s linear infinite; /* Counter-rotating dashed border */
-        }
-        .cycle-core-text {
-            color: #FFFFFF;
-            font-size: 2.6rem; /* Even larger text */
-            font-weight: 800;
-            text-shadow: 4px 4px 8px rgba(0,0,0,0.7); /* More pronounced shadow */
-            animation: text-flicker 0.6s infinite alternate; /* Faster text flicker */
-        }
-        @keyframes rotate-cycle {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        @keyframes rotate-cycle-reverse {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(-360deg); }
-        }
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 60px rgba(192, 57, 43, 1.2), 0 0 25px rgba(255, 255, 255, 0.8) inset; }
-            100% { box-shadow: 0 0 80px rgba(192, 57, 43, 1.5), 0 0 30px rgba(255, 255, 255, 1.2) inset; }
-        }
-        @keyframes text-flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; } /* More noticeable flicker */
-        }
-
-        /* Responsive adjustments for larger screens */
-        @media (min-width: 768px) {
-            .vicious-cycle-diagram {
-                grid-template-columns: 1fr 0.2fr 1fr;
-                grid-template-rows: auto auto auto;
-                gap: 1.5rem; /* Reduced gap */
-            }
-            .section-card {
-                padding: 3rem;
-            }
-            .arrow-container {
-                margin: 0;
-            }
-            /* Specific arrow positioning for the grid */
-            .arrow-left-right {
-                grid-column: 2 / 3;
-                grid-row: 1 / 2;
-                transform: rotate(90deg);
-            }
-            .arrow-down-left {
-                grid-column: 1 / 2;
-                grid-row: 2 / 3;
-                justify-self: end;
-                transform: rotate(180deg);
-            }
-            .arrow-down-right {
-                grid-column: 3 / 4;
-                grid-row: 2 / 3;
-                justify-self: start;
-            }
-            .arrow-up-left {
-                grid-column: 2 / 3;
-                grid-row: 3 / 4;
-                transform: rotate(-90deg);
-            }
-        }
-
-        /* SVG Icons - Styling for visibility and impact */
-        .icon-svg {
-            width: 3.8rem; /* Even larger icons */
-            height: 3.8rem;
-            fill: currentColor;
-            display: inline-block;
-            vertical-align: middle;
-            margin-inline-end: 0.8rem;
+        .card-hover-effect:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body class="p-4 sm:p-8">
+<body class="bg-[#FDF0D5] text-[#003049]">
 
-    <!-- Strategy Documentation -->
-    <!--
-        תמצית הנרטיב: אינפוגרפיקה זו ממחישה את מעגל הקסמים השלילי, השבור והקטסטרופלי שנוצר בין כשלים בתחבורה הציבורית לעלויות ההולכות וגוברות והפקקים הבלתי נסבלים של הרכב הפרטי בישראל, המזין ומחמיר את עצמו ללא הרף, תוך הדגשת שבירות מערכתית, כאוס והתרחשות מתמדת של ייאוש.
-        קונספט עיצובי: Narrative Scroll עם אלמנט מרכזי של תרשים זרימה מעגלי (Process Infographic) דינמי, אגרסיבי ובעל תחושת שחיקה וקריסה. הבחירה מדגישה את הדינמיקה המחזורית וההרסנית של הבעיה, ומאפשרת למשתמש לעקוב אחר ההידרדרות ההדדית והכפויה בין שני אמצעי התחבורה בתוך "חלל דמיוני" של כאוס מתמשך ובלתי נשלט.
-        פלטת צבעים:
-        #333333, #1A1A1A, #000000 (רקע ראשי): גרדיאנט רדיאלי כהה ועמוק, יוצר בסיס דרמטי המדגיש את צבעי הבעיה.
-        #FFFFFF (רקע כרטיסים): מפריד את יחידות המידע ומוסיף עומק וניקיון, עם אפקטים עדינים של רעש וצלליות מודגשות.
-        #F8F8F8 (טקסט גוף כללי): לבן, לקריאות מקסימלית על רקע כהה.
-        #1A1A1A (טקסט בתוך כרטיסים): שחור עמוק מאוד לנגישות וקריאות מקסימלית בתוך הכרטיסים הבהירים.
-        #E74C3C (הדגשה ראשית / בעיות / ליבת המעגל): אדום בוהק ואזעקתי המציין סכנה, בעיה קריטית והידרדרות, עם אפקטים של זוהר חזק.
-        #C0392B (גוון משלים לאדום): אדום עמוק יותר המשמש בגרדיאנטים ובצלליות להעמקת תחושת האיום.
-        #3498DB (הדגשה משנית / נקודות מפתח): כחול חזק וברור המציין נתונים או תובנות חשובות, ומשמש כניגוד בולט לצבע הבעיה.
-        #7F8C8D (צבע נתונים / מחברים): אפור כהה יותר, המשמש לאלמנטים מקשרים כמו חיצים, ומסייע להבליט את זרימת המעגל עם אפקטים של ריצוד ושבירה.
+    <!-- 
+    == STRATEGY BRIEF ==
+    * NARRATIVE: "This summer, fun doesn't cost a thing: 30 simple ideas for big adventures."
+    * DESIGN CONCEPT: Narrative Infographic (Dashboard Grid). Chosen to organize a dense list of activities into clear, digestible, and visually appealing categories. It allows for a quick overview and deep dives into specific ideas, empowering families to plan their summer easily.
+    * VISUAL STYLE: Elegant Minimalism with a touch of Retro. This style feels clean and authoritative (Minimalism) but also warm, friendly, and nostalgic (Retro), perfectly matching the theme of classic family fun.
+    * COLOR PALETTE:
+      * #FDF0D5 (Creamy White): Main background. Warm, inviting, and easy on the eyes.
+      * #003049 (Prussian Blue): Main text & headings. High contrast for readability, feels professional.
+      * #D62828 (Imperial Red): Key highlights and icons. An energetic pop of color that draws attention.
+      * #F77F00 (Tangelo Orange): Secondary accent for titles and charts. Fun, vibrant, and summery.
+      * #FCBF49 (Sunglow Yellow): Tertiary accent for icons and chart segments. Playful and bright.
+    * SUCCESS METRICS: The user will feel inspired and equipped with actionable, free ideas for summer activities, reducing the stress of planning and budgeting. Success is when a family sees this and says, "Hey, let's do the living room campout tonight!"
     -->
 
-    <div class="container mx-auto py-8">
-        <header class="text-center mb-16">
-            <h1 class="text-4xl sm:text-6xl font-extrabold mb-6 leading-tight text-[#E74C3C] drop-shadow-lg" style="text-shadow: 4px 4px 0px rgba(192, 57, 43, 0.7), -4px -4px 0px rgba(52, 152, 219, 0.5);">
-                מעגל הקסמים האבסורדי של התחבורה בישראל
-            </h1>
-            <p class="text-lg sm:text-2xl max-w-4xl mx-auto opacity-90 text-[#F8F8F8]">
-                ברוכים הבאים למציאות התחבורתית בישראל: תסבוכת בלתי נגמרת שבה כל ניסיון לברוח מבעיה אחת דוחף אותך ישירות לזרועותיה של בעיה אחרת, וחוזר חלילה. אינפוגרפיקה זו מפרקת את המעגל ההרסני הזה ומציגה כיצד כשלים מערכתיים בתחבורה הציבורית ועלויות הרכב הפרטי הבלתי נסבלות מזינים זה את זה, ויוצרים <span class="catastrophe-highlight">קטסטרופה יומיומית</span>.
+    <div class="container mx-auto p-4 sm:p-8 max-w-6xl">
+
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 gradient-text">הקיץ הזה, הכיף לא עולה כסף</h1>
+            <p class="text-lg md:text-xl text-[#003049] max-w-3xl mx-auto">
+                גלו 30 הרפתקאות קיץ חינמיות, יצירתיות ובלתי נשכחות לכל המשפחה. המדריך המלא שלכם לקיץ מלא בחוויות, לא בהוצאות.
             </p>
         </header>
 
-        <div class="vicious-cycle-diagram">
-
-            <!-- Public Transport Section -->
-            <div class="section-card w-full md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto">
-                <h2 class="text-2xl sm:text-4xl font-bold mb-6 text-center text-[#E74C3C]">
-                    <svg class="icon-svg inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="8"></line></svg>
-                    תחבורה ציבורית גרועה ויקרה: נקודת השבירה הראשונה
-                </h2>
-                <p class="mb-6 text-center text-lg text-[#1A1A1A]">
-                    הנקודה ההתחלתית במעגל הייאוש. התחבורה הציבורית בישראל סובלת מבעיות מבניות חמורות שמרחיקות ממנה את הציבור, והופכות אותה לחלופה בלתי אטרקטיבית, כמעט בלתי נסבלת.
-                </p>
-                <ul class="list-none p-0 space-y-4 text-xl">
-                    <li class="flex items-start">
-                        <svg class="icon-svg problem-icon flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                        <div>
-                            <span class="font-bold text-[#E74C3C]">אין זמנים ואין שירות:</span>
-                            <span class="text-[#1A1A1A]"> אוטובוסים שמאחרים דרך קבע או לא מגיעים כלל, רכבות עמוסות לעייפה, ותחנות מרוחקות ולא נגישות. המשתמשים מוצאים את עצמם מבלים שעות ארוכות בהמתנה ובנסיעות ארוכות ומתישות, מה שפוגע ביכולתם לתכנן את יומם ולהגיע ליעדיהם בזמן, ויוצר תחושת <span class="catastrophe-highlight">חוסר אונים</span>.</span>
-                        </div>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="icon-svg problem-icon flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                        <div>
-                            <span class="font-bold text-[#E74C3C]">עליית מחירים ב-<span class="highlight-text">50%+</span>:</span>
-                            <span class="text-[#1A1A1A]"> התייקרות דרמטית בתעריפי הנסיעה, שהופכת את התחבורה הציבורית לנטל כלכלי משמעותי, במיוחד עבור משפחות מרובות ילדים או בעלי הכנסה נמוכה, ומבטלת את היתרון הכלכלי שהיה לה בעבר לעומת הרכב הפרטי, ודוחפת אותם אל <span class="catastrophe-highlight">הקצה הכלכלי</span>.</span>
-                        </div>
-                    </li>
-                </ul>
+        <!-- Chart Section -->
+        <section class="mb-16 p-6 bg-white/50 rounded-2xl shadow-lg">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 text-[#F77F00]">חלוקת הפעילויות לפי סוג</h2>
+            <div class="max-w-sm mx-auto">
+                <canvas id="activitiesChart"></canvas>
             </div>
-
-            <!-- Arrow 1: Public Transport to Private Car -->
-            <div class="arrow-container arrow-left-right">
-                <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g class="glitch-effect">
-                        <line x1="5" y1="30" x2="95" y2="30" stroke="#E74C3C" stroke-width="4" stroke-linecap="round" class="glitch-arrow-path"/>
-                        <path d="M85 20 L95 30 L85 40 Z" fill="#E74C3C" class="glitch-arrow-head"/>
-                    </g>
-                </svg>
-                <p class="text-sm mt-1 text-center text-[#7F8C8D] font-semibold">דוחף בלית ברירה ל...</p>
-            </div>
-
-            <!-- Private Car Section -->
-            <div class="section-card w-full md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto">
-                <h2 class="text-2xl sm:text-4xl font-bold mb-6 text-center text-[#E74C3C]">
-                    <svg class="icon-svg inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12z"></path><line x1="1" y1="12" x2="17" y2="12"></line><line x1="7" y1="20" x2="7" y2="22"></line><line x1="11" y1="20" x2="11" y2="22"></line><line x1="15" y1="20" x2="15" y2="22"></line><path d="M18 18h4a2 2 0 0 0 0-4h-4v-4h4a2 2 0 0 0 0-4h-4V2"></path></svg>
-                    חזרה כפויה לרכב הפרטי: מלכודת העומס והעלויות
-                </h2>
-                <p class="mb-6 text-center text-lg text-[#1A1A1A]">
-                    כתוצאה מכשל התחבורה הציבורית, יותר ויותר אנשים נאלצים לחזור להסתמך על הרכב הפרטי, מה שיוצר בעיות חדשות, יקרות ומתישות, ודוחף את המערכת אל סף <span class="catastrophe-highlight">קריסה</span>.
-                </p>
-                <ul class="list-none p-0 space-y-4 text-xl">
-                    <li class="flex items-start">
-                        <svg class="icon-svg problem-icon flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                        <div>
-                            <span class="font-bold text-[#E74C3C]">עליית מחירי רכבים, ביטוחים ותיקונים:</span>
-                            <span class="text-[#1A1A1A]"> מחירי רכישת רכב חדש או משומש זינקו, עלויות הביטוח (חובה ומקיף) מרקיעות שחקים, ומחירי הטיפולים והחלפים במוסכים הפכו לבלתי נסבלים. כל אלו הופכים את החזקת הרכב ללוקסוס יקר במיוחד, המכניס משפחות רבות ל<span class="catastrophe-highlight">מצוקה כלכלית בלתי נסבלת</span>.</span>
-                        </div>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="icon-svg problem-icon flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V13a2 2 0 0 0-2-2h16a2 2 0 0 0-2 2z"></path><polyline points="10 2 10 11 4 11"></polyline><polyline points="14 2 14 11 20 11"></polyline></svg>
-                        <div>
-                            <span class="font-bold text-[#E74C3C]">כבישים במצב גרוע:</span>
-                            <span class="text-[#1A1A1A]"> מפגעים בכבישים, בורות, סדקים ותשתיות לקויות גורמים לא רק לנזק מתמשך לרכבים ולצורך בתיקונים יקרים, אלא גם מהווים סכנה בטיחותית ממשית לנהגים ולנוסעים, ויוצרים תחושת <span class="catastrophe-highlight">הזנחה מתמשכת ומסוכנת</span>.</span>
-                        </div>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="icon-svg problem-icon flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M10.24 14.24L12 16l1.76-1.76"></path><path d="M12 16.5V22"></path></svg>
-                        <div>
-                            <span class="font-bold text-[#E74C3C]">פקקים במצב קטסטרופלי:</span>
-                            <span class="text-[#1A1A1A]"> העומס הבלתי נתפס בכבישים, במיוחד בשעות השיא, גורם לאובדן שעות עבודה יקרות, תסכול רב, שחיקה נפשית, זיהום אוויר מוגבר, ופגיעה באיכות החיים הכללית. נסיעה של קילומטרים בודדים יכולה לארוך עשרות דקות, והופכת כל יום ל<span class="catastrophe-highlight">מרוץ בלתי אפשרי וחסר תכלית</span>.</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Arrow 2: Private Car to Public Transport -->
-            <div class="arrow-container arrow-down-left">
-                <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g class="glitch-effect">
-                        <line x1="95" y1="30" x2="5" y2="30" stroke="#E74C3C" stroke-width="4" stroke-linecap="round" class="glitch-arrow-path"/>
-                        <path d="M15 20 L5 30 L15 40 Z" fill="#E74C3C" class="glitch-arrow-head"/>
-                    </g>
-                </svg>
-                <p class="text-sm mt-1 text-center text-[#7F8C8D] font-semibold">דוחף חזרה ל...</p>
-            </div>
-
-            <!-- Central Cycle Visual -->
-            <div class="col-span-full md:col-span-1 md:row-span-3 flex flex-col items-center justify-center">
-                <div class="cycle-core">
-                    <p class="cycle-core-text text-center">
-                        מעגל קסמים<br>שלילי<br><span style="font-size: 0.8em; font-weight: 400;">(הקטסטרופה היומיומית)</span>
-                    </p>
-                </div>
-            </div>
-
-            <!-- Arrow 3: Back to Public Transport (closing the loop) -->
-            <div class="arrow-container arrow-down-right">
-                <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g class="glitch-effect">
-                        <line x1="5" y1="30" x2="95" y2="30" stroke="#E74C3C" stroke-width="4" stroke-linecap="round" class="glitch-arrow-path"/>
-                        <path d="M85 20 L95 30 L85 40 Z" fill="#E74C3C" class="glitch-arrow-head"/>
-                    </g>
-                </svg>
-                <p class="text-sm mt-1 text-center text-[#7F8C8D] font-semibold">חוזרים למקור הבעיה...</p>
-            </div>
-
-            <!-- Re-enter Public Transport (loop continuation) -->
-            <div class="section-card w-full md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto">
-                <h2 class="text-2xl sm:text-4xl font-bold mb-6 text-center text-[#E74C3C]">
-                    <svg class="icon-svg inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path><path d="M15 9l-3 3-3-3"></path><path d="M9 15l3-3 3 3"></path></svg>
-                    חזרה כפויה לתחבורה הציבורית: מעגל הייאוש נמשך
-                </h2>
-                <p class="mb-6 text-center text-lg text-[#1A1A1A]">
-                    הקושי הבלתי נסבל בשימוש ברכב פרטי דוחף שוב את הציבור בחזרה לתחבורה הציבורית, למרות חסרונותיה המובהקים והמתמשכים, וסוגר את מעגל הייאוש.
-                </p>
-                <ul class="list-none p-0 space-y-4 text-xl">
-                    <li class="flex items-start">
-                        <svg class="icon-svg problem-icon flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                        <div>
-                            <span class="font-bold text-[#E74C3C]">התחב"צ עדיין גרוע בטירוף:</span>
-                            <span class="text-[#1A1A1A]"> למרות הניסיונות לחזור לתחבורה הציבורית, המציאות נשארת עגומה: אוטובוסים שאינם מגיעים, צפיפות בלתי נסבלת, היעדר מסלולים יעילים, וזמני המתנה ארוכים, שממשיכים לערער את האמון בה, ומשאירים את הציבור ב<span class="catastrophe-highlight">תחושת תקיעות בלתי פוסקת</span>.</span>
-                        </div>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="icon-svg problem-icon flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                        <div>
-                            <span class="font-bold text-[#E74C3C]">העלאות מחירים חוזרות:</span>
-                            <span class="text-[#1A1A1A]"> ככל שיותר אנשים נדחקים חזרה לתחבורה הציבורית, כך עולה הנטייה להעלות שוב את התעריפים, מה שמחזיר את המשתמשים לנקודת ההתחלה של חיפוש חלופה, ושוב - לרכב הפרטי, ויוצר <span class="catastrophe-highlight">לולאה אינסופית של עלויות וייאוש</span>.</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Arrow 4: Back to Private Car (completing the loop visual) -->
-            <div class="arrow-container arrow-up-left">
-                <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g class="glitch-effect">
-                        <line x1="95" y1="30" x2="5" y2="30" stroke="#E74C3C" stroke-width="4" stroke-linecap="round" class="glitch-arrow-path"/>
-                        <path d="M15 20 L5 30 L15 40 Z" fill="#E74C3C" class="glitch-arrow-head"/>
-                    </g>
-                </svg>
-                <p class="text-sm mt-1 text-center text-[#7F8C8D] font-semibold">ושוב ל...</p>
-            </div>
-
-        </div>
-
-        <footer class="text-center mt-16 py-10 border-t-2 border-gray-300">
-            <h3 class="text-3xl sm:text-4xl font-bold mb-6 text-[#E74C3C]">הבנת המעגל: דרישה לשינוי מערכתי - לשבור את הלולאה!</h3>
-            <p class="max-w-4xl mx-auto text-xl text-[#F8F8F8]">
-                מעגל קסמים זה אינו רק תיאור מצב, אלא <span class="catastrophe-highlight">קריאה דחופה לפעולה</span>. הוא מדגיש את הצורך הבלתי מתפשר בפתרון מערכתי וכוללני שישבור את הלולאה ההרסנית הזו אחת ולתמיד. ללא השקעה משמעותית בשיפור דרמטי של התחבורה הציבורית (שירות, תדירות, כיסוי, מחיר), טיפול יסודי בתשתיות הכבישים, ובחינה מחודשת של מדיניות המיסוי והעלויות על רכב פרטי – המצב ימשיך להחמיר, והאזרחים ימשיכו להיות לכודים בין שתי חלופות גרועות, יקרות ומתישות. <span class="font-extrabold text-[#E74C3C]">זה הזמן לשבור את המעגל, לפני שהוא שובר אותנו.</span>
+            <p class="text-center text-sm mt-4 text-[#415A77]">
+                המדריך מציע איזון מושלם בין יצירתיות בבית, הרפתקאות בחוץ, והזדמנויות ללמידה והתפתחות.
             </p>
+        </section>
+
+        <!-- Activities Grid Sections -->
+        <main>
+            <!-- Category 1: Creative Home Activities -->
+            <section id="home-activities" class="mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#D62828]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    יצירתיות בתוך הבית
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Activity Cards will be dynamically inserted here or listed manually -->
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">1. מחנה בסלון</h3>
+                        <p class="text-sm">אוהלים מסדינים, סיפורי "מדורה" ומשחקי קופסה לאור פנסים.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">2. מאסטר שף ביתי</h3>
+                        <p class="text-sm">תחרות בישול עם חומרים שיש במקרר. מי השופט ומי המתמודד?</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">3. ספא ביתי מפנק</h3>
+                        <p class="text-sm">מסכות פנים ממלפפונים, עיסויים, מוזיקה מרגיעה ואווירה שלווה.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">4. חדר בריחה "תוצרת בית"</h3>
+                        <p class="text-sm">החביאו אוצר וצרו חידות ומשימות שיובילו אליו ברחבי הבית.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">5. יום צילומים</h3>
+                        <p class="text-sm">הפיקו סרט משפחתי קצר, קליפ או תחרות צילום עם נושאים מצחיקים.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">6. תחרות יצירה</h3>
+                        <p class="text-sm">פיסול בבצק מלח, ציור, או יצירת אמנות מחומרים ממוחזרים.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">7. קולנוע ביתי משודרג</h3>
+                        <p class="text-sm">הכינו פופקורן ביתי, החשיכו את החדר והקרינו סרט על הקיר.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">8. מסיבת ריקודים</h3>
+                        <p class="text-sm">פלייליסט אהוב, אורות צבעוניים ותחרות ריקודים בסלון.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">9. יום המדען המשוגע</h3>
+                        <p class="text-sm">ניסויים פשוטים מהמטבח: הר געש מסודה לשתייה, דיו סתרים מלימון.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">10. תיאטרון בובות</h3>
+                        <p class="text-sm">הכינו בובות מגרביים או כפות עץ והציגו הצגה מקורית.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Category 2: Free Outdoor Activities -->
+            <section id="outdoor-activities" class="mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#D62828]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    הרפתקאות תחת כיפת השמיים
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">11. פיקניק בפארק</h3>
+                        <p class="text-sm">ארזו אוכל מהבית, שמיכה ומשחקי כדור לבילוי קלאסי.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">12. ציד אוצרות שכונתי</h3>
+                        <p class="text-sm">הכינו רשימת דברים למצוא: עלה בצורת לב, אצטרובל, אבן מיוחדת.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">13. יום ספורט</h3>
+                        <p class="text-sm">כדורגל, טניס במגרש ציבורי, או רכיבה על אופניים במסלול קרוב.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">14. גינון ביתי</h3>
+                        <p class="text-sm">שתלו צמחי תבלין באדניות ישנות או פרחים קטנים בגינה.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">15. טיול לחוף הים</h3>
+                        <p class="text-sm">בבוקר מוקדם או לקראת שקיעה, עם חטיפים מהבית ובניית ארמונות.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">16. הליכה בשביל קרוב</h3>
+                        <p class="text-sm">גלו את שביל ההליכה הקרוב לביתכם, עם צידנית ומשחקי דרך.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">17. צפייה בזריחה/שקיעה</h3>
+                        <p class="text-sm">מצאו מקום גבוה בעיר או בטבע ותיהנו מהצגה של הטבע.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">18. איסוף פירות עונתיים</h3>
+                        <p class="text-sm">חפשו עצי תאנה, תות או שסק ציבוריים (במקומות מותרים בלבד).</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">19. יום באגם או נחל</h3>
+                        <p class="text-sm">טבילת רגליים, שחייה (במקום מוסדר) וצילומים בטבע.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">20. ביקור בשוק</h3>
+                        <p class="text-sm">לא חייבים לקנות! חקרו את הצבעים, הריחות והקולות של השוק.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Category 3: Learning and Enrichment Activities -->
+            <section id="learning-activities" class="mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#D62828]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                    למידה, העשרה וסקרנות
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">21. יום טיול בעולם</h3>
+                        <p class="text-sm">"טוסו" למדינה אחרת דרך Google Earth, שמעו מוזיקה מקומית.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">22. ביקור בספרייה</h3>
+                        <p class="text-sm">מעבר לקריאה, בדקו אם יש פעילויות חינמיות או שעת סיפור.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">23. מוזיאון בחינם</h3>
+                        <p class="text-sm">בדקו מתי יש ימי כניסה חופשית למוזיאונים באזורכם.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">24. לימוד שפה חדשה</h3>
+                        <p class="text-sm">הקדישו 15 דקות ביום ללימוד בסיסי של שפה עם אפליקציות חינמיות.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">25. פודקאסט משפחתי</h3>
+                        <p class="text-sm">הקליטו "תוכנית רדיו" משלכם עם ראיונות, סיפורים ומוזיקה.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">26. יום היסטוריה מקומית</h3>
+                        <p class="text-sm">בקרו באתרים היסטוריים חינמיים או אנדרטאות בסביבתכם.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">27. צפייה בכוכבים</h3>
+                        <p class="text-sm">בלילה צלול, צאו החוצה עם שמיכה והשתמשו באפליקציית כוכבים.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">28. סדנת תיקונים</h3>
+                        <p class="text-sm">למדו יחד לתקן צעצוע שבור, בגד קרוע או פריט קטן בבית.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">29. יום התנדבות</h3>
+                        <p class="text-sm">עזרו לשכן מבוגר, נקו את הסביבה הקרובה או טיילו עם כלבים מעמותה.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md card-hover-effect">
+                        <h3 class="font-bold text-lg text-[#F77F00]">30. כתיבת יומן משפחתי</h3>
+                        <p class="text-sm">תעדו יחד את חוויות הקיץ, צרפו ציורים ותמונות למזכרת נצח.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tips Section -->
+            <section class="mt-16 p-8 bg-[#003049] text-white rounded-2xl shadow-2xl">
+                <h2 class="text-3xl font-bold text-center mb-6 text-[#FCBF49]">טיפים להפיכת כל פעילות למיוחדת</h2>
+                <ul class="space-y-4 max-w-2xl mx-auto list-inside">
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#FCBF49] mt-1">✔</span>
+                        <div><strong class="font-semibold">תנו שמות מעניינים:</strong> "יום הרפתקאות בסלון" במקום "נשארים בבית".</div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#FCBF49] mt-1">✔</span>
+                        <div><strong class="font-semibold">צרו אירוע:</strong> הכינו הזמנות, שלטים והכרזות חגיגיות כדי לבנות ציפייה.</div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#FCBF49] mt-1">✔</span>
+                        <div><strong class="font-semibold">היכנסו לדמות:</strong> חלוקי טבחים למאסטר שף, פיג'מות לספא, בגדי חוקרים לציד אוצרות.</div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="text-[#FCBF49] mt-1">✔</span>
+                        <div><strong class="font-semibold">צלמו והנציחו:</strong> צרו אלבום תמונות דיגיטלי או פיזי מיוחד של "קיץ 2024 בחינם".</div>
+                    </li>
+                     <li class="flex items-start gap-3">
+                        <span class="text-[#FCBF49] mt-1">✔</span>
+                        <div><strong class="font-semibold">שתפו חברים:</strong> הזמינו משפחות נוספות להצטרף לפעילויות. כיף גדול יותר ביחד!</div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer class="text-center mt-16 text-sm text-[#415A77]">
+            <p>נוצר באהבה כדי להפוך את הקיץ שלכם לבלתי נשכח.</p>
         </footer>
+
     </div>
+
+    <script>
+        // Chart.js script
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('activitiesChart').getContext('2d');
+            const activitiesChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        'פעילויות בית יצירתיות',
+                        'הרפתקאות בחוץ',
+                        'למידה והעשרה'
+                    ],
+                    datasets: [{
+                        label: 'מספר פעילויות',
+                        data: [10, 10, 10],
+                        backgroundColor: [
+                            '#F77F00', // Tangelo Orange
+                            '#D62828', // Imperial Red
+                            '#FCBF49'  // Sunglow Yellow
+                        ],
+                        borderColor: '#FDF0D5',
+                        borderWidth: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#003049',
+                                font: {
+                                    family: "'Assistant', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            // This ensures tooltips work correctly as per the prompt instructions
+                            callbacks: {
+                                title: function(tooltipItems) {
+                                    const item = tooltipItems[0];
+                                    let label = item.chart.data.labels[item.dataIndex];
+                                    return Array.isArray(label) ? label.join(' ') : label;
+                                }
+                            },
+                            bodyFont: {
+                                family: "'Assistant', sans-serif",
+                            },
+                            titleFont: {
+                                family: "'Assistant', sans-serif",
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
+
