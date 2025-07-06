@@ -3,245 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>לוח מבצעי קיץ</title>
+    <title>30 פעילויות חינמיות לקיץ</title>
     
-    <!-- Tailwind CSS from CDN -->
+    <!--
+    ================================================================
+    STRATEGY BRIEF
+    ================================================================
+    * תמצית הנרטיב: מיפוי 30 דרכים להפוך את הקיץ להרפתקה בלתי נשכחת, בלי לפתוח את הארנק.
+    * קונספט עיצובי: 'Dashboard Grid' בסגנון סקיצואמורפיזם וקולאז'. משדר יצירתיות DIY, נגישות וחום, ומתאים למטרת הדרכה למשפחות.
+    * פלטת צבעים:
+        * רקע ראשי: #FDF6E3 (קרם נייר)
+        * טקסט ראשי: #3A3A3A (אפור כהה)
+        * הדגשה קטגוריה (בית): #4A90E2 (כחול)
+        * הדגשה קטגוריה (חוץ): #50E3C2 (טורקיז)
+        * הדגשה קטגוריה (למידה): #F5A623 (כתום)
+        * הדגשה (טיפים): #BD10E0 (סגול)
+    * מדדי הצלחה: 
+        1. המשתמש יסנן את הפעילויות לפחות פעם אחת.
+        2. המשתמש יבלה לפחות 30 שניות בדף, מה שמעיד על עיון ברשימה.
+        3. המשתמש יזהה בקלות את שלוש קטגוריות הפעילות.
+    ================================================================
+    -->
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Rubik (for titles) & IBM Plex Mono (for body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         body {
-            font-family: 'IBM Plex Mono', monospace;
-            background-color: #111111;
-            color: #EAEAEA;
-            scroll-behavior: smooth;
+            font-family: 'Assistant', sans-serif;
+            background-color: #FDF6E3; /* Paper cream background */
+            color: #3A3A3A;
         }
-        
-        .font-title {
-            font-family: 'Rubik', sans-serif;
+        .activity-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border-width: 2px;
         }
-
-        .glitch-text {
-            color: #00FF41;
-            text-shadow: 0 0 5px #00FF41, 0 0 10px #00FF41;
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-
-        .card-container {
-            perspective: 1000px;
+        .filter-btn {
+            transition: all 0.2s ease-in-out;
         }
-
-        .card {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-            cursor: pointer;
+        .filter-btn.active {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-        
-        .card.is-flipped {
-            transform: rotateY(180deg);
-        }
-
-        .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: 1rem;
-            padding: 1rem;
-        }
-
-        .card-front {
-            background: #1A1A1A;
-            border: 1px solid #333;
-        }
-        
-        .card-back {
-            background: #222222;
-            border: 1px solid #00FF41;
-            transform: rotateY(180deg);
-            justify-content: space-between;
-        }
-        
-        .card.is-completed .card-front {
-            background: #002A0D;
-            border-color: #00FF41;
-        }
-        
-        .card.is-completed .card-front .mission-status {
-            color: #00FF41;
-        }
-        
-        .progress-bar-container {
-            background-color: #222;
-            border: 1px solid #444;
-        }
-        
-        .progress-bar {
-            background-color: #00FF41;
-            box-shadow: 0 0 10px #00FF41;
-            transition: width 0.5s ease-in-out;
-        }
-        
-        .action-button {
-            background-color: transparent;
-            border: 1px solid #00FF41;
-            color: #00FF41;
-            transition: all 0.2s;
-        }
-        
-        .action-button:hover {
-            background-color: #00FF41;
-            color: #111;
+        .tips-box {
+            background-color: #fffacd; /* Light yellow like a sticky note */
+            border: 2px dashed #3A3A3A;
+            transform: rotate(-1deg);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
         }
     </style>
 </head>
-<body class="p-4 sm:p-8">
+<body class="p-4 sm:p-6 md:p-8">
 
-    <!-- 
-    == STRATEGY BRIEF (V3 - "SUMMER OPS") ==
-    * NARRATIVE: "Your summer mission, should you choose to accept it. 30 free ops to conquer boredom."
-    * DESIGN CONCEPT: Interactive Mission Board. Shifted from a passive infographic to an active, gamified experience. The user reveals and completes "missions", creating engagement and a sense of progress.
-    * VISUAL STYLE: Digital Brutalism / Glitch. A raw, edgy, tech-focused aesthetic. Monochromatic base with a sharp, electric green accent. Monospaced fonts for a "terminal" feel. The focus is on interaction and structure, not decoration.
-    * COLOR PALETTE:
-      * #111111 (Near Black): Main background.
-      * #EAEAEA (Light Grey): Main text.
-      * #00FF41 (Electric Green): The single, high-impact accent for highlights, borders, and CTAs.
-      * #1A1A1A, #222222 (Dark Greys): Card backgrounds.
-    * SUCCESS METRICS: The user actively engages with the board, flipping cards and marking missions as complete. The goal is to make planning summer feel like a game, not a chore. Success is seeing the progress bar move.
-    -->
-
-    <div class="container mx-auto max-w-7xl">
-
-        <!-- Header & Progress Bar -->
-        <header class="text-center mb-12">
-            <h1 class="font-title text-4xl md:text-6xl font-black mb-2">SUMMER OPS</h1>
-            <p class="text-lg md:text-xl glitch-text font-bold tracking-widest">30 משימות. 0 תקציב.</p>
-            
-            <div class="max-w-2xl mx-auto mt-8">
-                <div class="flex justify-between items-center mb-2 font-mono text-sm">
-                    <span>התקדמות המבצע:</span>
-                    <span id="progress-text">0/30</span>
-                </div>
-                <div class="w-full progress-bar-container rounded-full h-4">
-                    <div id="progress-bar" class="progress-bar h-4 rounded-full" style="width: 0%"></div>
-                </div>
-                <button id="reset-button" class="mt-4 text-xs text-gray-400 hover:text-white transition">אפס התקדמות</button>
-            </div>
+    <div class="max-w-7xl mx-auto">
+        <!-- Header Section -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">30 דרכים להפוך את הקיץ להרפתקה</h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                רשימת פעילויות חינמיות וטיפים יצירתיים שיעזרו לכם לתכנן קיץ מלא בכיף, חוויות וזיכרונות משפחתיים – בלי להוציא שקל. סננו לפי תחומי עניין וצאו לדרך!
+            </p>
         </header>
 
-        <!-- Mission Board -->
-        <main id="mission-board" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            <!-- Cards will be generated by JS -->
-        </main>
+        <!-- Main Content: Filters and Grid -->
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Filters and Tips Section -->
+            <aside class="lg:w-1/4 xl:w-1/5">
+                <div class="sticky top-8">
+                    <!-- Filters -->
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold mb-4">סננו לפי נושא</h3>
+                        <div id="filters" class="flex flex-wrap gap-3">
+                            <button data-filter="all" class="filter-btn active w-full text-white font-bold py-2 px-4 rounded-lg bg-gray-500 hover:bg-gray-600">
+                                <i class="fa-solid fa-layer-group ml-2"></i>הצג הכל
+                            </button>
+                            <button data-filter="home" class="filter-btn w-full text-white font-bold py-2 px-4 rounded-lg bg-blue-500 hover:bg-blue-600" style="background-color: #4A90E2;">
+                                <i class="fa-solid fa-house-chimney ml-2"></i>פעילויות בית
+                            </button>
+                            <button data-filter="outside" class="filter-btn w-full text-white font-bold py-2 px-4 rounded-lg bg-teal-400 hover:bg-teal-500" style="background-color: #50E3C2;">
+                                <i class="fa-solid fa-sun ml-2"></i>פעילויות חוץ
+                            </button>
+                            <button data-filter="learn" class="filter-btn w-full text-white font-bold py-2 px-4 rounded-lg bg-orange-400 hover:bg-orange-500" style="background-color: #F5A623;">
+                                <i class="fa-solid fa-book-open-reader ml-2"></i>למידה והעשרה
+                            </button>
+                        </div>
+                    </div>
 
-        <footer class="text-center mt-12 text-xs text-gray-600">
-            <p>// END OF TRANSMISSION //</p>
-        </footer>
+                    <!-- Tips Box -->
+                    <div class="tips-box p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center" style="color: #3A3A3A;">
+                            <i class="fa-solid fa-wand-magic-sparkles ml-2" style="color: #BD10E0;"></i>
+                            איך הופכים חינם למיוחד?
+                        </h3>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start"><i class="fa-solid fa-lightbulb mt-1 ml-2 text-yellow-500"></i><div><span class="font-bold">תנו שמות מעניינים:</span> "יום הרפתקאות" במקום "נשארים בבית".</div></li>
+                            <li class="flex items-start"><i class="fa-solid fa-bullhorn mt-1 ml-2 text-red-500"></i><div><span class="font-bold">צרו אירוע:</span> הכינו הזמנות, שלטים, הכרזות.</div></li>
+                            <li class="flex items-start"><i class="fa-solid fa-mask mt-1 ml-2 text-purple-500"></i><div><span class="font-bold">לבשו תלבושות:</span> חלוקי טבחים למאסטר שף, פיג'מות לספא.</div></li>
+                            <li class="flex items-start"><i class="fa-solid fa-camera-retro mt-1 ml-2 text-blue-500"></i><div><span class="font-bold">צלמו והנציחו:</span> צרו אלבום מיוחד של כל הפעילויות.</div></li>
+                            <li class="flex items-start"><i class="fa-solid fa-users mt-1 ml-2 text-green-500"></i><div><span class="font-bold">שתפו חברים:</span> הזמינו משפחות נוספות להצטרף.</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
 
+            <!-- Activities Grid -->
+            <main class="lg:w-3/4 xl:w-4/5">
+                <div id="activities-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6" aria-live="polite">
+                    <!-- Activity cards will be injected here by JavaScript -->
+                </div>
+            </main>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const activities = [
-                "מחנה בסלון", "קרב מטבחים", "ספא ביתי", "חדר בריחה DIY", "יום קולנוע", "סדנת יצירה",
-                "בינג' משודרג", "מסיבת אוזניות", "מעבדת ניסויים", "תיאטרון צלליות", "פיקניק בפארק",
-                "Urban Exploration", "יום ספורט", "גינון גרילה", "סשן חוף", "טרק קרוב לבית",
-                "ציידי שקיעות", "קטיף פירות", "שכשוך בנחל", "סיור שווקים", "טיול וירטואלי",
-                "ביקור בספרייה", "יום מוזיאון חינם", "לימוד שפה חדשה", "פודקאסט משפחתי",
-                "היסטוריה מקומית", "ליל כוכבים", "סדנת תיקונים", "התנדבות ספונטנית", "יומן קיץ דיגיטלי"
-            ];
+        const activities = [
+            // Home Activities
+            { id: 1, category: 'home', title: 'מחנה בסלון', icon: 'fa-tent' },
+            { id: 2, category: 'home', title: 'מאסטר שף ביתי', icon: 'fa-utensils' },
+            { id: 3, category: 'home', title: 'ספא ביתי', icon: 'fa-spa' },
+            { id: 4, category: 'home', title: 'חדר בריחה', icon: 'fa-key' },
+            { id: 5, category: 'home', title: 'יום צילומים', icon: 'fa-video' },
+            { id: 6, category: 'home', title: 'תחרות יצירה', icon: 'fa-palette' },
+            { id: 7, category: 'home', title: 'קולנוע ביתי', icon: 'fa-film' },
+            { id: 8, category: 'home', title: 'מסיבת ריקודים', icon: 'fa-music' },
+            { id: 9, category: 'home', title: 'יום למדעים', icon: 'fa-flask-vial' },
+            { id: 10, category: 'home', title: 'תיאטרון ביתי', icon: 'fa-masks-theater' },
+            // Outside Activities
+            { id: 11, category: 'outside', title: 'פיקניק בפארק', icon: 'fa-basket-shopping' },
+            { id: 12, category: 'outside', title: 'ציד אוצרות בשכונה', icon: 'fa-map-location-dot' },
+            { id: 13, category: 'outside', title: 'יום ספורט', icon: 'fa-futbol' },
+            { id: 14, category: 'outside', title: 'גינון ביתי', icon: 'fa-seedling' },
+            { id: 15, category: 'outside', title: 'טיול לחוף הים', icon: 'fa-umbrella-beach' },
+            { id: 16, category: 'outside', title: 'הליכה בשביל קרוב', icon: 'fa-person-hiking' },
+            { id: 17, category: 'outside', title: 'צפייה בזריחה/שקיעה', icon: 'fa-cloud-sun' },
+            { id: 18, category: 'outside', title: 'איסוף פירות עונתיים', icon: 'fa-apple-whole' },
+            { id: 19, category: 'outside', title: 'יום באגם או נחל', icon: 'fa-water' },
+            { id: 20, category: 'outside', title: 'ביקור בשוק', icon: 'fa-store' },
+            // Learning Activities
+            { id: 21, category: 'learn', title: 'יום מדינות', icon: 'fa-globe' },
+            { id: 22, category: 'learn', title: 'ספריית שכונה', icon: 'fa-book' },
+            { id: 23, category: 'learn', title: 'מוזיאון חינמי', icon: 'fa-landmark' },
+            { id: 24, category: 'learn', title: 'לימוד שפה חדשה', icon: 'fa-language' },
+            { id: 25, category: 'learn', title: 'פודקאסט משפחתי', icon: 'fa-microphone-lines' },
+            { id: 26, category: 'learn', title: 'יום היסטוריה', icon: 'fa-scroll' },
+            { id: 27, category: 'learn', title: 'צפייה בכוכבים', icon: 'fa-star' },
+            { id: 28, category: 'learn', title: 'סדנת תיקונים', icon: 'fa-screwdriver-wrench' },
+            { id: 29, category: 'learn', title: 'יום מתנדבים', icon: 'fa-hand-holding-heart' },
+            { id: 30, category: 'learn', title: 'כתיבת יומן משפחתי', icon: 'fa-pen-fancy' }
+        ];
 
-            const missionBoard = document.getElementById('mission-board');
-            let completedMissions = new Array(activities.length).fill(false);
+        const categoryStyles = {
+            home: { color: '#4A90E2', text: 'פעילויות בית' },
+            outside: { color: '#50E3C2', text: 'פעילויות חוץ' },
+            learn: { color: '#F5A623', text: 'למידה והעשרה' }
+        };
 
-            function renderBoard() {
-                missionBoard.innerHTML = '';
-                activities.forEach((activity, index) => {
-                    const isCompleted = completedMissions[index];
-                    
-                    const cardContainer = document.createElement('div');
-                    cardContainer.className = 'card-container h-40';
+        const grid = document.getElementById('activities-grid');
+        const filtersContainer = document.getElementById('filters');
 
-                    const card = document.createElement('div');
-                    card.className = `card ${isCompleted ? 'is-completed' : ''}`;
-                    card.dataset.index = index;
-                    
-                    card.innerHTML = `
-                        <div class="card-face card-front">
-                            <span class="font-title text-2xl text-gray-500">#${String(index + 1).padStart(2, '0')}</span>
-                            <span class="mission-status font-mono text-xs mt-2 text-gray-400">${isCompleted ? 'משימה הושלמה' : 'סטטוס: סודי'}</span>
-                        </div>
-                        <div class="card-face card-back text-center">
-                            <h3 class="font-title text-lg leading-tight">${activity}</h3>
-                            <button class="complete-button action-button text-xs py-1 px-3 rounded-full mt-2" data-index="${index}">
-                                ${isCompleted ? 'בטל השלמה' : 'השלם משימה'}
-                            </button>
-                        </div>
-                    `;
-                    
-                    cardContainer.appendChild(card);
-                    missionBoard.appendChild(cardContainer);
-                });
-                updateProgress();
-                addEventListeners();
-            }
-            
-            function updateProgress() {
-                const completedCount = completedMissions.filter(Boolean).length;
-                const progress = (completedCount / activities.length) * 100;
-                
-                document.getElementById('progress-bar').style.width = `${progress}%`;
-                document.getElementById('progress-text').textContent = `${completedCount}/${activities.length}`;
-            }
+        // Function to render cards
+        function renderCards() {
+            grid.innerHTML = '';
+            activities.forEach(activity => {
+                const style = categoryStyles[activity.category];
+                const card = document.createElement('div');
+                card.className = 'activity-card flex flex-col items-center justify-center text-center p-6 bg-white rounded-xl shadow-md';
+                card.dataset.category = activity.category;
+                card.style.borderColor = style.color;
 
-            function addEventListeners() {
-                document.querySelectorAll('.card').forEach(card => {
-                    card.addEventListener('click', (e) => {
-                        if (!e.target.classList.contains('complete-button')) {
-                            card.classList.toggle('is-flipped');
-                        }
-                    });
-                });
-                
-                document.querySelectorAll('.complete-button').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const index = parseInt(e.target.dataset.index);
-                        completedMissions[index] = !completedMissions[index];
-                        
-                        // Re-render to update all states
-                        renderBoard();
-                        
-                        // Find the re-rendered card and keep it flipped
-                        const newCard = missionBoard.querySelector(`.card[data-index="${index}"]`);
-                        if (newCard) {
-                            newCard.classList.add('is-flipped');
-                        }
-                    });
-                });
-            }
-
-            document.getElementById('reset-button').addEventListener('click', () => {
-                completedMissions.fill(false);
-                renderBoard();
+                card.innerHTML = `
+                    <div class="text-3xl mb-3" style="color: ${style.color};">
+                        <i class="fa-solid ${activity.icon} fa-2x"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800">${activity.title}</h4>
+                    <p class="text-sm font-semibold" style="color: ${style.color};">${style.text}</p>
+                    <div class="absolute top-2 right-2 bg-gray-200 text-gray-700 w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm">
+                        ${activity.id}
+                    </div>
+                `;
+                grid.appendChild(card);
             });
+        }
 
-            // Initial render
-            renderBoard();
+        // Function to handle filtering
+        function filterActivities(e) {
+            const selectedFilter = e.target.closest('button')?.dataset.filter;
+            if (!selectedFilter) return;
+
+            // Update active button style
+            document.querySelectorAll('#filters button').forEach(btn => btn.classList.remove('active'));
+            e.target.closest('button').classList.add('active');
+
+            // Filter cards
+            const cards = document.querySelectorAll('.activity-card');
+            cards.forEach(card => {
+                if (selectedFilter === 'all' || card.dataset.category === selectedFilter) {
+                    card.classList.remove('hidden');
+                    card.classList.add('flex');
+                } else {
+                    card.classList.remove('flex');
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // Initial render and event listener setup
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCards();
+            filtersContainer.addEventListener('click', filterActivities);
         });
-    </script>
 
+    </script>
 </body>
 </html>
 
