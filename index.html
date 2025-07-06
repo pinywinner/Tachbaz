@@ -3,348 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>30 Vibes של קיץ בחינם</title>
+    <title>לוח מבצעי קיץ</title>
     
     <!-- Tailwind CSS from CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Chart.js from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Google Fonts: Assistant -->
+    <!-- Google Fonts: Rubik (for titles) & IBM Plex Mono (for body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* Applying the Assistant font with bolder weights */
         body {
-            font-family: 'Assistant', sans-serif;
-            background-color: #073B4C; /* Dark blue background for a modern feel */
-            color: #F0F8FF;
+            font-family: 'IBM Plex Mono', monospace;
+            background-color: #111111;
+            color: #EAEAEA;
             scroll-behavior: smooth;
         }
         
-        /* Main gradient for titles */
-        .gradient-text {
-            background: linear-gradient(45deg, #FFD166, #FF6B6B, #14C4B9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
+        .font-title {
+            font-family: 'Rubik', sans-serif;
         }
 
-        /* Gradient border for cards */
-        .card-gradient-border {
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            background-color: #0d4a5f; /* Slightly lighter than body */
-            transition: all 0.3s ease-in-out;
+        .glitch-text {
+            color: #00FF41;
+            text-shadow: 0 0 5px #00FF41, 0 0 10px #00FF41;
+        }
+
+        .card-container {
+            perspective: 1000px;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
             position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
         }
         
-        .card-gradient-border::before {
-            content: '';
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
             position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            z-index: -1;
-            margin: -2px; /* Border width */
-            border-radius: 1.25rem; /* Tailwind's rounded-2xl */
-            background: linear-gradient(45deg, #FFD166, #FF6B6B, #14C4B9);
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 1rem;
+            padding: 1rem;
         }
 
-        .card-gradient-border:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+        .card-front {
+            background: #1A1A1A;
+            border: 1px solid #333;
         }
-
-        /* Custom scrollbar for a modern look */
-        ::-webkit-scrollbar {
-            width: 8px;
+        
+        .card-back {
+            background: #222222;
+            border: 1px solid #00FF41;
+            transform: rotateY(180deg);
+            justify-content: space-between;
         }
-        ::-webkit-scrollbar-track {
-            background: #073B4C;
+        
+        .card.is-completed .card-front {
+            background: #002A0D;
+            border-color: #00FF41;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #14C4B9;
-            border-radius: 10px;
+        
+        .card.is-completed .card-front .mission-status {
+            color: #00FF41;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #FF6B6B;
+        
+        .progress-bar-container {
+            background-color: #222;
+            border: 1px solid #444;
+        }
+        
+        .progress-bar {
+            background-color: #00FF41;
+            box-shadow: 0 0 10px #00FF41;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        .action-button {
+            background-color: transparent;
+            border: 1px solid #00FF41;
+            color: #00FF41;
+            transition: all 0.2s;
+        }
+        
+        .action-button:hover {
+            background-color: #00FF41;
+            color: #111;
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="p-4 sm:p-8">
 
     <!-- 
-    == STRATEGY BRIEF (V2 - "SUMMER VIBE") ==
-    * NARRATIVE: "Your Summer Bucket List just got a glow-up. 30 free vibes for an unforgettable summer."
-    * DESIGN CONCEPT: Vibrant Gradient Infographic. Switched to a dark-mode, neon-accented theme to feel more modern, digital, and energetic. The focus is on dynamic visuals that pop.
-    * VISUAL STYLE: Digital Maximalism / "Gen-Z" Aesthetic. Uses bold gradients, strong typography, dark mode, and dynamic hover effects to create a lively, engaging digital experience, not just a static page.
+    == STRATEGY BRIEF (V3 - "SUMMER OPS") ==
+    * NARRATIVE: "Your summer mission, should you choose to accept it. 30 free ops to conquer boredom."
+    * DESIGN CONCEPT: Interactive Mission Board. Shifted from a passive infographic to an active, gamified experience. The user reveals and completes "missions", creating engagement and a sense of progress.
+    * VISUAL STYLE: Digital Brutalism / Glitch. A raw, edgy, tech-focused aesthetic. Monochromatic base with a sharp, electric green accent. Monospaced fonts for a "terminal" feel. The focus is on interaction and structure, not decoration.
     * COLOR PALETTE:
-      * #073B4C (Deep Blue): Main background. Modern, high-contrast, makes colors pop.
-      * #F0F8FF (Alice Blue): Main text. Clean and readable against the dark background.
-      * #14C4B9 (Turquoise): Primary Accent & CTA. Energetic, summery, fresh.
-      * #FF6B6B (Coral Pink): Secondary Accent. Warm, vibrant, youthful.
-      * #FFD166 (Sunny Yellow): Tertiary Accent. Bright, optimistic, pure summer.
-    * SUCCESS METRICS: Users will feel energized and excited by the possibilities, sharing the link with friends as "summer goals." The design should feel less like a parent's guide and more like a cool digital discovery.
+      * #111111 (Near Black): Main background.
+      * #EAEAEA (Light Grey): Main text.
+      * #00FF41 (Electric Green): The single, high-impact accent for highlights, borders, and CTAs.
+      * #1A1A1A, #222222 (Dark Greys): Card backgrounds.
+    * SUCCESS METRICS: The user actively engages with the board, flipping cards and marking missions as complete. The goal is to make planning summer feel like a game, not a chore. Success is seeing the progress bar move.
     -->
 
-    <div class="container mx-auto p-4 sm:p-8 max-w-6xl">
+    <div class="container mx-auto max-w-7xl">
 
-        <!-- Header Section -->
-        <header class="text-center mb-16">
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 gradient-text tracking-tight">Summer Vibes Only</h1>
-            <p class="text-lg md:text-xl text-[#F0F8FF]/80 max-w-3xl mx-auto">
-                הבאקט ליסט שלך לקיץ קיבל שדרוג. 30 רעיונות בחינם לוייבים בלתי נשכחים.
-            </p>
+        <!-- Header & Progress Bar -->
+        <header class="text-center mb-12">
+            <h1 class="font-title text-4xl md:text-6xl font-black mb-2">SUMMER OPS</h1>
+            <p class="text-lg md:text-xl glitch-text font-bold tracking-widest">30 משימות. 0 תקציב.</p>
+            
+            <div class="max-w-2xl mx-auto mt-8">
+                <div class="flex justify-between items-center mb-2 font-mono text-sm">
+                    <span>התקדמות המבצע:</span>
+                    <span id="progress-text">0/30</span>
+                </div>
+                <div class="w-full progress-bar-container rounded-full h-4">
+                    <div id="progress-bar" class="progress-bar h-4 rounded-full" style="width: 0%"></div>
+                </div>
+                <button id="reset-button" class="mt-4 text-xs text-gray-400 hover:text-white transition">אפס התקדמות</button>
+            </div>
         </header>
 
-        <!-- Chart Section -->
-        <section class="mb-20 p-6 bg-[#0d4a5f]/50 rounded-2xl backdrop-blur-sm">
-            <h2 class="text-2xl md:text-3xl font-bold text-center mb-6 text-white">ה-Vibe הכללי: איך הפעילויות מתחלקות</h2>
-            <div class="max-w-md mx-auto">
-                <canvas id="activitiesChart"></canvas>
-            </div>
-             <p class="text-center text-sm mt-4 text-[#F0F8FF]/60">
-                איזון מושלם בין יצירתיות בבית, אקשן בחוץ, ופתיחת הראש לדברים חדשים.
-            </p>
-        </section>
-
-        <!-- Activities Grid Sections -->
-        <main>
-            <!-- Category 1: Creative Home Activities -->
-            <section id="home-activities" class="mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4 text-[#FF6B6B]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Home Base: יצירתיות בסלון
-                </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">1. מחנה בסלון</h3>
-                        <p class="text-base text-white/80">אוהל מסדינים, פנסים, וסיפורי אימה (או צ'יזבטים) עד אור הבוקר.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">2. קרב מטבחים</h3>
-                        <p class="text-base text-white/80">פותחים מקרר, וכל אחד מאלתר מנה. ההורים שופטים, המפסיד שוטף כלים.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">3. ספא ביתי</h3>
-                        <p class="text-base text-white/80">פלייליסט צ'יל, מסכות פנים ובעיקר - שקט. הרבה שקט.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">4. חדר בריחה DIY</h3>
-                        <p class="text-base text-white/80">מחביאים את השלט של הטלוויזיה ויוצרים רמזים הזויים כדי למצוא אותו.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">5. יום קולנוע</h3>
-                        <p class="text-base text-white/80">מפיקים סרטון טיקטוק ויראלי או קליפ מביך לשיר אהוב.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">6. סדנת יצירה</h3>
-                        <p class="text-base text-white/80">פיסול, ציור, או קולאז' ממגזינים ישנים. הכל הולך.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">7. בינג' משודרג</h3>
-                        <p class="text-base text-white/80">מרתון סרטים עם פופקורן, גלידה וכל מה שאסור ביום רגיל.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">8. מסיבת אוזניות</h3>
-                        <p class="text-base text-white/80">כל אחד עם פלייליסט משלו באוזניות, רוקדים ביחד בסלון. מצחיק רצח.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">9. מעבדת ניסויים</h3>
-                        <p class="text-base text-white/80">הר געש מסודה לשתייה, דיו סתרים וכל מה שגורם למטבח להיראות כמו אזור אסון.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">10. תיאטרון צלליות</h3>
-                        <p class="text-base text-white/80">סדין לבן, פנס, וממציאים סיפורים עם הידיים.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Category 2: Free Outdoor Activities -->
-            <section id="outdoor-activities" class="mb-16">
-                 <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4 text-[#14C4B9]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                    Out & About: הרפתקאות בחוץ
-                </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">11. פיקניק בפארק</h3>
-                        <p class="text-base text-white/80">אוכל מהבית, פריזבי, ורמקול נייד. המתכון הקלאסי.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">12. Urban Exploration</h3>
-                        <p class="text-base text-white/80">מגלים סמטאות וגרפיטי בשכונה שלא הכרתם.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">13. יום ספורט</h3>
-                        <p class="text-base text-white/80">כדורסל, סקייטבורד, או סתם ריצה. העיקר לזוז.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">14. גינון גרילה</h3>
-                        <p class="text-base text-white/80">שותלים פרח או צמח תבלין באדנית במרפסת או בפינה מוזנחת ליד הבית.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">15. סשן חוף</h3>
-                        <p class="text-base text-white/80">לא רק בטן-גב. צאו לים בזריחה או בשקיעה לריצה או סתם להירגע.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">16. טרק קרוב לבית</h3>
-                        <p class="text-base text-white/80">מגלים מסלול הליכה ביער או בפארק הקרוב. לא צריך לנסוע רחוק.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">17. ציידי שקיעות</h3>
-                        <p class="text-base text-white/80">מוצאים את הספוט הכי גבוה בעיר ומצלמים את השקיעה המושלמת לאינסטגרם.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">18. קטיף פירות</h3>
-                        <p class="text-base text-white/80">בודקים איפה יש עצי פרי ציבוריים (תאנים, שסק) ויוצאים לשלל.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">19. שכשוך בנחל</h3>
-                        <p class="text-base text-white/80">מוצאים נחל או מעיין קרוב, ופשוט טובלים רגליים במים הקרים.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">20. סיור שווקים</h3>
-                        <p class="text-base text-white/80">לא לקנות, רק לספוג את האווירה, הצבעים והריחות.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Category 3: Learning and Enrichment Activities -->
-            <section id="learning-activities" class="mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center flex items-center justify-center gap-4 text-[#FFD166]">
-                   <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    Next Level: להרחיב את המוח
-                </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">21. טיול וירטואלי</h3>
-                        <p class="text-base text-white/80">"קופצים" לטוקיו או לפירמידות עם Google Earth. בלי דרכון, בלי ג'ט לג.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">22. ביקור בספרייה</h3>
-                        <p class="text-base text-white/80">לא רק ספרים. חפשו פינות שקטות עם ספות נוחות ואינטרנט חינם.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">23. יום מוזיאון חינם</h3>
-                        <p class="text-base text-white/80">עושים גוגל "מוזיאונים כניסה חינם" ומוצאים את היום הנכון.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">24. לימוד שפה חדשה</h3>
-                        <p class="text-base text-white/80">מורידים Duolingo ומנסים ללמוד 5 מילים ביום. יפנית, קלינגונית, מה שבא.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">25. פודקאסט משפחתי</h3>
-                        <p class="text-base text-white/80">מקליטים בטלפון שיחה על נושא הזוי. רק בשביל הצחוקים.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">26. היסטוריה מקומית</h3>
-                        <p class="text-base text-white/80">מוצאים את הבניין הכי ישן בשכונה ומנסים לגלות את הסיפור שלו.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">27. ליל כוכבים</h3>
-                        <p class="text-base text-white/80">מתרחקים מאורות העיר, שמים מוזיקה ובוהים בשמיים. אפליקציית כוכבים זה בונוס.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">28. סדנת תיקונים</h3>
-                        <p class="text-base text-white/80">רואים סרטון ביוטיוב ולומדים לתקן את האוזניות או המטען שנדפק.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">29. התנדבות ספונטנית</h3>
-                        <p class="text-base text-white/80">מרימים זבל בחוף, עוזרים לשכן עם הקניות. קארמה טובה בחינם.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl card-gradient-border">
-                        <h3 class="font-bold text-xl text-[#FFD166]">30. יומן קיץ דיגיטלי</h3>
-                        <p class="text-base text-white/80">פותחים קבוצת וואטסאפ פרטית וזורקים לשם תמונות, סרטונים ומחשבות.</p>
-                    </div>
-                </div>
-            </section>
+        <!-- Mission Board -->
+        <main id="mission-board" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <!-- Cards will be generated by JS -->
         </main>
 
-        <footer class="text-center mt-16 text-sm text-[#F0F8FF]/50">
-            <p>Created to make your summer epic. Now go have fun.</p>
+        <footer class="text-center mt-12 text-xs text-gray-600">
+            <p>// END OF TRANSMISSION //</p>
         </footer>
 
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const ctx = document.getElementById('activitiesChart').getContext('2d');
-            const activitiesChart = new Chart(ctx, {
-                type: 'polarArea',
-                data: {
-                    labels: [
-                        'Home Base',
-                        'Out & About',
-                        'Next Level'
-                    ],
-                    datasets: [{
-                        label: 'מספר פעילויות',
-                        data: [10, 10, 10],
-                        backgroundColor: [
-                            'rgba(255, 107, 107, 0.7)', // Coral Pink
-                            'rgba(20, 196, 185, 0.7)', // Turquoise
-                            'rgba(255, 209, 102, 0.7)'  // Sunny Yellow
-                        ],
-                        borderColor: [
-                            '#FF6B6B',
-                            '#14C4B9',
-                            '#FFD166'
-                        ],
-                        borderWidth: 2,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    scales: {
-                        r: {
-                            grid: {
-                                color: 'rgba(240, 248, 255, 0.2)'
-                            },
-                            angleLines: {
-                                color: 'rgba(240, 248, 255, 0.2)'
-                            },
-                            ticks: {
-                                color: '#F0F8FF',
-                                backdropColor: 'rgba(0,0,0,0.5)',
-                                backdropPadding: 4,
-                                font: { family: "'Assistant', sans-serif" }
-                            }
+            const activities = [
+                "מחנה בסלון", "קרב מטבחים", "ספא ביתי", "חדר בריחה DIY", "יום קולנוע", "סדנת יצירה",
+                "בינג' משודרג", "מסיבת אוזניות", "מעבדת ניסויים", "תיאטרון צלליות", "פיקניק בפארק",
+                "Urban Exploration", "יום ספורט", "גינון גרילה", "סשן חוף", "טרק קרוב לבית",
+                "ציידי שקיעות", "קטיף פירות", "שכשוך בנחל", "סיור שווקים", "טיול וירטואלי",
+                "ביקור בספרייה", "יום מוזיאון חינם", "לימוד שפה חדשה", "פודקאסט משפחתי",
+                "היסטוריה מקומית", "ליל כוכבים", "סדנת תיקונים", "התנדבות ספונטנית", "יומן קיץ דיגיטלי"
+            ];
+
+            const missionBoard = document.getElementById('mission-board');
+            let completedMissions = new Array(activities.length).fill(false);
+
+            function renderBoard() {
+                missionBoard.innerHTML = '';
+                activities.forEach((activity, index) => {
+                    const isCompleted = completedMissions[index];
+                    
+                    const cardContainer = document.createElement('div');
+                    cardContainer.className = 'card-container h-40';
+
+                    const card = document.createElement('div');
+                    card.className = `card ${isCompleted ? 'is-completed' : ''}`;
+                    card.dataset.index = index;
+                    
+                    card.innerHTML = `
+                        <div class="card-face card-front">
+                            <span class="font-title text-2xl text-gray-500">#${String(index + 1).padStart(2, '0')}</span>
+                            <span class="mission-status font-mono text-xs mt-2 text-gray-400">${isCompleted ? 'משימה הושלמה' : 'סטטוס: סודי'}</span>
+                        </div>
+                        <div class="card-face card-back text-center">
+                            <h3 class="font-title text-lg leading-tight">${activity}</h3>
+                            <button class="complete-button action-button text-xs py-1 px-3 rounded-full mt-2" data-index="${index}">
+                                ${isCompleted ? 'בטל השלמה' : 'השלם משימה'}
+                            </button>
+                        </div>
+                    `;
+                    
+                    cardContainer.appendChild(card);
+                    missionBoard.appendChild(cardContainer);
+                });
+                updateProgress();
+                addEventListeners();
+            }
+            
+            function updateProgress() {
+                const completedCount = completedMissions.filter(Boolean).length;
+                const progress = (completedCount / activities.length) * 100;
+                
+                document.getElementById('progress-bar').style.width = `${progress}%`;
+                document.getElementById('progress-text').textContent = `${completedCount}/${activities.length}`;
+            }
+
+            function addEventListeners() {
+                document.querySelectorAll('.card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        if (!e.target.classList.contains('complete-button')) {
+                            card.classList.toggle('is-flipped');
                         }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                color: '#F0F8FF',
-                                font: {
-                                    family: "'Assistant', sans-serif",
-                                    size: 14
-                                }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                title: function(tooltipItems) {
-                                    const item = tooltipItems[0];
-                                    let label = item.chart.data.labels[item.dataIndex];
-                                    return Array.isArray(label) ? label.join(' ') : label;
-                                }
-                            },
-                            bodyFont: { family: "'Assistant', sans-serif" },
-                            titleFont: { family: "'Assistant', sans-serif" }
+                    });
+                });
+                
+                document.querySelectorAll('.complete-button').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const index = parseInt(e.target.dataset.index);
+                        completedMissions[index] = !completedMissions[index];
+                        
+                        // Re-render to update all states
+                        renderBoard();
+                        
+                        // Find the re-rendered card and keep it flipped
+                        const newCard = missionBoard.querySelector(`.card[data-index="${index}"]`);
+                        if (newCard) {
+                            newCard.classList.add('is-flipped');
                         }
-                    }
-                }
+                    });
+                });
+            }
+
+            document.getElementById('reset-button').addEventListener('click', () => {
+                completedMissions.fill(false);
+                renderBoard();
             });
+
+            // Initial render
+            renderBoard();
         });
     </script>
 
 </body>
 </html>
-
 
