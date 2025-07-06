@@ -20,7 +20,7 @@
         * הדגשה (טיפים): #BD10E0 (סגול)
     * מדדי הצלחה: 
         1. המשתמש יסנן את הפעילויות לפחות פעם אחת.
-        2. המשתמש יבלה לפחות 30 שניות בדף, מה שמעיד על עיון ברשימה.
+        2. המשתמש ילחץ על לפחות 3 כרטיסיות כדי לקרוא את התיאור המורחב.
         3. המשתמש יזהה בקלות את שלוש קטגוריות הפעילות.
     ================================================================
     -->
@@ -40,6 +40,7 @@
         .activity-card {
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
             border-width: 2px;
+            cursor: pointer;
         }
         .activity-card:hover {
             transform: translateY(-5px);
@@ -58,6 +59,12 @@
             transform: rotate(-1deg);
             box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
         }
+        #modal-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8">
@@ -67,7 +74,7 @@
         <header class="text-center mb-8">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">30 דרכים להפוך את הקיץ להרפתקה</h1>
             <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                רשימת פעילויות חינמיות וטיפים יצירתיים שיעזרו לכם לתכנן קיץ מלא בכיף, חוויות וזיכרונות משפחתיים – בלי להוציא שקל. סננו לפי תחומי עניין וצאו לדרך!
+                רשימת פעילויות חינמיות וטיפים יצירתיים שיעזרו לכם לתכנן קיץ מלא בכיף, חוויות וזיכרונות משפחתיים – בלי להוציא שקל. סננו לפי תחומי עניין, לחצו על פעילות כדי לגלות את הערך האמיתי שלה, וצאו לדרך!
             </p>
         </header>
 
@@ -122,41 +129,58 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div id="modal-overlay" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center p-4 z-50">
+        <div id="modal-content" class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-lg mx-auto transform scale-95">
+            <div class="flex justify-between items-start mb-4">
+                <div class="flex items-center">
+                    <div id="modal-icon" class="text-3xl mr-4"></div>
+                    <h3 id="modal-title" class="text-2xl font-bold text-gray-800"></h3>
+                </div>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-800 text-2xl" aria-label="סגור חלון">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <p id="modal-description" class="text-gray-600 text-lg"></p>
+        </div>
+    </div>
+
+
     <script>
         const activities = [
             // Home Activities
-            { id: 1, category: 'home', title: 'מחנה בסלון', icon: 'fa-tent' },
-            { id: 2, category: 'home', title: 'מאסטר שף ביתי', icon: 'fa-utensils' },
-            { id: 3, category: 'home', title: 'ספא ביתי', icon: 'fa-spa' },
-            { id: 4, category: 'home', title: 'חדר בריחה', icon: 'fa-key' },
-            { id: 5, category: 'home', title: 'יום צילומים', icon: 'fa-video' },
-            { id: 6, category: 'home', title: 'תחרות יצירה', icon: 'fa-palette' },
-            { id: 7, category: 'home', title: 'קולנוע ביתי', icon: 'fa-film' },
-            { id: 8, category: 'home', title: 'מסיבת ריקודים', icon: 'fa-music' },
-            { id: 9, category: 'home', title: 'יום למדעים', icon: 'fa-flask-vial' },
-            { id: 10, category: 'home', title: 'תיאטרון ביתי', icon: 'fa-masks-theater' },
+            { id: 1, category: 'home', title: 'מחנה בסלון', icon: 'fa-tent', description: 'לא צריך יער כדי להרגיש הרפתקה. הפכו את הסלון למבצר. המטרה: בניית צוות, יצירתיות תחת מגבלות, וסיפורים שיישארו אחרי שהסדינים יחזרו לארון.' },
+            { id: 2, category: 'home', title: 'מאסטר שף ביתי', icon: 'fa-utensils', description: 'תחרות בישול היא לא על אוכל, היא על ניהול משאבים בלחץ. קחו מה שיש במקרר והפכו אותו ליצירת מופת. מי יהיה השף ומי השוטף? זה כבר משא ומתן.' },
+            { id: 3, category: 'home', title: 'ספא ביתי', icon: 'fa-spa', description: 'רגיעה היא אסטרטגיה. מלפפונים על העיניים, מוזיקה מרגיעה. המטרה: הורדת מתח, ולימוד שגם בלי תקציב אפשר לייצר חווית פרימיום.' },
+            { id: 4, category: 'home', title: 'חדר בריחה', icon: 'fa-key', description: 'הבית הוא קופסה מלאה בסודות. הפכו אותו לזירת אתגר. חידות, רמזים, משימות. זה לא משחק, זה אימון בחשיבה יצירתית ופתרון בעיות.' },
+            { id: 5, category: 'home', title: 'יום צילומים', icon: 'fa-video', description: 'כל משפחה היא סיפור. היום אתם הבמאים. צרו סרט קצר או תחרות צילום. המטרה: תיעוד נרטיב, לא רק תמונות יפות.' },
+            { id: 6, category: 'home', title: 'תחרות יצירה', icon: 'fa-palette', description: 'מבצק מלח ועד קרטוני חלב. המגבלה היא הדלק ליצירתיות. המטרה: להוכיח שחדשנות לא דורשת חומרים יקרים, אלא חשיבה אחרת.' },
+            { id: 7, category: 'home', title: 'קולנוע ביתי', icon: 'fa-film', description: 'לא סתם סרט, אלא אירוע. פופקורן על הגז, תאורה מעומעמת, כרטיסים מנייר. אתם לא צופים, אתם מנהלים חוויה.' },
+            { id: 8, category: 'home', title: 'מסיבת ריקודים', icon: 'fa-music', description: 'שחרור אנרגיה מבוקר. פלייליסט מנצח, תחרות תנועות. המטרה: גיבוש, פעילות פיזית, והוכחה שאפשר לרקוד גם בלי מועדון.' },
+            { id: 9, category: 'home', title: 'יום למדעים', icon: 'fa-flask-vial', description: 'המטבח הוא מעבדה. הר געש מסודה לשתיה וחומץ הוא קלאסיקה. המטרה: להפוך עקרונות מדעיים מופשטים לניסוי שאפשר לגעת בו.' },
+            { id: 10, category: 'home', title: 'תיאטרון ביתי', icon: 'fa-masks-theater', description: 'גרביים הופכות לבובות, סיפור ישן הופך למחזה. המטרה: אימון בביטחון עצמי, עמידה מול "קהל" וסיפור סיפורים.' },
             // Outside Activities
-            { id: 11, category: 'outside', title: 'פיקניק בפארק', icon: 'fa-basket-shopping' },
-            { id: 12, category: 'outside', title: 'ציד אוצרות בשכונה', icon: 'fa-map-location-dot' },
-            { id: 13, category: 'outside', title: 'יום ספורט', icon: 'fa-futbol' },
-            { id: 14, category: 'outside', title: 'גינון ביתי', icon: 'fa-seedling' },
-            { id: 15, category: 'outside', title: 'טיול לחוף הים', icon: 'fa-umbrella-beach' },
-            { id: 16, category: 'outside', title: 'הליכה בשביל קרוב', icon: 'fa-person-hiking' },
-            { id: 17, category: 'outside', title: 'צפייה בזריחה/שקיעה', icon: 'fa-cloud-sun' },
-            { id: 18, category: 'outside', title: 'איסוף פירות עונתיים', icon: 'fa-apple-whole' },
-            { id: 19, category: 'outside', title: 'יום באגם או נחל', icon: 'fa-water' },
-            { id: 20, category: 'outside', title: 'ביקור בשוק', icon: 'fa-store' },
+            { id: 11, category: 'outside', title: 'פיקניק בפארק', icon: 'fa-basket-shopping', description: 'לשבור שגרה, לא את חשבון הבנק. אוכל מהבית, מיקום חדש. המטרה: שינוי סביבה מינימלי לאפקט מקסימלי.' },
+            { id: 12, category: 'outside', title: 'ציד אוצרות בשכונה', icon: 'fa-map-location-dot', description: 'לראות את המוכר בעיניים חדשות. רשימת משימות שהופכת הליכה שגרתית למסע גילויים. המטרה: אימון בהתבוננות ושימת לב לפרטים.' },
+            { id: 13, category: 'outside', title: 'יום ספורט', icon: 'fa-futbol', description: 'לא צריך מנוי לחדר כושר. כדור, אופניים, או סתם ריצה בפארק. המטרה: בריאות, תחרותיות בריאה, ושחרור אנדורפינים.' },
+            { id: 14, category: 'outside', title: 'גינון ביתי', icon: 'fa-seedling', description: 'מאדנית במרפסת ועד ערוגה קטנה. לשתול משהו זה להשקיע בעתיד. המטרה: ללמוד על תהליכים, סבלנות, וצמיחה.' },
+            { id: 15, category: 'outside', title: 'טיול לחוף הים', icon: 'fa-umbrella-beach', description: 'הים הוא משאב חינמי. בבוקר מוקדם או לקראת שקיעה כדי להימנע מההמון. המטרה: להתחבר לטבע בלי מסחור.' },
+            { id: 16, category: 'outside', title: 'הליכה בשביל קרוב', icon: 'fa-person-hiking', description: 'כל עיר מוקפת בשבילים נסתרים. מצאו אחד. המטרה: גילוי, ניווט, והבנה שהרפתקה לא חייבת להיות רחוקה.' },
+            { id: 17, category: 'outside', title: 'צפייה בזריחה/שקיעה', icon: 'fa-cloud-sun', description: 'הצגות הטבע הטובות ביותר הן בחינם. מצאו נקודה גבוהה. המטרה: רגע של השראה ופרספקטיבה.' },
+            { id: 18, category: 'outside', title: 'איסוף פירות עונתיים', icon: 'fa-apple-whole', description: 'חקלאות עירונית במקומות המותרים. המטרה: להתחבר למקורות המזון ולהבין את עונות השנה.' },
+            { id: 19, category: 'outside', title: 'יום באגם או נחל', icon: 'fa-water', description: 'מים הם אטרקציה. שחיה, בניית סכרים מאבנים. המטרה: קירור טבעי וחוויה חושית.' },
+            { id: 20, category: 'outside', title: 'ביקור בשוק', icon: 'fa-store', description: 'מוזיאון חי של ריחות, צבעים ואנשים. לא חייבים לקנות כלום. המטרה: ספיגת אווירה, צילום, והתבוננות אנושית.' },
             // Learning Activities
-            { id: 21, category: 'learn', title: 'יום מדינות', icon: 'fa-globe' },
-            { id: 22, category: 'learn', title: 'ספריית שכונה', icon: 'fa-book' },
-            { id: 23, category: 'learn', title: 'מוזיאון חינמי', icon: 'fa-landmark' },
-            { id: 24, category: 'learn', title: 'לימוד שפה חדשה', icon: 'fa-language' },
-            { id: 25, category: 'learn', title: 'פודקאסט משפחתי', icon: 'fa-microphone-lines' },
-            { id: 26, category: 'learn', title: 'יום היסטוריה', icon: 'fa-scroll' },
-            { id: 27, category: 'learn', title: 'צפייה בכוכבים', icon: 'fa-star' },
-            { id: 28, category: 'learn', title: 'סדנת תיקונים', icon: 'fa-screwdriver-wrench' },
-            { id: 29, category: 'learn', title: 'יום מתנדבים', icon: 'fa-hand-holding-heart' },
-            { id: 30, category: 'learn', title: 'כתיבת יומן משפחתי', icon: 'fa-pen-fancy' }
+            { id: 21, category: 'learn', title: 'יום מדינות', icon: 'fa-globe', description: 'מסע עולמי מהספה. Google Earth, סרטי טבע, מוזיקה מקומית. המטרה: הרחבת אופקים בלי דרכון.' },
+            { id: 22, category: 'learn', title: 'ספריית שכונה', icon: 'fa-book', description: 'מקדש של ידע חינמי. לא רק ספרים, לעיתים יש גם שעות סיפור ופעילויות. המטרה: טיפוח אהבת קריאה.' },
+            { id: 23, category: 'learn', title: 'מוזיאון חינמי', icon: 'fa-landmark', description: 'תרבות לא צריכה להיות יקרה. בדקו ימי כניסה חופשית או מוזיאונים קטנים. המטרה: צריכת אמנות וידע.' },
+            { id: 24, category: 'learn', title: 'לימוד שפה חדשה', icon: 'fa-language', description: 'אפליקציות כמו Duolingo הן כלי רב עוצמה. 15 דקות ביום. המטרה: אימון מוחי ורכישת מיומנות חדשה.' },
+            { id: 25, category: 'learn', title: 'פודקאסט משפחתי', icon: 'fa-microphone-lines', description: 'לכל משפחה יש סיפורים. הקליטו אותם. המטרה: יצירת ארכיון משפחתי, אימון בדיבור ובהקשבה.' },
+            { id: 26, category: 'learn', title: 'יום היסטוריה', icon: 'fa-scroll', description: 'ההיסטוריה נמצאת סביבנו. שלט רחוב, בניין ישן, אתר הנצחה. המטרה: להפוך את העבר לחלק מההווה.' },
+            { id: 27, category: 'learn', title: 'צפייה בכוכבים', icon: 'fa-star', description: 'שמי הלילה הם המסך הגדול ביותר. אפליקציה פשוטה תזהה את קבוצות הכוכבים. המטרה: ענווה, השראה, והבנת מקומנו ביקום.' },
+            { id: 28, category: 'learn', title: 'סדנת תיקונים', icon: 'fa-screwdriver-wrench', description: 'אל תזרקו, תקנו. מצעצוע שבור ועד כיסא מתנדנד. המטרה: קיימות, פתרון בעיות, וגאווה על עבודה עצמית.' },
+            { id: 29, category: 'learn', title: 'יום מתנדבים', icon: 'fa-hand-holding-heart', description: 'נתינה היא קבלה. עזרה לשכן, ניקיון סביבתי. המטרה: אחריות קהילתית וחיבור אנושי.' },
+            { id: 30, category: 'learn', title: 'כתיבת יומן משפחתי', icon: 'fa-pen-fancy', description: 'הזיכרון האנושי מתעתע. תעדו את החוויות. המטרה: יצירת נכס רגשי שערכו רק יעלה עם הזמן.' }
         ];
 
         const categoryStyles = {
@@ -167,6 +191,12 @@
 
         const grid = document.getElementById('activities-grid');
         const filtersContainer = document.getElementById('filters');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalContent = document.getElementById('modal-content');
+        const closeModalBtn = document.getElementById('close-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalIcon = document.getElementById('modal-icon');
+        const modalDescription = document.getElementById('modal-description');
 
         // Function to render cards
         function renderCards() {
@@ -176,15 +206,20 @@
                 const card = document.createElement('div');
                 card.className = 'activity-card flex flex-col items-center justify-center text-center p-6 bg-white rounded-xl shadow-md';
                 card.dataset.category = activity.category;
+                card.dataset.id = activity.id;
                 card.style.borderColor = style.color;
+                card.setAttribute('role', 'button');
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('aria-label', `פרטים נוספים על ${activity.title}`);
+
 
                 card.innerHTML = `
-                    <div class="text-3xl mb-3" style="color: ${style.color};">
+                    <div class="text-3xl mb-3 pointer-events-none" style="color: ${style.color};">
                         <i class="fa-solid ${activity.icon} fa-2x"></i>
                     </div>
-                    <h4 class="text-xl font-bold text-gray-800">${activity.title}</h4>
-                    <p class="text-sm font-semibold" style="color: ${style.color};">${style.text}</p>
-                    <div class="absolute top-2 right-2 bg-gray-200 text-gray-700 w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm">
+                    <h4 class="text-xl font-bold text-gray-800 pointer-events-none">${activity.title}</h4>
+                    <p class="text-sm font-semibold pointer-events-none" style="color: ${style.color};">${style.text}</p>
+                    <div class="absolute top-2 right-2 bg-gray-200 text-gray-700 w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm pointer-events-none">
                         ${activity.id}
                     </div>
                 `;
@@ -197,11 +232,9 @@
             const selectedFilter = e.target.closest('button')?.dataset.filter;
             if (!selectedFilter) return;
 
-            // Update active button style
             document.querySelectorAll('#filters button').forEach(btn => btn.classList.remove('active'));
             e.target.closest('button').classList.add('active');
 
-            // Filter cards
             const cards = document.querySelectorAll('.activity-card');
             cards.forEach(card => {
                 if (selectedFilter === 'all' || card.dataset.category === selectedFilter) {
@@ -213,11 +246,74 @@
                 }
             });
         }
+        
+        // Functions to open and close modal
+        function openModal(activity) {
+            const style = categoryStyles[activity.category];
+            modalTitle.textContent = activity.title;
+            modalIcon.innerHTML = `<i class="fa-solid ${activity.icon}"></i>`;
+            modalIcon.style.color = style.color;
+            modalDescription.textContent = activity.description;
+            
+            modalOverlay.classList.remove('hidden');
+            modalOverlay.classList.add('flex');
+            setTimeout(() => {
+                modalOverlay.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+            }, 10); // small delay to allow display change
+        }
 
-        // Initial render and event listener setup
+        function closeModal() {
+            modalOverlay.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modalOverlay.classList.add('hidden');
+                modalOverlay.classList.remove('flex');
+            }, 300); // matches transition duration
+        }
+
+        // Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
             renderCards();
             filtersContainer.addEventListener('click', filterActivities);
+
+            grid.addEventListener('click', (e) => {
+                const card = e.target.closest('.activity-card');
+                if (card) {
+                    const activityId = parseInt(card.dataset.id);
+                    const activity = activities.find(a => a.id === activityId);
+                    if (activity) {
+                        openModal(activity);
+                    }
+                }
+            });
+            
+            grid.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const card = e.target.closest('.activity-card');
+                    if (card) {
+                        e.preventDefault();
+                        const activityId = parseInt(card.dataset.id);
+                        const activity = activities.find(a => a.id === activityId);
+                        if (activity) {
+                            openModal(activity);
+                        }
+                    }
+                }
+            });
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modalOverlay.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
         });
 
     </script>
