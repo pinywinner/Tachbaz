@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>לוקחים אחריות - קורס שוק ההון למתקדמים</title>
+    <title>מפת הקריירה במאה ה-21</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,322 +13,457 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
     
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
     <style>
-        /* Applying Assistant font to the entire page */
         body {
             font-family: 'Assistant', sans-serif;
+            background-color: #111827; /* slate-900 */
+            color: #F9FAFB; /* gray-50 */
+            overflow-x: hidden;
         }
-        /* Custom styles for smooth scrolling and other enhancements */
-        html {
-            scroll-behavior: smooth;
+        .section-card {
+            background-color: rgba(31, 41, 55, 0.5); /* gray-800 with opacity */
+            border: 1px solid #374151; /* gray-700 */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        /* Style for the floating WhatsApp button */
-        .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 40px;
-            left: 40px;
-            background-color: #25d366;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(45, 212, 191, 0.1);
         }
-        /* Style for the accordion content */
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
+        h1, h2, h3 {
+            font-weight: 700;
+        }
+        .text-accent {
+            color: #2DD4BF; /* teal-400 */
+        }
+        .bg-accent {
+            background-color: #2DD4BF; /* teal-400 */
+        }
+        .border-accent {
+            border-color: #2DD4BF; /* teal-400 */
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 40vh;
+            width: 80vw;
+            max-width: 400px;
+        }
+        .icon-style {
+            width: 3rem;
+            height: 3rem;
+            stroke: #2DD4BF; /* teal-400 */
+            stroke-width: 1.5;
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200">
+<body class="antialiased">
+    <!-- 
+    ================================================
+    |           STRATEGY BRIEF (תיעוד אסטרטגי)      |
+    ================================================
+    |
+    |   **תמצית הנרטיב:** הקריירה שלך היא מסע בעולם חדש. זו המפה שלך.
+    |
+    |   **קונספט עיצובי:** "ממפה הדרכים" (The Cartographer). הקונספט משלב את הבהירות והסדר של ה-Swiss Style
+    |   עם הדינמיות של עיצוב גנרטיבי. המטרה היא להציג מידע מורכב בצורה של מפה אינטואיטיבית, אסתטית ופונקציונלית,
+    |   המשדרת סמכות ותובנה מתקדמת.
+    |
+    |   **פלטת צבעים:**
+    |   - רקע_ראשי: #111827 (רקע כהה ליצירת מיקוד ותחושת פרימיום)
+    |   - טקסט_ראשי: #F9FAFB (לבן-אפרפר לקריאות מקסימלית)
+    |   - טקסט_משני: #9CA3AF (אפור להערות ותוויות)
+    |   - הדגשה_ראשית (CTA): #2DD4BF (טורקיז טכנולוגי לאינטראקציה וכותרות)
+    |   - הדגשה_משנית: #FBBF24 (זהב/ענבר להדגשת נתונים משניים)
+    |   - גבול_מפריד: #374151 (אפור כהה לקווים ומסגרות עדינות)
+    |
+    |   **מדדי הצלחה:** המשתמש יבין את השינויים המרכזיים בעולם העבודה, יזהה את המודלים והכלים הרלוונטיים
+    |   לניהול הקריירה שלו, ויחוש תחושת שליטה ובהירות לגבי צעדיו הבאים.
+    |
+    ================================================
+    -->
 
-    <!-- Header -->
-    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg shadow-emerald-500/5">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-white">
-                <span class="text-emerald-400">לוקחים</span> אחריות
+    <main class="container mx-auto p-4 md:p-8">
+
+        <!-- Header Section -->
+        <header class="text-center py-16 md:py-24">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in">
+                מפת הקריירה <span class="text-accent">במאה ה-21</span>
             </h1>
-            <nav class="hidden md:flex space-x-8 space-x-reverse">
-                <a href="#syllabus" class="hover:text-emerald-400 transition-colors duration-300">סילבוס</a>
-                <a href="#benefits" class="hover:text-emerald-400 transition-colors duration-300">למה אנחנו?</a>
-                <a href="#faq" class="hover:text-emerald-400 transition-colors duration-300">שאלות ותשובות</a>
-            </nav>
-            <a href="#register" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg transition-transform duration-300 hover:scale-105 shadow-md shadow-emerald-500/20">
-                להרשמה
-            </a>
-        </div>
-    </header>
+            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto animate-fade-in-delay">
+                הספר "קריירה במאה ה-21" מאת אשרית כספי ברוך, מפורק ומוצג כאן כמפה אינטראקטיבית למסע המקצועי החדש. החוזה הישן נשבר; הכללים השתנו. זוהי הדרך לנווט בעולם של הזדמנויות, אתגרים וניהול עצמי.
+            </p>
+        </header>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section class="py-20 md:py-32 bg-gray-900 text-center">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl md:text-6xl font-extrabold text-white leading-tight">
-                    שוק ההון <span class="text-emerald-400">למתקדמים</span> בלבד
-                </h2>
-                <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-                    הקורס המקיף שמאחד ניתוח ערך פונדמנטלי וניתוח טכני לכדי אסטרטגיית השקעה שלמה ומנצחת.
-                    מפסיקים להמר, מתחילים לנתח.
-                </p>
-                <div class="mt-10">
-                    <a href="#register" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-10 rounded-lg transition-transform duration-300 hover:scale-105 text-lg shadow-lg shadow-emerald-500/30">
-                        אני רוצה לקחת אחריות &rarr;
-                    </a>
+        <!-- Section 1: The Great Shift -->
+        <section id="shift" class="mb-20 md:mb-32">
+            <h2 class="text-3xl md:text-4xl text-center mb-12">השינוי הגדול: מ"סולם" ל"רשת"</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="section-card p-6 rounded-xl text-center">
+                    <h3 class="text-2xl mb-4 text-red-400">הקריירה הישנה (Then)</h3>
+                    <div class="flex justify-center mb-4">
+                        <svg class="icon-style" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" /></svg>
+                    </div>
+                    <ul class="text-left space-y-2 text-gray-300">
+                        <li><span class="font-bold text-white">מבנה:</span> ליניארי, היררכי, "טיפוס בסולם".</li>
+                        <li><span class="font-bold text-white">אחריות:</span> הארגון מנהל את הקריירה.</li>
+                        <li><span class="font-bold text-white">הצלחה:</span> שכר, תפקיד, ביטחון תעסוקתי.</li>
+                        <li><span class="font-bold text-white">מיומנויות:</span> התמחות בעומק, נאמנות לארגון.</li>
+                        <li><span class="font-bold text-white">גבולות:</span> ברורים, בתוך ארגון אחד.</li>
+                    </ul>
+                </div>
+                <div class="section-card p-6 rounded-xl text-center">
+                    <h3 class="text-2xl mb-4 text-accent">הקריירה החדשה (Now)</h3>
+                     <div class="flex justify-center mb-4">
+                        <svg class="icon-style" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+                    </div>
+                    <ul class="text-left space-y-2 text-gray-300">
+                        <li><span class="font-bold text-white">מבנה:</span> רשתי, דינמי, "מסע ללא גבולות".</li>
+                        <li><span class="font-bold text-white">אחריות:</span> הפרט מנהל את הקריירה (פרוטיאנית).</li>
+                        <li><span class="font-bold text-white">הצלחה:</span> הגשמה עצמית, איזון, העסקתיות.</li>
+                        <li><span class="font-bold text-white">מיומנויות:</span> יכולת למידה, הסתגלות, אינטליגנציה רגשית.</li>
+                        <li><span class="font-bold text-white">גבולות:</span> מטושטשים, חוצי ארגונים ודיסציפלינות.</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- "Who is this for?" Section -->
-        <section id="for-who" class="py-20 bg-gray-800">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h3 class="text-3xl font-bold text-white">למי הקורס הזה תפור בול?</h3>
-                    <p class="text-gray-400 mt-2">אם זיהית את עצמך באחת הנקודות, מקומך איתנו.</p>
-                    <div class="w-24 h-1 bg-emerald-500 mx-auto mt-4 rounded"></div>
+        <!-- Section 2: Forces of Change -->
+        <section id="forces" class="mb-20 md:mb-32">
+            <h2 class="text-3xl md:text-4xl text-center mb-4">כוחות השינוי</h2>
+            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">שלושה כוחות עיקריים מפרקים את עולם העבודה הישן ומרכיבים אותו מחדש.</p>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="section-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-2">גלובליזציה</h3>
+                    <p class="text-gray-400">העולם הפך ל"כפר גלובלי" אחד. התוצאה: תחרות מוגברת, צורך ביתרון תחרותי, אך גם הזדמנויות לקריירות בינלאומיות.</p>
                 </div>
-                <div class="grid md:grid-cols-3 gap-8 text-center">
-                    <div class="bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-700 hover:border-emerald-500 transition-all duration-300 hover:scale-105">
-                        <div class="text-emerald-400 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-white mb-2">משקיעים עם ניסיון</h4>
-                        <p class="text-gray-400">אתם כבר מכירים את הבסיס, סחרתם קצת, אבל מרגישים שתקועים במקום ורוצים לעלות לרמה הבאה.</p>
-                    </div>
-                    <div class="bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-700 hover:border-emerald-500 transition-all duration-300 hover:scale-105">
-                        <div class="text-emerald-400 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-white mb-2">אלו ש"הולכים לאיבוד"</h4>
-                        <p class="text-gray-400">שמעתם על באפט וגם על נרות יפניים, אבל לא יודעים איך לחבר בין העולמות ומה נכון עבורכם.</p>
-                    </div>
-                    <div class="bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-700 hover:border-emerald-500 transition-all duration-300 hover:scale-105">
-                        <div class="text-emerald-400 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12a6 6 0 110-12 6 6 0 010 12z" /></svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-white mb-2">בונים אסטרטגיה אישית</h4>
-                        <p class="text-gray-400">אתם מבינים שאין פתרונות קסם ומחפשים לבנות שיטת עבודה סדורה ומותאמת אישית שתשרת אתכם לאורך שנים.</p>
-                    </div>
+                <div class="section-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-2">טכנולוגיה</h3>
+                    <p class="text-gray-400">אוטומציה, AI וביג דאטה מייתרים מקצועות חזרתיים ויוצרים דרישה למיומנויות חדשות. העבודה הופכת לגמישה יותר (זמן ומקום).</p>
+                </div>
+                <div class="section-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-2">שינויים דמוגרפיים</h3>
+                    <p class="text-gray-400">כניסת נשים לשוק העבודה, כוח עבודה רב-דורי (X,Y,Z) ומגוון תרבותי מאתגרים מודלים ישנים של ניהול ויוצרים צורך באיזון עבודה-חיים.</p>
+                </div>
+            </div>
+            <div class="mt-12">
+                <div class="chart-container mx-auto" style="height:300px; max-width: 500px;">
+                    <canvas id="forcesChart"></canvas>
                 </div>
             </div>
         </section>
 
-        <!-- Syllabus Section -->
-        <section id="syllabus" class="py-20 bg-gray-900">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h3 class="text-3xl font-bold text-white">מה לומדים בקורס? ארגז כלים שלם.</h3>
-                    <p class="text-gray-400 mt-2">6 מפגשים מרוכזים (90 דק' כל אחד) שיבנו לכם תפיסת עולם חדשה.</p>
-                    <div class="w-24 h-1 bg-emerald-500 mx-auto mt-4 rounded"></div>
+        <!-- Section 3: Inner World Navigation -->
+        <section id="inner-world" class="mb-20 md:mb-32">
+            <h2 class="text-3xl md:text-4xl text-center mb-4">ניווט העולם הפנימי</h2>
+            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">ההצלחה בקריירה החדשה תלויה בהתאמה בין מי שאתה לבין מה שאתה עושה. אלו המצפנים המרכזיים.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="section-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-2">אישיות (מודל הולנד)</h3>
+                    <p class="text-gray-400 mb-4">ששת טיפוסי האישיות התעסוקתית. התאמה בין הטיפוס שלך לסביבת העבודה מנבאת שביעות רצון.</p>
+                    <div class="h-48 w-full"><canvas id="hollandChart"></canvas></div>
                 </div>
-                <div class="grid lg:grid-cols-3 gap-8">
-                    <!-- Module 1: Value Investing -->
-                    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 flex flex-col">
-                        <div class="mb-4">
-                            <span class="text-sm font-bold text-emerald-400">מודול 1-2</span>
-                            <h4 class="text-2xl font-bold text-white mt-1">אסטרטגיית ערך: לחשוב כמו באפט</h4>
-                        </div>
-                        <ul class="space-y-3 text-gray-300 flex-grow">
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> זיהוי חברות מעולות עם "חפיר" כלכלי.</li>
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> צלילה לדו"חות כספיים: מאזן, רווח והפסד, תזרים.</li>
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> שיטות להערכת שווי אמיתי של חברה.</li>
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> סינון מניות מהיר ויעיל עם כלים חינמיים.</li>
-                        </ul>
-                    </div>
-                    <!-- Module 2: Technical Analysis -->
-                    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 flex flex-col">
-                        <div class="mb-4">
-                            <span class="text-sm font-bold text-emerald-400">מודול 3-4</span>
-                            <h4 class="text-2xl font-bold text-white mt-1">אומנות הניתוח הטכני: לתזמן כמו מקצוען</h4>
-                        </div>
-                        <ul class="space-y-3 text-gray-300 flex-grow">
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> שליטה בגרפים: נרות יפניים, קווי מגמה, תמיכה והתנגדות.</li>
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> אינדיקטורים מובילים: ממוצעים נעים, RSI, רצועות בולינגר.</li>
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> זיהוי דפוסי גרפים קלאסיים (היפוך והמשך מגמה).</li>
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> הבנת הפסיכולוגיה של השוק דרך הגרף.</li>
-                        </ul>
-                    </div>
-                    <!-- Module 3: Synthesis -->
-                    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 flex flex-col">
-                        <div class="mb-4">
-                            <span class="text-sm font-bold text-emerald-400">מודול 5-6</span>
-                            <h4 class="text-2xl font-bold text-white mt-1">הסינתזה: בניית אסטרטגיה היברידית</h4>
-                        </div>
-                        <ul class="space-y-3 text-gray-300 flex-grow">
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> שילוב כלים: מתי להקשיב לערך ומתי לגרף?</li>
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> בניית תוכנית מסחר אישית: נקודות כניסה, יציאה וניהול סיכונים.</li>
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> ניתוח Case Studies של חברות אמיתיות מקצה לקצה.</li>
-                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> אסטרטגיות כניסה ויציאה מהשקעה בביטחון.</li>
-                        </ul>
-                    </div>
+                <div class="section-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-2">ערכים (מודל שוורץ)</h3>
+                    <p class="text-gray-400">מה מניע אותך? עשרה ערכים אוניברסליים המכוונים את הבחירות שלנו, מביטחון ועד להכוונה עצמית.</p>
+                    <div class="h-48 w-full"><canvas id="valuesChart"></canvas></div>
+                </div>
+                <div class="section-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-2">עוגנים (מודל שיין)</h3>
+                    <p class="text-gray-400">הדימוי העצמי התעסוקתי שלך. מהו ה"עוגן" שלא תוותר עליו? (למשל: יצירתיות, ביטחון, ניהול).</p>
+                    <ul class="text-sm list-disc list-inside text-gray-300 mt-4">
+                        <li>טכני / פונקציונלי</li>
+                        <li>ניהול כללי</li>
+                        <li>אוטונומיה / עצמאות</li>
+                        <li>ביטחון / יציבות</li>
+                        <li>יזמות / יצירתיות</li>
+                    </ul>
+                </div>
+                <div class="section-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-2">דפוסים (מודל דרייבר)</h3>
+                    <p class="text-gray-400">ארבעה דפוסי קריירה: ליניארי, יציב, ספירלי, או משתנה. הדפוס שלך משקף את המוטיבציה והסגנון הקוגניטיבי שלך.</p>
+                     <div class="h-48 w-full"><canvas id="driverChart"></canvas></div>
                 </div>
             </div>
         </section>
 
-        <!-- Benefits Section -->
-        <section id="benefits" class="py-20 bg-gray-800">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h3 class="text-3xl font-bold text-white">מעבר לידע, מקבלים כלים וליווי</h3>
-                    <div class="w-24 h-1 bg-emerald-500 mx-auto mt-4 rounded"></div>
+        <!-- Section 4: Gender Labyrinth -->
+        <section id="gender" class="mb-20 md:mb-32">
+            <h2 class="text-3xl md:text-4xl text-center mb-4">מבוך המגדר</h2>
+            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">למרות ההתקדמות, נשים עדיין מתמודדות עם חסמים ייחודיים בדרך למעלה.</p>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="section-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-2">תקרת הזכוכית</h3>
+                    <p class="text-gray-400 mb-4">מחסום בלתי נראה הבולם התקדמות נשים לעמדות בכירות. נובע מסטריאוטיפים, הדרת רשתות חברתיות וקונפליקט עבודה-משפחה.</p>
+                     <h3 class="text-xl font-bold mb-2 mt-6">הרצפה הדביקה</h3>
+                    <p class="text-gray-400">הנטייה של נשים "להיתקע" בתפקידים זוטרים עם אפשרויות קידום מוגבלות.</p>
                 </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="text-center p-6">
-                        <div class="bg-emerald-500/10 border-2 border-emerald-500/30 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h2m8-4H9a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z" /></svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-white">ליווי אישי ב-WhatsApp</h4>
-                        <p class="text-gray-400 mt-2">קבוצה ייחודית לבוגרי הקורס למענה שוטף על שאלות, גם הרבה אחרי שהקורס נגמר.</p>
-                    </div>
-                    <div class="text-center p-6">
-                        <div class="bg-emerald-500/10 border-2 border-emerald-500/30 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-white">יישום מלא</h4>
-                        <p class="text-gray-400 mt-2">בסיום הקורס תדעו לנתח מניה בעצמכם, לזהות חברות מעולות ולהשקיע בביטחון.</p>
-                    </div>
-                    <div class="text-center p-6">
-                        <div class="bg-emerald-500/10 border-2 border-emerald-500/30 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-white">כלים פרקטיים</h4>
-                        <p class="text-gray-400 mt-2">נלמד להשתמש בכלים חינמיים ומתקדמים לסינון מניות, הערכת שווי וניתוח נתונים.</p>
-                    </div>
-                    <div class="text-center p-6">
-                        <div class="bg-emerald-500/10 border-2 border-emerald-500/30 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </div>
-                        <h4 class="text-xl font-semibold text-white">ביטחון להשקעה</h4>
-                        <p class="text-gray-400 mt-2">תקבלו את הכלים והביטחון לקבל החלטות השקעה מושכלות, מבוססות נתונים ולא על רעשי רקע.</p>
+                <div>
+                     <div class="chart-container mx-auto" style="height:300px; max-width: 400px;">
+                        <canvas id="genderChart"></canvas>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- FAQ Section -->
-        <section id="faq" class="py-20 bg-gray-900">
-            <div class="container mx-auto px-6 max-w-4xl">
-                <div class="text-center mb-12">
-                    <h3 class="text-3xl font-bold text-white">שאלות נפוצות</h3>
-                    <div class="w-24 h-1 bg-emerald-500 mx-auto mt-4 rounded"></div>
+        <!-- Section 5: The Future -->
+        <section id="future" class="mb-20 md:mb-32">
+            <h2 class="text-3xl md:text-4xl text-center mb-4">הצצה לעתיד</h2>
+            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">מקצועות נעלמים ונוצרים, והטכנולוגיה משנה את כללי המשחק.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="section-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-2 text-red-400">מקצועות בדעיכה</h3>
+                    <ul class="list-disc list-inside text-gray-300">
+                        <li>פועלי ייצור (אוטומציה)</li>
+                        <li>מנהלי חשבונות (תוכנות)</li>
+                        <li>שענים, סנדלרים (ייצור המוני)</li>
+                        <li>פקידות ואדמיניסטרציה</li>
+                    </ul>
                 </div>
-                <div class="space-y-4">
-                    <!-- FAQ Item 1 -->
-                    <div class="bg-gray-800 rounded-lg">
-                        <button class="accordion-toggle flex justify-between items-center w-full p-6 text-right font-semibold text-white text-lg">
-                            <span>האם הקורס מתאים למתחילים גמורים?</span>
-                            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="accordion-content px-6 pb-4 text-gray-300">
-                            <p>הקורס מיועד לבעלי ידע בסיסי בשוק ההון. אם מעולם לא קנית מניה או שאינך יודע מה ההבדל בין מניה לאג"ח, מומלץ להתחיל בקורס יסודות. הקורס הזה נועד לקחת ידע קיים ולהעמיק אותו באופן משמעותי.</p>
-                        </div>
-                    </div>
-                    <!-- FAQ Item 2 -->
-                    <div class="bg-gray-800 rounded-lg">
-                        <button class="accordion-toggle flex justify-between items-center w-full p-6 text-right font-semibold text-white text-lg">
-                            <span>באילו פלטפורמות וכלים נשתמש?</span>
-                            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="accordion-content px-6 pb-4 text-gray-300">
-                            <p>אנו מתמקדים בכלים חינמיים ונגישים לכולם. נעבוד עם פלטפורמות גרפים כמו TradingView ואתרי מידע פיננסי כמו Finviz, Yahoo Finance ואחרים. אין צורך ברכישת תוכנות יקרות.</p>
-                        </div>
-                    </div>
-                    <!-- FAQ Item 3 -->
-                    <div class="bg-gray-800 rounded-lg">
-                        <button class="accordion-toggle flex justify-between items-center w-full p-6 text-right font-semibold text-white text-lg">
-                            <span>מה קורה אם אני מפספס שיעור?</span>
-                            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="accordion-content px-6 pb-4 text-gray-300">
-                            <p>כל השיעורים מוקלטים ויהיו זמינים לצפייה חוזרת באזור אישי ייעודי לסטודנטים של הקורס, ללא הגבלת זמן. כך תוכלו לחזור על החומר מתי שתרצו.</p>
-                        </div>
-                    </div>
-                     <!-- FAQ Item 4 -->
-                    <div class="bg-gray-800 rounded-lg">
-                        <button class="accordion-toggle flex justify-between items-center w-full p-6 text-right font-semibold text-white text-lg">
-                            <span>האם הקורס הוא המלצה להשקעה?</span>
-                            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="accordion-content px-6 pb-4 text-gray-300">
-                            <p>חד משמעית לא. הקורס מעניק ידע, כלים ושיטות עבודה, אך אינו מהווה ייעוץ השקעות או המלצה לביצוע פעולה כלשהי בנייר ערך. האחריות על כל פעולה היא של המשקיע בלבד. מטרתנו היא לתת לכם את היכולת לקבל החלטות טובות יותר בעצמכם.</p>
-                        </div>
-                    </div>
+                <div class="section-card p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-2 text-accent">מקצועות בצמיחה</h3>
+                    <ul class="list-disc list-inside text-gray-300">
+                        <li>גיימרים, יוטיוברים (כלכלת היוצרים)</li>
+                        <li>מדעני נתונים (Big Data)</li>
+                        <li>מומחי AI ולמידת מכונה</li>
+                        <li>מנהלי חדשנות, יועצי קריירה</li>
+                    </ul>
                 </div>
             </div>
+            <div class="section-card p-6 rounded-xl mt-8">
+                <h3 class="text-xl font-bold mb-2">מהפכת ה-Big Data</h3>
+                <p class="text-gray-400">ארגונים משתמשים בניתוח מידע רב (מפייסבוק, לינקדאין וכו') לגיוס, מיון והערכת עובדים. הפרופיל הדיגיטלי שלך הוא חלק מקורות החיים שלך.</p>
+            </div>
         </section>
+        
+        <!-- Footer -->
+        <footer class="text-center py-12 border-t border-gray-700">
+            <p class="text-gray-400">הקריירה שלך היא המוצר החשוב ביותר שתבנה אי פעם. נהל אותה בתבונה.</p>
+            <p class="text-sm text-gray-500 mt-2">אינפוגרפיקה זו נוצרה על בסיס הספר "קריירה במאה ה-21" מאת אשרית כספי ברוך, ובהתאם למתודולוגיה של "מערכת הפעלה 6.1".</p>
+        </footer>
 
-        <!-- Registration Section -->
-        <section id="register" class="py-20 bg-gray-800">
-            <div class="container mx-auto px-6 text-center max-w-3xl">
-                <h3 class="text-4xl font-bold text-white">מוכנים לקחת אחריות על העתיד הפיננסי שלכם?</h3>
-                <p class="mt-4 text-lg text-gray-300">המחזור הקרוב נפתח בקרוב. מספר המקומות מוגבל כדי להבטיח יחס אישי לכל משתתף. שריינו את מקומכם עכשיו.</p>
-                <div class="mt-8 bg-gray-900 p-8 rounded-xl shadow-2xl border border-emerald-500/30">
-                    <h4 class="text-2xl font-bold text-white mb-6">הרשמה מהירה</h4>
-                    <form class="space-y-4">
-                        <input type="text" placeholder="שם מלא" class="w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
-                        <input type="email" placeholder="כתובת אימייל" class="w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
-                        <input type="tel" placeholder="מספר טלפון" class="w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
-                        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-8 rounded-lg transition-transform duration-300 hover:scale-105 text-lg shadow-lg shadow-emerald-500/30">
-                            שליחה וקבלת פרטים נוספים
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 border-t border-gray-800">
-        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
-            <p>&copy; 2024 לוקחים אחריות. כל הזכויות שמורות.</p>
-            <p class="text-sm mt-2">אין לראות בתוכן האתר והקורס ייעוץ השקעות או המלצה לביצוע פעולות בניירות ערך.</p>
-        </div>
-    </footer>
-    
-    <!-- Floating WhatsApp button -->
-    <a href="https://wa.me/972500000000?text=היי,%20אשמח%20לקבל%20פרטים%20נוספים%20על%20קורס%20שוק%20ההון%20למתקדמים" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-8 h-8"><path fill="currentColor" d="M16.21,4.46C9.39,4.46,3.8,10.05,3.8,16.88c0,2.78,1,5.3,2.65,7.39L4.2,30.2l6.24-2.4c2,.9,4.27,1.41,6.64,1.41,6.82,0,12.41-5.59,12.41-12.41C29.49,10.05,23.9,4.46,16.21,4.46Zm7.23,15.4a2,2,0,0,1-1.73,1.33c-.53.06-1.19.12-3.32-.74-2.82-1.13-4.69-3.9-4.88-4.13-.19-.25-.88-1.13-.88-2.12s.56-1.47.81-1.68c.25-.25.53-.28.74-.28.21,0,.42,0,.6.06.25.06.38,0,.59-.44s.88-2.12,1-2.28c.12-.21.21-.25.38-.25s.31,0,.47,0a1.35,1.35,0,0,1,1,.44c.12.19.6,1.44.6,1.44s.38,1,.38,1.06-1.13,1.31-1.28,1.47c-.19.19-.31.21-.12.41s.88,1.47,2,2.44a8.33,8.33,0,0,0,2.21,1.19c.21.09.34.06.47-.09s.56-.65.71-.88c.15-.19.28-.15.47-.09l1.41.81c.21.12.34.19.38.28s.06.44,0,.59A1.89,1.89,0,0,1,23.44,19.86Z"></path></svg>
-    </a>
-
-    <!-- JavaScript for Accordion -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const accordionToggles = document.querySelectorAll('.accordion-toggle');
-
-            accordionToggles.forEach(button => {
-                button.addEventListener('click', () => {
-                    const content = button.nextElementSibling;
-                    const icon = button.querySelector('svg');
-
-                    // Close other open accordions
-                    accordionToggles.forEach(otherButton => {
-                        if (otherButton !== button) {
-                            otherButton.nextElementSibling.style.maxHeight = null;
-                            otherButton.querySelector('svg').classList.remove('rotate-180');
-                        }
-                    });
-
-                    // Toggle current accordion
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                        icon.classList.remove('rotate-180');
-                    } else {
-                        content.style.maxHeight = content.scrollHeight + 'px';
-                        icon.classList.add('rotate-180');
-                    }
-                });
+    document.addEventListener('DOMContentLoaded', function () {
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Fade in animations for elements
+        gsap.utils.toArray('.section-card, section h2, section p').forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none',
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: 'power3.out',
             });
         });
-    </script>
+        
+        gsap.from('.animate-fade-in', { opacity: 0, duration: 1, y: 20, ease: 'power2.out' });
+        gsap.from('.animate-fade-in-delay', { opacity: 0, duration: 1, y: 20, ease: 'power2.out', delay: 0.4 });
 
+
+        // Chart.js Implementations
+
+        // 1. Forces of Change Chart (Radar)
+        const forcesCtx = document.getElementById('forcesChart').getContext('2d');
+        new Chart(forcesCtx, {
+            type: 'radar',
+            data: {
+                labels: ['גלובליזציה', 'טכנולוגיה', 'דמוגרפיה', 'תחרותיות', 'אי-ודאות'],
+                datasets: [{
+                    label: 'עוצמת ההשפעה על הקריירה',
+                    data: [85, 95, 75, 90, 80],
+                    backgroundColor: 'rgba(45, 212, 191, 0.2)',
+                    borderColor: '#2DD4BF',
+                    pointBackgroundColor: '#2DD4BF',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#2DD4BF'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#F9FAFB' }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                        pointLabels: { color: '#F9FAFB', font: { size: 12 } },
+                        ticks: {
+                            color: '#111827',
+                            backdropColor: 'rgba(255, 255, 255, 0.8)',
+                            stepSize: 20
+                        }
+                    }
+                }
+            }
+        });
+
+        // 2. Holland Chart (Polar Area)
+        const hollandCtx = document.getElementById('hollandChart').getContext('2d');
+        new Chart(hollandCtx, {
+            type: 'polarArea',
+            data: {
+                labels: ['ריאליסטי (R)', 'חקרני (I)', 'אמנותי (A)', 'חברתי (S)', 'יזמי (E)', 'קונבנציונלי (C)'],
+                datasets: [{
+                    label: 'טיפוסי אישיות',
+                    data: [6, 9, 7, 8, 8, 5],
+                    backgroundColor: [
+                        'rgba(251, 191, 36, 0.5)',
+                        'rgba(45, 212, 191, 0.5)',
+                        'rgba(167, 139, 250, 0.5)',
+                        'rgba(251, 113, 133, 0.5)',
+                        'rgba(59, 130, 246, 0.5)',
+                        'rgba(139, 92, 246, 0.5)'
+                    ],
+                    borderColor: '#F9FAFB',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    r: {
+                        grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                        ticks: { display: false }
+                    }
+                }
+            }
+        });
+        
+        // 3. Schwartz Values Chart (Doughnut)
+        const valuesCtx = document.getElementById('valuesChart').getContext('2d');
+        new Chart(valuesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['הכוונה עצמית', 'גירוי', 'הדוניזם', 'הישג', 'כוח', 'ביטחון', 'קונפורמיות', 'מסורת', 'נדיבות', 'אוניברסליות'],
+                datasets: [{
+                    label: 'ערכים',
+                    data: [12, 10, 8, 11, 7, 9, 6, 5, 10, 11],
+                    backgroundColor: [
+                        '#2DD4BF', '#34D399', '#A3E635', '#FBBF24', '#FB923C',
+                        '#F87171', '#F472B6', '#C084FC', '#818CF8', '#60A5FA'
+                    ],
+                    borderColor: '#111827',
+                    borderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // 4. Driver's Patterns Chart (Bar)
+        const driverCtx = document.getElementById('driverChart').getContext('2d');
+        new Chart(driverCtx, {
+            type: 'bar',
+            data: {
+                labels: ['ליניארי', 'יציב', 'ספירלי', 'משתנה'],
+                datasets: [{
+                    label: 'שכיחות בעולם החדש',
+                    data: [40, 20, 70, 60],
+                    backgroundColor: [
+                        'rgba(251, 191, 36, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(45, 212, 191, 0.7)',
+                        'rgba(167, 139, 250, 0.7)'
+                    ],
+                    borderColor: '#F9FAFB',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#9CA3AF' }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#F9FAFB' }
+                    }
+                }
+            }
+        });
+
+        // 5. Gender Chart (Bar)
+        const genderCtx = document.getElementById('genderChart').getContext('2d');
+        new Chart(genderCtx, {
+            type: 'bar',
+            data: {
+                labels: ['עובדים', 'מנהלי ביניים', 'הנהלה בכירה', 'מנכ"לים'],
+                datasets: [{
+                    label: 'נשים',
+                    data: [47, 40, 25, 8],
+                    backgroundColor: '#2DD4BF',
+                }, {
+                    label: 'גברים',
+                    data: [53, 60, 75, 92],
+                    backgroundColor: '#60A5FA',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'ייצוג מגדרי לפי דרג בארגון (דוגמה)',
+                        color: '#F9FAFB'
+                    },
+                    legend: {
+                        labels: { color: '#F9FAFB' }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        grid: { display: false },
+                        ticks: { color: '#9CA3AF' }
+                    },
+                    y: {
+                        stacked: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        ticks: { color: '#9CA3AF' }
+                    }
+                }
+            }
+        });
+
+    });
+    </script>
 </body>
 </html>
 
