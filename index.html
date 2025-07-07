@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מפת הקריירה במאה ה-21</title>
+    <title>מפת הקריירה במאה ה-21 | GPS אישי</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -32,11 +32,16 @@
             border: 1px solid #374151; /* gray-700 */
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
         .section-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(45, 212, 191, 0.1);
+        }
+        .highlight {
+            border-color: #2DD4BF; /* teal-400 */
+            box-shadow: 0 0 25px rgba(45, 212, 191, 0.3);
+            transform: scale(1.02);
         }
         h1, h2, h3 {
             font-weight: 700;
@@ -63,6 +68,45 @@
             stroke: #2DD4BF; /* teal-400 */
             stroke-width: 1.5;
         }
+        .deep-dive-btn {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .deep-dive-btn:hover {
+            transform: scale(1.2);
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: #1F2937; /* gray-800 */
+            margin: 10% auto;
+            padding: 2rem;
+            border: 1px solid #374151; /* gray-700 */
+            width: 90%;
+            max-width: 600px;
+            border-radius: 0.75rem;
+            position: relative;
+        }
+        .close-btn {
+            color: #9CA3AF; /* gray-400 */
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -71,22 +115,21 @@
     |           STRATEGY BRIEF (תיעוד אסטרטגי)      |
     ================================================
     |
-    |   **תמצית הנרטיב:** הקריירה שלך היא מסע בעולם חדש. זו המפה שלך.
+    |   **תמצית הנרטיב:** הקריירה שלך היא מסע בעולם חדש. זה ה-GPS האישי שלך.
     |
-    |   **קונספט עיצובי:** "ממפה הדרכים" (The Cartographer). הקונספט משלב את הבהירות והסדר של ה-Swiss Style
-    |   עם הדינמיות של עיצוב גנרטיבי. המטרה היא להציג מידע מורכב בצורה של מפה אינטואיטיבית, אסתטית ופונקציונלית,
-    |   המשדרת סמכות ותובנה מתקדמת.
+    |   **קונספט עיצובי:** "ממפה הדרכים" (The Cartographer) - גרסה 2.0. שדרוג המפה הסטטית לכלי ניווט
+    |   אינטראקטיבי ואישי המאפשר אבחון, צלילת עומק ותכנון פעולה.
     |
     |   **פלטת צבעים:**
-    |   - רקע_ראשי: #111827 (רקע כהה ליצירת מיקוד ותחושת פרימיום)
-    |   - טקסט_ראשי: #F9FAFB (לבן-אפרפר לקריאות מקסימלית)
-    |   - טקסט_משני: #9CA3AF (אפור להערות ותוויות)
-    |   - הדגשה_ראשית (CTA): #2DD4BF (טורקיז טכנולוגי לאינטראקציה וכותרות)
-    |   - הדגשה_משנית: #FBBF24 (זהב/ענבר להדגשת נתונים משניים)
-    |   - גבול_מפריד: #374151 (אפור כהה לקווים ומסגרות עדינות)
+    |   - רקע_ראשי: #111827
+    |   - טקסט_ראשי: #F9FAFB
+    |   - טקסט_משני: #9CA3AF
+    |   - הדגשה_ראשית (CTA): #2DD4BF
+    |   - הדגשה_משנית: #FBBF24
+    |   - גבול_מפריד: #374151
     |
-    |   **מדדי הצלחה:** המשתמש יבין את השינויים המרכזיים בעולם העבודה, יזהה את המודלים והכלים הרלוונטיים
-    |   לניהול הקריירה שלו, ויחוש תחושת שליטה ובהירות לגבי צעדיו הבאים.
+    |   **מדדי הצלחה:** המשתמש יאבחן את מצבו הנוכחי, יבין את המודלים הרלוונטיים לו לעומק, ויגבש תכנית פעולה
+    |   קונקרטית להמשך הדרך.
     |
     ================================================
     -->
@@ -94,23 +137,53 @@
     <main class="container mx-auto p-4 md:p-8">
 
         <!-- Header Section -->
-        <header class="text-center py-16 md:py-24">
+        <header class="text-center py-12 md:py-16">
             <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in">
-                מפת הקריירה <span class="text-accent">במאה ה-21</span>
+                ה-GPS לקריירה <span class="text-accent">שלך</span>
             </h1>
             <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto animate-fade-in-delay">
-                הספר "קריירה במאה ה-21" מאת אשרית כספי ברוך, מפורק ומוצג כאן כמפה אינטראקטיבית למסע המקצועי החדש. החוזה הישן נשבר; הכללים השתנו. זוהי הדרך לנווט בעולם של הזדמנויות, אתגרים וניהול עצמי.
+                עולם העבודה השתנה. המפה הזו היא כלי ניווט אישי שיעזור לך להבין איפה אתה עומד, לאן פניך מועדות, ואיך להגיע לשם.
             </p>
         </header>
+        
+        <!-- Personalization Questionnaire -->
+        <section id="questionnaire" class="section-card p-6 md:p-8 rounded-xl mb-20 md:mb-32">
+            <h2 class="text-2xl md:text-3xl text-center mb-6">אבחון מהיר: איפה אתה על המפה?</h2>
+            <form id="career-form" class="space-y-6">
+                <div>
+                    <label class="block mb-2 font-semibold">מה הכי חשוב לך בקריירה כרגע?</label>
+                    <div class="flex flex-wrap gap-4">
+                        <label class="flex items-center space-x-2 rtl:space-x-reverse"><input type="radio" name="priority" value="stability" class="form-radio text-accent"> <span>יציבות וביטחון</span></label>
+                        <label class="flex items-center space-x-2 rtl:space-x-reverse"><input type="radio" name="priority" value="challenge" class="form-radio text-accent"> <span>אתגר וצמיחה</span></label>
+                        <label class="flex items-center space-x-2 rtl:space-x-reverse"><input type="radio" name="priority" value="balance" class="form-radio text-accent"> <span>איזון עבודה-חיים</span></label>
+                    </div>
+                </div>
+                <div>
+                    <label for="holland-type" class="block mb-2 font-semibold">איזה טיפוס תעסוקתי הכי מתאר אותך (לפי הולנד)?</label>
+                    <select id="holland-type" name="holland" class="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:ring-accent focus:border-accent">
+                        <option value="">בחר...</option>
+                        <option value="R">ריאליסטי (R) - אוהב לעבוד עם הידיים, כלים</option>
+                        <option value="I">חקרני (I) - אוהב לפתור בעיות, לחקור</option>
+                        <option value="A">אמנותי (A) - יצירתי, לא שגרתי</option>
+                        <option value="S">חברתי (S) - אוהב לעזור, ללמד, לעבוד עם אנשים</option>
+                        <option value="E">יזמי (E) - אוהב להוביל, לשכנע, להשפיע</option>
+                        <option value="C">קונבנציונלי (C) - אוהב סדר, נתונים, כללים</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-accent text-gray-900 font-bold py-2 px-6 rounded-lg hover:bg-teal-300 transition-colors">הצג התאמה אישית</button>
+                </div>
+            </form>
+        </section>
 
         <!-- Section 1: The Great Shift -->
         <section id="shift" class="mb-20 md:mb-32">
             <h2 class="text-3xl md:text-4xl text-center mb-12">השינוי הגדול: מ"סולם" ל"רשת"</h2>
             <div class="grid md:grid-cols-2 gap-8">
-                <div class="section-card p-6 rounded-xl text-center">
+                <div id="old-career-card" class="section-card p-6 rounded-xl text-center">
                     <h3 class="text-2xl mb-4 text-red-400">הקריירה הישנה (Then)</h3>
                     <div class="flex justify-center mb-4">
-                        <svg class="icon-style" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" /></svg>
+                        <svg class="icon-style text-red-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" /></svg>
                     </div>
                     <ul class="text-left space-y-2 text-gray-300">
                         <li><span class="font-bold text-white">מבנה:</span> ליניארי, היררכי, "טיפוס בסולם".</li>
@@ -120,7 +193,7 @@
                         <li><span class="font-bold text-white">גבולות:</span> ברורים, בתוך ארגון אחד.</li>
                     </ul>
                 </div>
-                <div class="section-card p-6 rounded-xl text-center">
+                <div id="new-career-card" class="section-card p-6 rounded-xl text-center">
                     <h3 class="text-2xl mb-4 text-accent">הקריירה החדשה (Now)</h3>
                      <div class="flex justify-center mb-4">
                         <svg class="icon-style" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 119 0v3.75M3.75 21.75h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
@@ -136,47 +209,27 @@
             </div>
         </section>
 
-        <!-- Section 2: Forces of Change -->
-        <section id="forces" class="mb-20 md:mb-32">
-            <h2 class="text-3xl md:text-4xl text-center mb-4">כוחות השינוי</h2>
-            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">שלושה כוחות עיקריים מפרקים את עולם העבודה הישן ומרכיבים אותו מחדש.</p>
-            <div class="grid md:grid-cols-3 gap-8 text-center">
-                <div class="section-card p-6 rounded-xl">
-                    <h3 class="text-xl font-bold mb-2">גלובליזציה</h3>
-                    <p class="text-gray-400">העולם הפך ל"כפר גלובלי" אחד. התוצאה: תחרות מוגברת, צורך ביתרון תחרותי, אך גם הזדמנויות לקריירות בינלאומיות.</p>
-                </div>
-                <div class="section-card p-6 rounded-xl">
-                    <h3 class="text-xl font-bold mb-2">טכנולוגיה</h3>
-                    <p class="text-gray-400">אוטומציה, AI וביג דאטה מייתרים מקצועות חזרתיים ויוצרים דרישה למיומנויות חדשות. העבודה הופכת לגמישה יותר (זמן ומקום).</p>
-                </div>
-                <div class="section-card p-6 rounded-xl">
-                    <h3 class="text-xl font-bold mb-2">שינויים דמוגרפיים</h3>
-                    <p class="text-gray-400">כניסת נשים לשוק העבודה, כוח עבודה רב-דורי (X,Y,Z) ומגוון תרבותי מאתגרים מודלים ישנים של ניהול ויוצרים צורך באיזון עבודה-חיים.</p>
-                </div>
-            </div>
-            <div class="mt-12">
-                <div class="chart-container mx-auto" style="height:300px; max-width: 500px;">
-                    <canvas id="forcesChart"></canvas>
-                </div>
-            </div>
-        </section>
-
         <!-- Section 3: Inner World Navigation -->
         <section id="inner-world" class="mb-20 md:mb-32">
-            <h2 class="text-3xl md:text-4xl text-center mb-4">ניווט העולם הפנימי</h2>
+            <div class="flex justify-center items-center gap-4 mb-4">
+                <h2 class="text-3xl md:text-4xl text-center">ניווט העולם הפנימי</h2>
+                <svg class="w-8 h-8 text-gray-400 deep-dive-btn" id="inner-world-dive" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+            </div>
             <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">ההצלחה בקריירה החדשה תלויה בהתאמה בין מי שאתה לבין מה שאתה עושה. אלו המצפנים המרכזיים.</p>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="section-card p-6 rounded-xl">
+                <div id="holland-card" class="section-card p-6 rounded-xl">
                     <h3 class="text-xl font-bold mb-2">אישיות (מודל הולנד)</h3>
                     <p class="text-gray-400 mb-4">ששת טיפוסי האישיות התעסוקתית. התאמה בין הטיפוס שלך לסביבת העבודה מנבאת שביעות רצון.</p>
                     <div class="h-48 w-full"><canvas id="hollandChart"></canvas></div>
                 </div>
-                <div class="section-card p-6 rounded-xl">
+                <div id="values-card" class="section-card p-6 rounded-xl">
                     <h3 class="text-xl font-bold mb-2">ערכים (מודל שוורץ)</h3>
                     <p class="text-gray-400">מה מניע אותך? עשרה ערכים אוניברסליים המכוונים את הבחירות שלנו, מביטחון ועד להכוונה עצמית.</p>
                     <div class="h-48 w-full"><canvas id="valuesChart"></canvas></div>
                 </div>
-                <div class="section-card p-6 rounded-xl">
+                <div id="anchors-card" class="section-card p-6 rounded-xl">
                     <h3 class="text-xl font-bold mb-2">עוגנים (מודל שיין)</h3>
                     <p class="text-gray-400">הדימוי העצמי התעסוקתי שלך. מהו ה"עוגן" שלא תוותר עליו? (למשל: יצירתיות, ביטחון, ניהול).</p>
                     <ul class="text-sm list-disc list-inside text-gray-300 mt-4">
@@ -187,63 +240,36 @@
                         <li>יזמות / יצירתיות</li>
                     </ul>
                 </div>
-                <div class="section-card p-6 rounded-xl">
+                <div id="driver-card" class="section-card p-6 rounded-xl">
                     <h3 class="text-xl font-bold mb-2">דפוסים (מודל דרייבר)</h3>
-                    <p class="text-gray-400">ארבעה דפוסי קריירה: ליניארי, יציב, ספירלי, או משתנה. הדפוס שלך משקף את המוטיבציה והסגנון הקוגניטיבי שלך.</p>
+                    <p class="text-gray-400">ארבעה דפוסי קריירה: ליניארי, יציב, ספירלי, או משתנה. הדפוס שלך משקף את המוטיבציה.</p>
                      <div class="h-48 w-full"><canvas id="driverChart"></canvas></div>
                 </div>
             </div>
         </section>
-
-        <!-- Section 4: Gender Labyrinth -->
-        <section id="gender" class="mb-20 md:mb-32">
-            <h2 class="text-3xl md:text-4xl text-center mb-4">מבוך המגדר</h2>
-            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">למרות ההתקדמות, נשים עדיין מתמודדות עם חסמים ייחודיים בדרך למעלה.</p>
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div class="section-card p-6 rounded-xl">
-                    <h3 class="text-xl font-bold mb-2">תקרת הזכוכית</h3>
-                    <p class="text-gray-400 mb-4">מחסום בלתי נראה הבולם התקדמות נשים לעמדות בכירות. נובע מסטריאוטיפים, הדרת רשתות חברתיות וקונפליקט עבודה-משפחה.</p>
-                     <h3 class="text-xl font-bold mb-2 mt-6">הרצפה הדביקה</h3>
-                    <p class="text-gray-400">הנטייה של נשים "להיתקע" בתפקידים זוטרים עם אפשרויות קידום מוגבלות.</p>
-                </div>
-                <div>
-                     <div class="chart-container mx-auto" style="height:300px; max-width: 400px;">
-                        <canvas id="genderChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 5: The Future -->
-        <section id="future" class="mb-20 md:mb-32">
-            <h2 class="text-3xl md:text-4xl text-center mb-4">הצצה לעתיד</h2>
-            <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">מקצועות נעלמים ונוצרים, והטכנולוגיה משנה את כללי המשחק.</p>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="section-card p-6 rounded-xl">
-                    <h3 class="text-xl font-bold mb-2 text-red-400">מקצועות בדעיכה</h3>
-                    <ul class="list-disc list-inside text-gray-300">
-                        <li>פועלי ייצור (אוטומציה)</li>
-                        <li>מנהלי חשבונות (תוכנות)</li>
-                        <li>שענים, סנדלרים (ייצור המוני)</li>
-                        <li>פקידות ואדמיניסטרציה</li>
-                    </ul>
-                </div>
-                <div class="section-card p-6 rounded-xl">
-                    <h3 class="text-xl font-bold mb-2 text-accent">מקצועות בצמיחה</h3>
-                    <ul class="list-disc list-inside text-gray-300">
-                        <li>גיימרים, יוטיוברים (כלכלת היוצרים)</li>
-                        <li>מדעני נתונים (Big Data)</li>
-                        <li>מומחי AI ולמידת מכונה</li>
-                        <li>מנהלי חדשנות, יועצי קריירה</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="section-card p-6 rounded-xl mt-8">
-                <h3 class="text-xl font-bold mb-2">מהפכת ה-Big Data</h3>
-                <p class="text-gray-400">ארגונים משתמשים בניתוח מידע רב (מפייסבוק, לינקדאין וכו') לגיוס, מיון והערכת עובדים. הפרופיל הדיגיטלי שלך הוא חלק מקורות החיים שלך.</p>
-            </div>
-        </section>
         
+        <!-- Action Plan Section -->
+        <section id="action-plan" class="section-card p-6 md:p-8 rounded-xl mb-12">
+            <h2 class="text-2xl md:text-3xl text-center mb-6">תכנית הפעולה שלך</h2>
+            <div class="space-y-4">
+                <div>
+                    <label for="takeaway" class="block mb-2 font-semibold">תובנה מרכזית אחת שלקחתי מהמפה:</label>
+                    <textarea id="takeaway" rows="2" class="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:ring-accent focus:border-accent"></textarea>
+                </div>
+                 <div>
+                    <label for="question" class="block mb-2 font-semibold">שאלה אחת שאני צריך לשאול את עצמי השבוע:</label>
+                    <textarea id="question" rows="2" class="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:ring-accent focus:border-accent"></textarea>
+                </div>
+                 <div>
+                    <label for="action" class="block mb-2 font-semibold">פעולה קונקרטית אחת שאבצע החודש:</label>
+                    <textarea id="action" rows="2" class="w-full p-2 rounded bg-gray-700 border border-gray-600 focus:ring-accent focus:border-accent"></textarea>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <button id="export-btn" class="bg-gray-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-gray-500 transition-colors">ייצא תכנית כקובץ טקסט</button>
+            </div>
+        </section>
+
         <!-- Footer -->
         <footer class="text-center py-12 border-t border-gray-700">
             <p class="text-gray-400">הקריירה שלך היא המוצר החשוב ביותר שתבנה אי פעם. נהל אותה בתבונה.</p>
@@ -252,134 +278,161 @@
 
     </main>
 
+    <!-- Modal Structure -->
+    <div id="deep-dive-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 id="modal-title" class="text-2xl font-bold mb-4 text-accent"></h3>
+            <div id="modal-body" class="space-y-4 text-gray-300"></div>
+        </div>
+    </div>
+
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // GSAP Animations
+        // --- GSAP Animations ---
         gsap.registerPlugin(ScrollTrigger);
-        
-        // Fade in animations for elements
         gsap.utils.toArray('.section-card, section h2, section p').forEach(el => {
             gsap.from(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none',
-                },
-                opacity: 0,
-                y: 50,
-                duration: 0.8,
-                ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+                opacity: 0, y: 50, duration: 0.8, ease: 'power3.out',
             });
         });
-        
         gsap.from('.animate-fade-in', { opacity: 0, duration: 1, y: 20, ease: 'power2.out' });
         gsap.from('.animate-fade-in-delay', { opacity: 0, duration: 1, y: 20, ease: 'power2.out', delay: 0.4 });
 
+        // --- Personalization Logic ---
+        const form = document.getElementById('career-form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const priority = formData.get('priority');
+            const hollandType = formData.get('holland');
 
-        // Chart.js Implementations
+            // Clear previous highlights
+            document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
 
-        // 1. Forces of Change Chart (Radar)
-        const forcesCtx = document.getElementById('forcesChart').getContext('2d');
-        new Chart(forcesCtx, {
-            type: 'radar',
-            data: {
-                labels: ['גלובליזציה', 'טכנולוגיה', 'דמוגרפיה', 'תחרותיות', 'אי-ודאות'],
-                datasets: [{
-                    label: 'עוצמת ההשפעה על הקריירה',
-                    data: [85, 95, 75, 90, 80],
-                    backgroundColor: 'rgba(45, 212, 191, 0.2)',
-                    borderColor: '#2DD4BF',
-                    pointBackgroundColor: '#2DD4BF',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#2DD4BF'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        labels: { color: '#F9FAFB' }
-                    }
-                },
-                scales: {
-                    r: {
-                        angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
-                        grid: { color: 'rgba(255, 255, 255, 0.2)' },
-                        pointLabels: { color: '#F9FAFB', font: { size: 12 } },
-                        ticks: {
-                            color: '#111827',
-                            backdropColor: 'rgba(255, 255, 255, 0.8)',
-                            stepSize: 20
-                        }
-                    }
-                }
+            // Apply new highlights
+            if (priority === 'stability') {
+                document.getElementById('old-career-card').classList.add('highlight');
+                document.getElementById('anchors-card').classList.add('highlight'); // Security anchor
+            } else if (priority === 'challenge') {
+                document.getElementById('new-career-card').classList.add('highlight');
+                document.getElementById('driver-card').classList.add('highlight'); // Spiral/Transitory
+            } else if (priority === 'balance') {
+                 document.getElementById('new-career-card').classList.add('highlight');
+                 // A section on work-life balance would be highlighted here if it existed.
+            }
+            
+            if (hollandType) {
+                document.getElementById('holland-card').classList.add('highlight');
             }
         });
 
-        // 2. Holland Chart (Polar Area)
+        // --- Deep Dive Modal Logic ---
+        const modal = document.getElementById('deep-dive-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const closeBtn = document.querySelector('.close-btn');
+
+        const deepDiveData = {
+            'inner-world-dive': {
+                title: 'צלילת עומק: מודלים לניווט פנימי',
+                content: `
+                    <p><strong class="text-accent">הנחת יסוד:</strong> בחירת קריירה אינה מקרית. היא נובעת מהתאמה (או חוסר התאמה) בין המבנה הפנימי שלנו (אישיות, ערכים, עוגנים) לבין סביבת העבודה החיצונית.</p>
+                    <p><strong class="text-accent">ביקורת:</strong> רוב המודלים הקלאסיים פותחו על גברים לבנים בסביבת עבודה יציבה. הם פחות מתאימים לעולם העבודה המודרני, הגמיש והמגוון, ודורשים התאמה למסלולי קריירה לא-ליניאריים (כמו קריירה קליידוסקופית).</p>
+                    <p><strong class="text-accent">לקריאה נוספת:</strong> חפש "Person-Environment Fit Theory" כדי להבין את הבסיס התיאורטי של מודלים אלו.</p>
+                `
+            }
+        };
+
+        document.querySelectorAll('.deep-dive-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const data = deepDiveData[this.id];
+                if (data) {
+                    modalTitle.textContent = data.title;
+                    modalBody.innerHTML = data.content;
+                    modal.style.display = 'block';
+                }
+            });
+        });
+
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // --- Action Plan Logic ---
+        document.getElementById('export-btn').addEventListener('click', function() {
+            const takeaway = document.getElementById('takeaway').value;
+            const question = document.getElementById('question').value;
+            const action = document.getElementById('action').value;
+
+            const content = `
+תכנית הפעולה שלי למסע הקריירה
+===================================
+
+תובנה מרכזית אחת:
+-----------------
+${takeaway || 'לא הוזן'}
+
+שאלה אחת לשאול את עצמי:
+-----------------------
+${question || 'לא הוזן'}
+
+פעולה קונקרטית אחת:
+--------------------
+${action || 'לא הוזן'}
+            `;
+
+            const blob = new Blob([content.trim()], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'career_action_plan.txt';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+
+        // --- Chart.js Implementations ---
+        const chartTextColor = '#F9FAFB';
+        const chartGridColor = 'rgba(255, 255, 255, 0.2)';
+
+        // Holland Chart (Polar Area)
         const hollandCtx = document.getElementById('hollandChart').getContext('2d');
         new Chart(hollandCtx, {
             type: 'polarArea',
             data: {
                 labels: ['ריאליסטי (R)', 'חקרני (I)', 'אמנותי (A)', 'חברתי (S)', 'יזמי (E)', 'קונבנציונלי (C)'],
                 datasets: [{
-                    label: 'טיפוסי אישיות',
                     data: [6, 9, 7, 8, 8, 5],
-                    backgroundColor: [
-                        'rgba(251, 191, 36, 0.5)',
-                        'rgba(45, 212, 191, 0.5)',
-                        'rgba(167, 139, 250, 0.5)',
-                        'rgba(251, 113, 133, 0.5)',
-                        'rgba(59, 130, 246, 0.5)',
-                        'rgba(139, 92, 246, 0.5)'
-                    ],
-                    borderColor: '#F9FAFB',
+                    backgroundColor: ['rgba(251, 191, 36, 0.5)','rgba(45, 212, 191, 0.5)','rgba(167, 139, 250, 0.5)','rgba(251, 113, 133, 0.5)','rgba(59, 130, 246, 0.5)','rgba(139, 92, 246, 0.5)'],
+                    borderColor: chartTextColor,
                 }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    r: {
-                        grid: { color: 'rgba(255, 255, 255, 0.2)' },
-                        ticks: { display: false }
-                    }
-                }
-            }
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { r: { grid: { color: chartGridColor }, ticks: { display: false } } } }
         });
         
-        // 3. Schwartz Values Chart (Doughnut)
+        // Schwartz Values Chart (Doughnut)
         const valuesCtx = document.getElementById('valuesChart').getContext('2d');
         new Chart(valuesCtx, {
             type: 'doughnut',
             data: {
                 labels: ['הכוונה עצמית', 'גירוי', 'הדוניזם', 'הישג', 'כוח', 'ביטחון', 'קונפורמיות', 'מסורת', 'נדיבות', 'אוניברסליות'],
                 datasets: [{
-                    label: 'ערכים',
                     data: [12, 10, 8, 11, 7, 9, 6, 5, 10, 11],
-                    backgroundColor: [
-                        '#2DD4BF', '#34D399', '#A3E635', '#FBBF24', '#FB923C',
-                        '#F87171', '#F472B6', '#C084FC', '#818CF8', '#60A5FA'
-                    ],
-                    borderColor: '#111827',
-                    borderWidth: 2,
+                    backgroundColor: ['#2DD4BF', '#34D399', '#A3E635', '#FBBF24', '#FB923C', '#F87171', '#F472B6', '#C084FC', '#818CF8', '#60A5FA'],
+                    borderColor: '#111827', borderWidth: 2,
                 }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                }
-            }
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
         });
 
-        // 4. Driver's Patterns Chart (Bar)
+        // Driver's Patterns Chart (Bar)
         const driverCtx = document.getElementById('driverChart').getContext('2d');
         new Chart(driverCtx, {
             type: 'bar',
@@ -388,80 +441,15 @@
                 datasets: [{
                     label: 'שכיחות בעולם החדש',
                     data: [40, 20, 70, 60],
-                    backgroundColor: [
-                        'rgba(251, 191, 36, 0.7)',
-                        'rgba(59, 130, 246, 0.7)',
-                        'rgba(45, 212, 191, 0.7)',
-                        'rgba(167, 139, 250, 0.7)'
-                    ],
-                    borderColor: '#F9FAFB',
-                    borderWidth: 1
+                    backgroundColor: ['rgba(251, 191, 36, 0.7)','rgba(59, 130, 246, 0.7)','rgba(45, 212, 191, 0.7)','rgba(167, 139, 250, 0.7)'],
+                    borderColor: chartTextColor, borderWidth: 1
                 }]
             },
             options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    x: {
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        ticks: { color: '#9CA3AF' }
-                    },
-                    y: {
-                        grid: { display: false },
-                        ticks: { color: '#F9FAFB' }
-                    }
-                }
+                indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                scales: { x: { grid: { color: chartGridColor }, ticks: { color: '#9CA3AF' } }, y: { grid: { display: false }, ticks: { color: chartTextColor } } }
             }
         });
-
-        // 5. Gender Chart (Bar)
-        const genderCtx = document.getElementById('genderChart').getContext('2d');
-        new Chart(genderCtx, {
-            type: 'bar',
-            data: {
-                labels: ['עובדים', 'מנהלי ביניים', 'הנהלה בכירה', 'מנכ"לים'],
-                datasets: [{
-                    label: 'נשים',
-                    data: [47, 40, 25, 8],
-                    backgroundColor: '#2DD4BF',
-                }, {
-                    label: 'גברים',
-                    data: [53, 60, 75, 92],
-                    backgroundColor: '#60A5FA',
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'ייצוג מגדרי לפי דרג בארגון (דוגמה)',
-                        color: '#F9FAFB'
-                    },
-                    legend: {
-                        labels: { color: '#F9FAFB' }
-                    }
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                        grid: { display: false },
-                        ticks: { color: '#9CA3AF' }
-                    },
-                    y: {
-                        stacked: true,
-                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        ticks: { color: '#9CA3AF' }
-                    }
-                }
-            }
-        });
-
     });
     </script>
 </body>
