@@ -3,83 +3,501 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>שפת הים - באנר פרימיום</title>
+    <title>דשבורד אסטרטגי: מפת המדיה במגזר החרדי</title>
     
+    <!-- Strategy Brief -->
+    <!-- 
+        PROPOSAL: Interactive Strategic Dashboard
+        CORE THESIS: Media consumption in the Haredi sector is not monolithic; it is deeply segmented by stream (Sephardi, Lithuanian, Hasidic), age, and platform, demanding a tailored, multi-channel marketing strategy.
+        ARCHETYPE: The Cartographer (ממפה הדרכים) - To make sense of a complex landscape and provide a clear map for strategists.
+        
+        DESIGN CONCEPT:
+        - Style: Swiss/International Style. Clean, grid-based, objective, and data-focused to project authority and clarity.
+        - Layout: A tabbed dashboard for exploring different media categories (News, Radio, Social).
+        
+        COLOR PALETTE:
+        - Background: #F8FAFC (Very Light Blue-Gray)
+        - Main Text: #0F172A (Slate 900)
+        - Secondary Text: #64748B (Slate 500)
+        - Primary Accent/CTA: #2563EB (Blue 600)
+        - Chart - Sephardi: #2563EB (Blue)
+        - Chart - Lithuanian: #0F172A (Dark Slate)
+        - Chart - Hasidic: #F59E0B (Amber 500)
+        
+        SUCCESS METRICS:
+        The dashboard will enable marketing managers and strategists to make data-driven decisions on budget allocation and content development for the Haredi sector. It will provide a clear understanding of the internal segmentation and media preferences of each sub-audience, leading to more effective and efficient campaigns.
+    -->
+
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
         body {
             font-family: 'Assistant', sans-serif;
+            background-color: #F8FAFC;
         }
-        .banner-container {
-            /* Common banner aspect ratio, e.g., 300x250, 728x90, etc. Here we use a flexible one */
-            aspect-ratio: 16 / 9;
-            max-width: 800px;
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 40vh;
             width: 100%;
+        }
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            border-color: #2563EB;
+            background-color: #DBEAFE;
+            color: #1E40AF;
+            font-weight: 700;
+        }
+        .rtl-chart-label {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .rtl-chart-label span {
+            margin-left: 8px;
         }
     </style>
 </head>
-<body class="bg-gray-200 flex items-center justify-center min-h-screen">
+<body class="bg-slate-50 text-slate-900">
 
-    <div class="banner-container relative bg-transparent overflow-visible shadow-lg rounded-md" aria-label="באנר פרסומי של שפת הים">
-        <div class="absolute bottom-0 h-2/3 w-full bg-[#A9D6E5] overflow-hidden rounded-b-md">
-            <svg width="100%" height="100%" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" class="opacity-30">
-                <path d="M0 400 L0 200 Q 200 150, 400 200 T 800 200 L 800 400 Z" fill="#F1FAEE" />
-                <path d="M-50 180 L 850 180" stroke="#FFFFFF" stroke-width="2"/>
-                <circle cx="650" cy="160" r="10" fill="#2d3748" />
-                <path d="M650 170 L 650 190 L 640 210" stroke="#2d3748" stroke-width="3" fill="none" />
-                <path d="M650 175 L 750 170" stroke="#2d3748" stroke-width="1.5" fill="none" />
-            </svg>
-        </div>
-
-        <div class="absolute -top-1/4 right-1/4 sm:right-1/3 w-2/5 sm:w-1/3 z-10" aria-hidden="true">
-             <svg viewBox="0 0 200 300">
-                <defs>
-                    <filter id="drop-shadow">
-                        <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
-                        <feOffset dx="2" dy="4" result="offsetblur"/>
-                        <feMerge>
-                            <feMergeNode/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
-                </defs>
-                <g style="filter:url(#drop-shadow);">
-                    <path d="M100,100 C 50,150 60,250 100,300 C 140,250 150,150 100,100 Z" fill="#C0C0C0"/>
-                    <path d="M100,100 Q 110,110 120,105" stroke="#333" stroke-width="2" fill="none"/>
-                    <circle cx="115" cy="115" r="3" fill="#333"/>
-
-                    <path d="M80 180 Q100 170 120 180 L 130 240 Q100 250 70 240 Z" fill="#FFD700"/>
-                    <text x="100" y="215" font-family="Assistant, sans-serif" font-size="16" font-weight="bold" fill="#1A202C" text-anchor="middle">שפת הים</text>
-
-                    <path d="M120,50 C 160,60 180,100 170,140 L 130,200 L 70,200 L 30,140 C 20,100 40,60 80,50 L 120,50 Z" fill="#deb887"/>
-                    <path d="M80,50 C 70,30 75,10 85,10" stroke="#deb887" stroke-width="12" stroke-linecap="round" fill="none"/>
-                    <path d="M100,50 C 95,30 100,10 110,10" stroke="#deb887" stroke-width="12" stroke-linecap="round" fill="none"/>
-                    <path d="M120,50 C 125,30 120,10 130,10" stroke="#deb887" stroke-width="12" stroke-linecap="round" fill="none"/>
-                </g>
-            </svg>
-        </div>
+    <div class="container mx-auto p-4 md:p-8">
         
-        <div class="relative z-20 h-full w-full flex flex-col justify-end items-center text-center p-4 md:p-6 text-white">
-            <div class="bg-black bg-opacity-40 p-4 rounded-lg">
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.7);">
-                    זה לא המתכון, זה הדג.
-                </h1>
-                <p class="mt-2 text-md md:text-lg text-gray-200">
-                    דגי פרימיום שאחריהם לא חוזרים אחורה
-                </p>
-            </div>
-            
-            <a href="#" role="button" class="mt-4 md:mt-6 inline-block bg-[#FFD700] text-[#1A202C] px-8 py-3 rounded-md text-lg font-bold
-             hover:bg-[#e6c200] transform hover:scale-105 transition-transform duration-200 shadow-xl"
-             aria-label="לרכישת דגי פרימיום, זהירות ממכר">
-                זהירות, ממכר
-            </a>
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-5xl font-bold text-slate-800">מפת המדיה במגזר החרדי</h1>
+            <p class="text-lg md:text-xl text-slate-600 mt-2">ניתוח אסטרטגי של צריכת אתרי חדשות, תחנות רדיו ורשתות חברתיות</p>
+        </header>
+
+        <!-- Tabs Navigation -->
+        <div class="mb-8 border-b border-slate-300">
+            <nav class="flex flex-wrap -mb-px" aria-label="Tabs">
+                <button class="tab-btn active text-lg py-4 px-6 border-b-2 font-medium text-slate-500 hover:text-blue-600 hover:border-blue-300" onclick="changeTab(event, 'news')">
+                    📰 אתרי חדשות
+                </button>
+                <button class="tab-btn text-lg py-4 px-6 border-b-2 font-medium text-slate-500 hover:text-blue-600 hover:border-blue-300" onclick="changeTab(event, 'radio')">
+                    📻 תחנות רדיו
+                </button>
+                <button class="tab-btn text-lg py-4 px-6 border-b-2 font-medium text-slate-500 hover:text-blue-600 hover:border-blue-300" onclick="changeTab(event, 'social')">
+                    📱 רשתות חברתיות
+                </button>
+            </nav>
         </div>
+
+        <!-- Tab Content -->
+        <main>
+            <!-- News Sites Tab -->
+            <div id="news" class="tab-content">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold mb-1">פופולריות אתרי חדשות לפי זרם</h2>
+                        <p class="text-slate-600 mb-4">אחוז הקוראים באופן קבוע או לעיתים קרובות</p>
+                        <div class="chart-container">
+                            <canvas id="newsBySectorChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md flex flex-col justify-center">
+                        <h3 class="text-xl font-bold mb-3">תובנות אסטרטגיות: אתרים</h3>
+                        <ul class="space-y-4 text-slate-700">
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">1.</span>
+                                <div>
+                                    <strong class="text-slate-800">פילוח חד לפי זרם:</strong> 'כיכר השבת' הוא האתר הדומיננטי בקרב ספרדים, בעוד 'JDN' שולט במגזר החסידי, בעיקר בזכות זמינותו במכשירים מסוננים.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">2.</span>
+                                <div>
+                                    <strong class="text-slate-800">הצעירים מובילים בדיגיטל:</strong> קהל הגילאים 18-29 מציג את אחוזי הגלישה הגבוהים ביותר, במיוחד באתר JDN. קהל מבוגר יותר צורך פחות חדשות אונליין.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">3.</span>
+                                <div>
+                                    <strong class="text-slate-800">המלצת פעולה:</strong> קמפיין ממוקד מחייב פיצול תקציב. כדי להגיע לספרדים - 'כיכר השבת' הוא חובה. כדי להגיע לחסידים וצעירים - 'JDN' הוא הנכס המרכזי.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                 <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-1">פופולריות אתרי חדשות לפי גיל</h2>
+                    <p class="text-slate-600 mb-4">אחוז הקוראים באופן קבוע או לעיתים קרובות</p>
+                    <div class="chart-container">
+                        <canvas id="newsByAgeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Radio Tab -->
+            <div id="radio" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold mb-1">האזנה לרדיו לפי זרם</h2>
+                        <p class="text-slate-600 mb-4">אחוז המאזינים באופן קבוע או לעיתים קרובות</p>
+                        <div class="chart-container">
+                            <canvas id="radioBySectorChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md flex flex-col justify-center">
+                        <h3 class="text-xl font-bold mb-3">תובנות אסטרטגיות: רדיו</h3>
+                        <ul class="space-y-4 text-slate-700">
+                             <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">1.</span>
+                                <div>
+                                    <strong class="text-slate-800">זיהוי עדתי חזק:</strong> 'קול ברמה' היא תחנה עם זיהוי ספרדי מובהק. 'קול חי' לעומתה, נהנית מקהל רחב יותר וחוצה זרמים.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">2.</span>
+                                <div>
+                                    <strong class="text-slate-800">הקרב על המוזיקה:</strong> 'קול חי מיוזיק' פופולרית במיוחד בקרב ליטאים. צעירים באופן כללי מאזינים יותר לתחנות מוזיקה, בעוד מבוגרים מעדיפים תחנות אקטואליה.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">3.</span>
+                                <div>
+                                    <strong class="text-slate-800">המלצת פעולה:</strong> פרסום למגזר הספרדי? 'קול ברמה' היא בחירה טבעית. קמפיין רחב יותר? 'קול חי' תספק חשיפה גדולה יותר. פנייה לצעירים? יש להשקיע בתחנות המוזיקה.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-1">האזנה לרדיו לפי גיל</h2>
+                    <p class="text-slate-600 mb-4">אחוז המאזינים באופן קבוע או לעיתים קרובות</p>
+                    <div class="chart-container">
+                        <canvas id="radioByAgeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Tab -->
+            <div id="social" class="tab-content hidden">
+                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold mb-1">שימוש ברשתות חברתיות</h2>
+                        <p class="text-slate-600 mb-4">אחוז המשתמשים באופן קבוע או לעיתים קרובות</p>
+                        <div class="chart-container">
+                            <canvas id="socialUsageChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md flex flex-col justify-center">
+                        <h3 class="text-xl font-bold mb-3">תובנות אסטרטגיות: סושיאל</h3>
+                        <ul class="space-y-4 text-slate-700">
+                             <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">1.</span>
+                                <div>
+                                    <strong class="text-slate-800">ווטסאפ הוא המלך:</strong> בפער ניכר, ווטסאפ היא הרשת החברתית וערוץ התוכן המרכזי במגזר. קבוצות חדשות כמו 'הסקופים' הן ערוץ הפצה חזק.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">2.</span>
+                                <div>
+                                    <strong class="text-slate-800">יוטיוב כבמת סמכות:</strong> הפלטפורמה משמשת בעיקר לצפייה בתכנים של רבנים ודמויות משפיעות, מה שהופך אותה לכלי מיתוג והשפעה ולא רק לבידור.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-500 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">3.</span>
+                                <div>
+                                    <strong class="text-slate-800">המלצת פעולה:</strong> אסטרטגיה דיגיטלית חייבת לכלול נוכחות משמעותית בווטסאפ (דרך קבוצות תוכן או שיווק ישיר) וערוץ יוטיוב המספק ערך ותוכן אותנטי. פייסבוק וטוויטר רלוונטיים לשיח דעתני ופוליטי, אך פחות למיינסטרים.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="mt-12 pt-8 border-t border-slate-300">
+            <h2 class="text-center text-2xl md:text-3xl font-bold text-slate-800 mb-6">סיכום אסטרטגי למקבלי החלטות</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-3">🎯</div>
+                    <h3 class="font-bold text-xl mb-2">פילוח חובה</h3>
+                    <p class="text-slate-600">אין דבר כזה "שיווק למגזר החרדי". יש שיווק לספרדים, לליטאים ולחסידים. כל פנייה חייבת להיות מותאמת לזרם הספציפי.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-3">🛡️</div>
+                    <h3 class="font-bold text-xl mb-2">ערוצים "כשרים"</h3>
+                    <p class="text-slate-600">הצלחה דורשת נוכחות בפלטפורמות הזמינות במכשירים מסוננים. זהו יתרון תחרותי קריטי בקרב קהלים שמרניים.</p>
+                </div>
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-3">💬</div>
+                    <h3 class="font-bold text-xl mb-2">ווטסאפ הוא הניוזלטר</h3>
+                    <p class="text-slate-600">קבוצות החדשות בווטסאפ הן ערוץ ישיר, עוקף-אתרים, להפצת מסרים. זהו כלי הפרסום החזק ביותר כיום.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-3">🔗</div>
+                    <h3 class="font-bold text-xl mb-2">אסטרטגיה משולבת</h3>
+                    <p class="text-slate-600">הצלחה אמיתית תגיע משילוב של אתר תוכן, קבוצות ווטסאפ פעילות וערוץ יוטיוב עם תוכן אותנטי ובעל ערך.</p>
+                </div>
+            </div>
+        </footer>
+
     </div>
 
+    <script>
+        // --- Chart.js Global Configuration ---
+        Chart.defaults.font.family = "'Assistant', sans-serif";
+        Chart.defaults.font.size = 14;
+        Chart.defaults.color = '#334155'; // slate-700
+        Chart.defaults.plugins.tooltip.rtl = true;
+        Chart.defaults.plugins.legend.rtl = true;
+        Chart.defaults.plugins.legend.position = 'bottom';
+        Chart.defaults.plugins.legend.labels.usePointStyle = true;
+        Chart.defaults.plugins.legend.labels.pointStyle = 'rectRounded';
+        Chart.defaults.plugins.legend.labels.boxWidth = 20;
+        Chart.defaults.plugins.legend.labels.padding = 20;
+        
+        // --- Tab Functionality ---
+        function changeTab(event, tabID) {
+            let tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.add("hidden");
+            }
+
+            let tabButtons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+
+            document.getElementById(tabID).classList.remove("hidden");
+            event.currentTarget.classList.add("active");
+        }
+
+        // --- Chart Data & Initialization ---
+        window.onload = function() {
+            const colors = {
+                sephardi: '#2563EB',
+                lithuanian: '#0F172A',
+                hasidic: '#F59E0B',
+                age18_29: '#10B981',
+                age30_44: '#F59E0B',
+                age45_64: '#EF4444',
+                default: '#64748B'
+            };
+
+            // --- News by Sector Chart ---
+            const newsBySectorCtx = document.getElementById('newsBySectorChart').getContext('2d');
+            new Chart(newsBySectorCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['חדשות JDN', 'כיכר השבת', 'בחדרי חרדים', 'המחדש'],
+                    datasets: [{
+                        label: 'ספרדי',
+                        data: [26, 40, 32, 20],
+                        backgroundColor: colors.sephardi,
+                        borderColor: colors.sephardi,
+                        borderWidth: 1
+                    }, {
+                        label: 'ליטאי',
+                        data: [31, 24, 18, 19],
+                        backgroundColor: colors.lithuanian,
+                        borderColor: colors.lithuanian,
+                        borderWidth: 1
+                    }, {
+                        label: 'חסידי',
+                        data: [38, 22, 24, 15],
+                        backgroundColor: colors.hasidic,
+                        borderColor: colors.hasidic,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) { return value + '%' }
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.parsed.y}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // --- News by Age Chart ---
+            const newsByAgeCtx = document.getElementById('newsByAgeChart').getContext('2d');
+            new Chart(newsByAgeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['חדשות JDN', 'כיכר השבת', 'בחדרי חרדים', 'המחדש'],
+                    datasets: [{
+                        label: '18-29',
+                        data: [36, 34, 27, 8],
+                        backgroundColor: colors.age18_29,
+                    }, {
+                        label: '30-44',
+                        data: [28, 31, 26, 13],
+                        backgroundColor: colors.age30_44,
+                    }, {
+                        label: '45-64',
+                        data: [18, 22, 18, 25],
+                        backgroundColor: colors.age45_64,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { callback: function(value) { return value + '%' } }
+                        }
+                    },
+                     plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) { return `${context.dataset.label}: ${context.parsed.y}%`; }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // --- Radio by Sector Chart ---
+            const radioBySectorCtx = document.getElementById('radioBySectorChart').getContext('2d');
+            new Chart(radioBySectorCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['קול חי מיוזיק', 'קול חי', 'קול פליי', 'קול ברמה'],
+                    datasets: [{
+                        label: 'ספרדי',
+                        data: [43, 49, 33, 43],
+                        backgroundColor: colors.sephardi,
+                    }, {
+                        label: 'ליטאי',
+                        data: [55, 36, 33, 15],
+                        backgroundColor: colors.lithuanian,
+                    }, {
+                        label: 'חסידי',
+                        data: [29, 22, 16, 11],
+                        backgroundColor: colors.hasidic,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { callback: function(value) { return value + '%' } }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) { return `${context.dataset.label}: ${context.parsed.y}%`; }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // --- Radio by Age Chart ---
+            const radioByAgeCtx = document.getElementById('radioByAgeChart').getContext('2d');
+            new Chart(radioByAgeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['קול חי מיוזיק', 'קול חי', 'קול פליי', 'קול ברמה'],
+                    datasets: [{
+                        label: '18-29',
+                        data: [44, 18, 29, 13],
+                        backgroundColor: colors.age18_29,
+                    }, {
+                        label: '30-44',
+                        data: [41, 34, 26, 21],
+                        backgroundColor: colors.age30_44,
+                    }, {
+                        label: '45-64',
+                        data: [39, 43, 22, 31],
+                        backgroundColor: colors.age45_64,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { callback: function(value) { return value + '%' } }
+                        }
+                    },
+                     plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) { return `${context.dataset.label}: ${context.parsed.y}%`; }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // --- Social Usage Chart ---
+            const socialUsageCtx = document.getElementById('socialUsageChart').getContext('2d');
+            new Chart(socialUsageCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['ווטסאפ', 'יוטיוב', 'טלגרם', 'טוויטר', 'פייסבוק', 'אינסטגרם', 'טיקטוק'],
+                    datasets: [{
+                        label: 'אחוז שימוש',
+                        data: [57, 38, 23, 21, 17, 10, 5],
+                        backgroundColor: [
+                            '#25D366', // WhatsApp
+                            '#FF0000', // YouTube
+                            '#0088CC', // Telegram
+                            '#1DA1F2', // Twitter
+                            '#1877F2', // Facebook
+                            '#E4405F', // Instagram
+                            '#010101'  // TikTok
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) { return value + '%' }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `אחוז שימוש: ${context.parsed.x}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        };
+    </script>
 </body>
 </html>
+
