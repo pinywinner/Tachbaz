@@ -3,320 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>30 פעילויות חינמיות לקיץ</title>
+    <title>לוקחים אחריות - קורס שוק ההון למתקדמים</title>
     
-    <!--
-    ================================================================
-    STRATEGY BRIEF
-    ================================================================
-    * תמצית הנרטיב: מיפוי 30 דרכים להפוך את הקיץ להרפתקה בלתי נשכחת, בלי לפתוח את הארנק.
-    * קונספט עיצובי: 'Dashboard Grid' בסגנון סקיצואמורפיזם וקולאז'. משדר יצירתיות DIY, נגישות וחום, ומתאים למטרת הדרכה למשפחות.
-    * פלטת צבעים:
-        * רקע ראשי: #FDF6E3 (קרם נייר)
-        * טקסט ראשי: #3A3A3A (אפור כהה)
-        * הדגשה קטגוריה (בית): #4A90E2 (כחול)
-        * הדגשה קטגוריה (חוץ): #50E3C2 (טורקיז)
-        * הדגשה קטגוריה (למידה): #F5A623 (כתום)
-        * הדגשה (טיפים): #BD10E0 (סגול)
-    * מדדי הצלחה: 
-        1. המשתמש יסנן את הפעילויות לפחות פעם אחת.
-        2. המשתמש ילחץ על לפחות 3 כרטיסיות כדי לקרוא את התיאור המורחב.
-        3. המשתמש יזהה בקלות את שלוש קטגוריות הפעילות.
-    ================================================================
-    -->
-
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Assistant -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* Applying Assistant font to the entire page */
         body {
             font-family: 'Assistant', sans-serif;
-            background-color: #FDF6E3; /* Paper cream background */
-            color: #3A3A3A;
         }
-        .activity-card {
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            border-width: 2px;
-            cursor: pointer;
+        /* Custom styles for smooth scrolling and other enhancements */
+        html {
+            scroll-behavior: smooth;
         }
-        .activity-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        /* Style for the floating WhatsApp button */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            left: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .filter-btn {
-            transition: all 0.2s ease-in-out;
-        }
-        .filter-btn.active {
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .tips-box {
-            background-color: #fffacd; /* Light yellow like a sticky note */
-            border: 2px dashed #3A3A3A;
-            transform: rotate(-1deg);
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
-        }
-        #modal-overlay {
-            transition: opacity 0.3s ease-in-out;
-        }
-        #modal-content {
-            transition: transform 0.3s ease-in-out;
+        /* Style for the accordion content */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
         }
     </style>
 </head>
-<body class="p-4 sm:p-6 md:p-8">
+<body class="bg-gray-900 text-gray-200">
 
-    <div class="max-w-7xl mx-auto">
-        <!-- Header Section -->
-        <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">30 דרכים להפוך את הקיץ להרפתקה</h1>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                רשימת פעילויות חינמיות וטיפים יצירתיים שיעזרו לכם לתכנן קיץ מלא בכיף, חוויות וזיכרונות משפחתיים – בלי להוציא שקל. סננו לפי תחומי עניין, לחצו על פעילות כדי לגלות את הערך האמיתי שלה, וצאו לדרך!
-            </p>
-        </header>
+    <!-- Header -->
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg shadow-emerald-500/5">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">
+                <span class="text-emerald-400">לוקחים</span> אחריות
+            </h1>
+            <nav class="hidden md:flex space-x-8 space-x-reverse">
+                <a href="#syllabus" class="hover:text-emerald-400 transition-colors duration-300">סילבוס</a>
+                <a href="#benefits" class="hover:text-emerald-400 transition-colors duration-300">למה אנחנו?</a>
+                <a href="#faq" class="hover:text-emerald-400 transition-colors duration-300">שאלות ותשובות</a>
+            </nav>
+            <a href="#register" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg transition-transform duration-300 hover:scale-105 shadow-md shadow-emerald-500/20">
+                להרשמה
+            </a>
+        </div>
+    </header>
 
-        <!-- Main Content: Filters and Grid -->
-        <div class="flex flex-col lg:flex-row gap-8">
-            
-            <!-- Filters and Tips Section -->
-            <aside class="lg:w-1/4 xl:w-1/5">
-                <div class="sticky top-8">
-                    <!-- Filters -->
-                    <div class="mb-8">
-                        <h3 class="text-2xl font-bold mb-4">סננו לפי נושא</h3>
-                        <div id="filters" class="flex flex-wrap gap-3">
-                            <button data-filter="all" class="filter-btn active w-full text-white font-bold py-2 px-4 rounded-lg bg-gray-500 hover:bg-gray-600">
-                                <i class="fa-solid fa-layer-group ml-2"></i>הצג הכל
-                            </button>
-                            <button data-filter="home" class="filter-btn w-full text-white font-bold py-2 px-4 rounded-lg bg-blue-500 hover:bg-blue-600" style="background-color: #4A90E2;">
-                                <i class="fa-solid fa-house-chimney ml-2"></i>פעילויות בית
-                            </button>
-                            <button data-filter="outside" class="filter-btn w-full text-white font-bold py-2 px-4 rounded-lg bg-teal-400 hover:bg-teal-500" style="background-color: #50E3C2;">
-                                <i class="fa-solid fa-sun ml-2"></i>פעילויות חוץ
-                            </button>
-                            <button data-filter="learn" class="filter-btn w-full text-white font-bold py-2 px-4 rounded-lg bg-orange-400 hover:bg-orange-500" style="background-color: #F5A623;">
-                                <i class="fa-solid fa-book-open-reader ml-2"></i>למידה והעשרה
-                            </button>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="py-20 md:py-32 bg-gray-900 text-center">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl md:text-6xl font-extrabold text-white leading-tight">
+                    שוק ההון <span class="text-emerald-400">למתקדמים</span> בלבד
+                </h2>
+                <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                    הקורס המקיף שמאחד ניתוח ערך פונדמנטלי וניתוח טכני לכדי אסטרטגיית השקעה שלמה ומנצחת.
+                    מפסיקים להמר, מתחילים לנתח.
+                </p>
+                <div class="mt-10">
+                    <a href="#register" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-10 rounded-lg transition-transform duration-300 hover:scale-105 text-lg shadow-lg shadow-emerald-500/30">
+                        אני רוצה לקחת אחריות &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- "Who is this for?" Section -->
+        <section id="for-who" class="py-20 bg-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-white">למי הקורס הזה תפור בול?</h3>
+                    <p class="text-gray-400 mt-2">אם זיהית את עצמך באחת הנקודות, מקומך איתנו.</p>
+                    <div class="w-24 h-1 bg-emerald-500 mx-auto mt-4 rounded"></div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-700 hover:border-emerald-500 transition-all duration-300 hover:scale-105">
+                        <div class="text-emerald-400 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
                         </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">משקיעים עם ניסיון</h4>
+                        <p class="text-gray-400">אתם כבר מכירים את הבסיס, סחרתם קצת, אבל מרגישים שתקועים במקום ורוצים לעלות לרמה הבאה.</p>
                     </div>
+                    <div class="bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-700 hover:border-emerald-500 transition-all duration-300 hover:scale-105">
+                        <div class="text-emerald-400 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">אלו ש"הולכים לאיבוד"</h4>
+                        <p class="text-gray-400">שמעתם על באפט וגם על נרות יפניים, אבל לא יודעים איך לחבר בין העולמות ומה נכון עבורכם.</p>
+                    </div>
+                    <div class="bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-700 hover:border-emerald-500 transition-all duration-300 hover:scale-105">
+                        <div class="text-emerald-400 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12a6 6 0 110-12 6 6 0 010 12z" /></svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">בונים אסטרטגיה אישית</h4>
+                        <p class="text-gray-400">אתם מבינים שאין פתרונות קסם ומחפשים לבנות שיטת עבודה סדורה ומותאמת אישית שתשרת אתכם לאורך שנים.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                    <!-- Tips Box -->
-                    <div class="tips-box p-6 rounded-lg">
-                        <h3 class="text-2xl font-bold mb-4 flex items-center" style="color: #3A3A3A;">
-                            <i class="fa-solid fa-wand-magic-sparkles ml-2" style="color: #BD10E0;"></i>
-                            איך הופכים חינם למיוחד?
-                        </h3>
-                        <ul class="space-y-3 text-gray-700">
-                            <li class="flex items-start"><i class="fa-solid fa-lightbulb mt-1 ml-2 text-yellow-500"></i><div><span class="font-bold">תנו שמות מעניינים:</span> "יום הרפתקאות" במקום "נשארים בבית".</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-bullhorn mt-1 ml-2 text-red-500"></i><div><span class="font-bold">צרו אירוע:</span> הכינו הזמנות, שלטים, הכרזות.</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-mask mt-1 ml-2 text-purple-500"></i><div><span class="font-bold">לבשו תלבושות:</span> חלוקי טבחים למאסטר שף, פיג'מות לספא.</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-camera-retro mt-1 ml-2 text-blue-500"></i><div><span class="font-bold">צלמו והנציחו:</span> צרו אלבום מיוחד של כל הפעילויות.</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-users mt-1 ml-2 text-green-500"></i><div><span class="font-bold">שתפו חברים:</span> הזמינו משפחות נוספות להצטרף.</div></li>
+        <!-- Syllabus Section -->
+        <section id="syllabus" class="py-20 bg-gray-900">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-white">מה לומדים בקורס? ארגז כלים שלם.</h3>
+                    <p class="text-gray-400 mt-2">6 מפגשים מרוכזים (90 דק' כל אחד) שיבנו לכם תפיסת עולם חדשה.</p>
+                    <div class="w-24 h-1 bg-emerald-500 mx-auto mt-4 rounded"></div>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Module 1: Value Investing -->
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 flex flex-col">
+                        <div class="mb-4">
+                            <span class="text-sm font-bold text-emerald-400">מודול 1-2</span>
+                            <h4 class="text-2xl font-bold text-white mt-1">אסטרטגיית ערך: לחשוב כמו באפט</h4>
+                        </div>
+                        <ul class="space-y-3 text-gray-300 flex-grow">
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> זיהוי חברות מעולות עם "חפיר" כלכלי.</li>
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> צלילה לדו"חות כספיים: מאזן, רווח והפסד, תזרים.</li>
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> שיטות להערכת שווי אמיתי של חברה.</li>
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> סינון מניות מהיר ויעיל עם כלים חינמיים.</li>
+                        </ul>
+                    </div>
+                    <!-- Module 2: Technical Analysis -->
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 flex flex-col">
+                        <div class="mb-4">
+                            <span class="text-sm font-bold text-emerald-400">מודול 3-4</span>
+                            <h4 class="text-2xl font-bold text-white mt-1">אומנות הניתוח הטכני: לתזמן כמו מקצוען</h4>
+                        </div>
+                        <ul class="space-y-3 text-gray-300 flex-grow">
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> שליטה בגרפים: נרות יפניים, קווי מגמה, תמיכה והתנגדות.</li>
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> אינדיקטורים מובילים: ממוצעים נעים, RSI, רצועות בולינגר.</li>
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> זיהוי דפוסי גרפים קלאסיים (היפוך והמשך מגמה).</li>
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> הבנת הפסיכולוגיה של השוק דרך הגרף.</li>
+                        </ul>
+                    </div>
+                    <!-- Module 3: Synthesis -->
+                    <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-gray-700 flex flex-col">
+                        <div class="mb-4">
+                            <span class="text-sm font-bold text-emerald-400">מודול 5-6</span>
+                            <h4 class="text-2xl font-bold text-white mt-1">הסינתזה: בניית אסטרטגיה היברידית</h4>
+                        </div>
+                        <ul class="space-y-3 text-gray-300 flex-grow">
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> שילוב כלים: מתי להקשיב לערך ומתי לגרף?</li>
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> בניית תוכנית מסחר אישית: נקודות כניסה, יציאה וניהול סיכונים.</li>
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> ניתוח Case Studies של חברות אמיתיות מקצה לקצה.</li>
+                            <li class="flex items-start"><span class="text-emerald-500 mr-2 ml-2 mt-1">&#10003;</span> אסטרטגיות כניסה ויציאה מהשקעה בביטחון.</li>
                         </ul>
                     </div>
                 </div>
-            </aside>
-
-            <!-- Activities Grid -->
-            <main class="lg:w-3/4 xl:w-4/5">
-                <div id="activities-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6" aria-live="polite">
-                    <!-- Activity cards will be injected here by JavaScript -->
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="modal-overlay" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center p-4 z-50">
-        <div id="modal-content" class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-lg mx-auto transform scale-95">
-            <div class="flex justify-between items-start mb-4">
-                <div class="flex items-center">
-                    <div id="modal-icon" class="text-3xl mr-4"></div>
-                    <h3 id="modal-title" class="text-2xl font-bold text-gray-800"></h3>
-                </div>
-                <button id="close-modal" class="text-gray-500 hover:text-gray-800 text-2xl" aria-label="סגור חלון">
-                    <i class="fas fa-times"></i>
-                </button>
             </div>
-            <p id="modal-description" class="text-gray-600 text-lg"></p>
+        </section>
+
+        <!-- Benefits Section -->
+        <section id="benefits" class="py-20 bg-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-white">מעבר לידע, מקבלים כלים וליווי</h3>
+                    <div class="w-24 h-1 bg-emerald-500 mx-auto mt-4 rounded"></div>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center p-6">
+                        <div class="bg-emerald-500/10 border-2 border-emerald-500/30 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h2m8-4H9a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2z" /></svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white">ליווי אישי ב-WhatsApp</h4>
+                        <p class="text-gray-400 mt-2">קבוצה ייחודית לבוגרי הקורס למענה שוטף על שאלות, גם הרבה אחרי שהקורס נגמר.</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="bg-emerald-500/10 border-2 border-emerald-500/30 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white">יישום מלא</h4>
+                        <p class="text-gray-400 mt-2">בסיום הקורס תדעו לנתח מניה בעצמכם, לזהות חברות מעולות ולהשקיע בביטחון.</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="bg-emerald-500/10 border-2 border-emerald-500/30 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white">כלים פרקטיים</h4>
+                        <p class="text-gray-400 mt-2">נלמד להשתמש בכלים חינמיים ומתקדמים לסינון מניות, הערכת שווי וניתוח נתונים.</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="bg-emerald-500/10 border-2 border-emerald-500/30 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white">ביטחון להשקעה</h4>
+                        <p class="text-gray-400 mt-2">תקבלו את הכלים והביטחון לקבל החלטות השקעה מושכלות, מבוססות נתונים ולא על רעשי רקע.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-20 bg-gray-900">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl font-bold text-white">שאלות נפוצות</h3>
+                    <div class="w-24 h-1 bg-emerald-500 mx-auto mt-4 rounded"></div>
+                </div>
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="bg-gray-800 rounded-lg">
+                        <button class="accordion-toggle flex justify-between items-center w-full p-6 text-right font-semibold text-white text-lg">
+                            <span>האם הקורס מתאים למתחילים גמורים?</span>
+                            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-6 pb-4 text-gray-300">
+                            <p>הקורס מיועד לבעלי ידע בסיסי בשוק ההון. אם מעולם לא קנית מניה או שאינך יודע מה ההבדל בין מניה לאג"ח, מומלץ להתחיל בקורס יסודות. הקורס הזה נועד לקחת ידע קיים ולהעמיק אותו באופן משמעותי.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="bg-gray-800 rounded-lg">
+                        <button class="accordion-toggle flex justify-between items-center w-full p-6 text-right font-semibold text-white text-lg">
+                            <span>באילו פלטפורמות וכלים נשתמש?</span>
+                            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-6 pb-4 text-gray-300">
+                            <p>אנו מתמקדים בכלים חינמיים ונגישים לכולם. נעבוד עם פלטפורמות גרפים כמו TradingView ואתרי מידע פיננסי כמו Finviz, Yahoo Finance ואחרים. אין צורך ברכישת תוכנות יקרות.</p>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="bg-gray-800 rounded-lg">
+                        <button class="accordion-toggle flex justify-between items-center w-full p-6 text-right font-semibold text-white text-lg">
+                            <span>מה קורה אם אני מפספס שיעור?</span>
+                            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-6 pb-4 text-gray-300">
+                            <p>כל השיעורים מוקלטים ויהיו זמינים לצפייה חוזרת באזור אישי ייעודי לסטודנטים של הקורס, ללא הגבלת זמן. כך תוכלו לחזור על החומר מתי שתרצו.</p>
+                        </div>
+                    </div>
+                     <!-- FAQ Item 4 -->
+                    <div class="bg-gray-800 rounded-lg">
+                        <button class="accordion-toggle flex justify-between items-center w-full p-6 text-right font-semibold text-white text-lg">
+                            <span>האם הקורס הוא המלצה להשקעה?</span>
+                            <svg class="w-6 h-6 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content px-6 pb-4 text-gray-300">
+                            <p>חד משמעית לא. הקורס מעניק ידע, כלים ושיטות עבודה, אך אינו מהווה ייעוץ השקעות או המלצה לביצוע פעולה כלשהי בנייר ערך. האחריות על כל פעולה היא של המשקיע בלבד. מטרתנו היא לתת לכם את היכולת לקבל החלטות טובות יותר בעצמכם.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration Section -->
+        <section id="register" class="py-20 bg-gray-800">
+            <div class="container mx-auto px-6 text-center max-w-3xl">
+                <h3 class="text-4xl font-bold text-white">מוכנים לקחת אחריות על העתיד הפיננסי שלכם?</h3>
+                <p class="mt-4 text-lg text-gray-300">המחזור הקרוב נפתח בקרוב. מספר המקומות מוגבל כדי להבטיח יחס אישי לכל משתתף. שריינו את מקומכם עכשיו.</p>
+                <div class="mt-8 bg-gray-900 p-8 rounded-xl shadow-2xl border border-emerald-500/30">
+                    <h4 class="text-2xl font-bold text-white mb-6">הרשמה מהירה</h4>
+                    <form class="space-y-4">
+                        <input type="text" placeholder="שם מלא" class="w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                        <input type="email" placeholder="כתובת אימייל" class="w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                        <input type="tel" placeholder="מספר טלפון" class="w-full p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all">
+                        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-8 rounded-lg transition-transform duration-300 hover:scale-105 text-lg shadow-lg shadow-emerald-500/30">
+                            שליחה וקבלת פרטים נוספים
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
+            <p>&copy; 2024 לוקחים אחריות. כל הזכויות שמורות.</p>
+            <p class="text-sm mt-2">אין לראות בתוכן האתר והקורס ייעוץ השקעות או המלצה לביצוע פעולות בניירות ערך.</p>
         </div>
-    </div>
+    </footer>
+    
+    <!-- Floating WhatsApp button -->
+    <a href="https://wa.me/972500000000?text=היי,%20אשמח%20לקבל%20פרטים%20נוספים%20על%20קורס%20שוק%20ההון%20למתקדמים" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-8 h-8"><path fill="currentColor" d="M16.21,4.46C9.39,4.46,3.8,10.05,3.8,16.88c0,2.78,1,5.3,2.65,7.39L4.2,30.2l6.24-2.4c2,.9,4.27,1.41,6.64,1.41,6.82,0,12.41-5.59,12.41-12.41C29.49,10.05,23.9,4.46,16.21,4.46Zm7.23,15.4a2,2,0,0,1-1.73,1.33c-.53.06-1.19.12-3.32-.74-2.82-1.13-4.69-3.9-4.88-4.13-.19-.25-.88-1.13-.88-2.12s.56-1.47.81-1.68c.25-.25.53-.28.74-.28.21,0,.42,0,.6.06.25.06.38,0,.59-.44s.88-2.12,1-2.28c.12-.21.21-.25.38-.25s.31,0,.47,0a1.35,1.35,0,0,1,1,.44c.12.19.6,1.44.6,1.44s.38,1,.38,1.06-1.13,1.31-1.28,1.47c-.19.19-.31.21-.12.41s.88,1.47,2,2.44a8.33,8.33,0,0,0,2.21,1.19c.21.09.34.06.47-.09s.56-.65.71-.88c.15-.19.28-.15.47-.09l1.41.81c.21.12.34.19.38.28s.06.44,0,.59A1.89,1.89,0,0,1,23.44,19.86Z"></path></svg>
+    </a>
 
-
+    <!-- JavaScript for Accordion -->
     <script>
-        const activities = [
-            // Home Activities
-            { id: 1, category: 'home', title: 'מחנה בסלון', icon: 'fa-tent', description: 'לא צריך יער כדי להרגיש הרפתקה. הפכו את הסלון למבצר. המטרה: בניית צוות, יצירתיות תחת מגבלות, וסיפורים שיישארו אחרי שהסדינים יחזרו לארון.' },
-            { id: 2, category: 'home', title: 'מאסטר שף ביתי', icon: 'fa-utensils', description: 'תחרות בישול היא לא על אוכל, היא על ניהול משאבים בלחץ. קחו מה שיש במקרר והפכו אותו ליצירת מופת. מי יהיה השף ומי השוטף? זה כבר משא ומתן.' },
-            { id: 3, category: 'home', title: 'ספא ביתי', icon: 'fa-spa', description: 'רגיעה היא אסטרטגיה. מלפפונים על העיניים, מוזיקה מרגיעה. המטרה: הורדת מתח, ולימוד שגם בלי תקציב אפשר לייצר חווית פרימיום.' },
-            { id: 4, category: 'home', title: 'חדר בריחה', icon: 'fa-key', description: 'הבית הוא קופסה מלאה בסודות. הפכו אותו לזירת אתגר. חידות, רמזים, משימות. זה לא משחק, זה אימון בחשיבה יצירתית ופתרון בעיות.' },
-            { id: 5, category: 'home', title: 'יום צילומים', icon: 'fa-video', description: 'כל משפחה היא סיפור. היום אתם הבמאים. צרו סרט קצר או תחרות צילום. המטרה: תיעוד נרטיב, לא רק תמונות יפות.' },
-            { id: 6, category: 'home', title: 'תחרות יצירה', icon: 'fa-palette', description: 'מבצק מלח ועד קרטוני חלב. המגבלה היא הדלק ליצירתיות. המטרה: להוכיח שחדשנות לא דורשת חומרים יקרים, אלא חשיבה אחרת.' },
-            { id: 7, category: 'home', title: 'קולנוע ביתי', icon: 'fa-film', description: 'לא סתם סרט, אלא אירוע. פופקורן על הגז, תאורה מעומעמת, כרטיסים מנייר. אתם לא צופים, אתם מנהלים חוויה.' },
-            { id: 8, category: 'home', title: 'מסיבת ריקודים', icon: 'fa-music', description: 'שחרור אנרגיה מבוקר. פלייליסט מנצח, תחרות תנועות. המטרה: גיבוש, פעילות פיזית, והוכחה שאפשר לרקוד גם בלי מועדון.' },
-            { id: 9, category: 'home', title: 'יום למדעים', icon: 'fa-flask-vial', description: 'המטבח הוא מעבדה. הר געש מסודה לשתיה וחומץ הוא קלאסיקה. המטרה: להפוך עקרונות מדעיים מופשטים לניסוי שאפשר לגעת בו.' },
-            { id: 10, category: 'home', title: 'תיאטרון ביתי', icon: 'fa-masks-theater', description: 'גרביים הופכות לבובות, סיפור ישן הופך למחזה. המטרה: אימון בביטחון עצמי, עמידה מול "קהל" וסיפור סיפורים.' },
-            // Outside Activities
-            { id: 11, category: 'outside', title: 'פיקניק בפארק', icon: 'fa-basket-shopping', description: 'לשבור שגרה, לא את חשבון הבנק. אוכל מהבית, מיקום חדש. המטרה: שינוי סביבה מינימלי לאפקט מקסימלי.' },
-            { id: 12, category: 'outside', title: 'ציד אוצרות בשכונה', icon: 'fa-map-location-dot', description: 'לראות את המוכר בעיניים חדשות. רשימת משימות שהופכת הליכה שגרתית למסע גילויים. המטרה: אימון בהתבוננות ושימת לב לפרטים.' },
-            { id: 13, category: 'outside', title: 'יום ספורט', icon: 'fa-futbol', description: 'לא צריך מנוי לחדר כושר. כדור, אופניים, או סתם ריצה בפארק. המטרה: בריאות, תחרותיות בריאה, ושחרור אנדורפינים.' },
-            { id: 14, category: 'outside', title: 'גינון ביתי', icon: 'fa-seedling', description: 'מאדנית במרפסת ועד ערוגה קטנה. לשתול משהו זה להשקיע בעתיד. המטרה: ללמוד על תהליכים, סבלנות, וצמיחה.' },
-            { id: 15, category: 'outside', title: 'טיול לחוף הים', icon: 'fa-umbrella-beach', description: 'הים הוא משאב חינמי. בבוקר מוקדם או לקראת שקיעה כדי להימנע מההמון. המטרה: להתחבר לטבע בלי מסחור.' },
-            { id: 16, category: 'outside', title: 'הליכה בשביל קרוב', icon: 'fa-person-hiking', description: 'כל עיר מוקפת בשבילים נסתרים. מצאו אחד. המטרה: גילוי, ניווט, והבנה שהרפתקה לא חייבת להיות רחוקה.' },
-            { id: 17, category: 'outside', title: 'צפייה בזריחה/שקיעה', icon: 'fa-cloud-sun', description: 'הצגות הטבע הטובות ביותר הן בחינם. מצאו נקודה גבוהה. המטרה: רגע של השראה ופרספקטיבה.' },
-            { id: 18, category: 'outside', title: 'איסוף פירות עונתיים', icon: 'fa-apple-whole', description: 'חקלאות עירונית במקומות המותרים. המטרה: להתחבר למקורות המזון ולהבין את עונות השנה.' },
-            { id: 19, category: 'outside', title: 'יום באגם או נחל', icon: 'fa-water', description: 'מים הם אטרקציה. שחיה, בניית סכרים מאבנים. המטרה: קירור טבעי וחוויה חושית.' },
-            { id: 20, category: 'outside', title: 'ביקור בשוק', icon: 'fa-store', description: 'מוזיאון חי של ריחות, צבעים ואנשים. לא חייבים לקנות כלום. המטרה: ספיגת אווירה, צילום, והתבוננות אנושית.' },
-            // Learning Activities
-            { id: 21, category: 'learn', title: 'יום מדינות', icon: 'fa-globe', description: 'מסע עולמי מהספה. Google Earth, סרטי טבע, מוזיקה מקומית. המטרה: הרחבת אופקים בלי דרכון.' },
-            { id: 22, category: 'learn', title: 'ספריית שכונה', icon: 'fa-book', description: 'מקדש של ידע חינמי. לא רק ספרים, לעיתים יש גם שעות סיפור ופעילויות. המטרה: טיפוח אהבת קריאה.' },
-            { id: 23, category: 'learn', title: 'מוזיאון חינמי', icon: 'fa-landmark', description: 'תרבות לא צריכה להיות יקרה. בדקו ימי כניסה חופשית או מוזיאונים קטנים. המטרה: צריכת אמנות וידע.' },
-            { id: 24, category: 'learn', title: 'לימוד שפה חדשה', icon: 'fa-language', description: 'אפליקציות כמו Duolingo הן כלי רב עוצמה. 15 דקות ביום. המטרה: אימון מוחי ורכישת מיומנות חדשה.' },
-            { id: 25, category: 'learn', title: 'פודקאסט משפחתי', icon: 'fa-microphone-lines', description: 'לכל משפחה יש סיפורים. הקליטו אותם. המטרה: יצירת ארכיון משפחתי, אימון בדיבור ובהקשבה.' },
-            { id: 26, category: 'learn', title: 'יום היסטוריה', icon: 'fa-scroll', description: 'ההיסטוריה נמצאת סביבנו. שלט רחוב, בניין ישן, אתר הנצחה. המטרה: להפוך את העבר לחלק מההווה.' },
-            { id: 27, category: 'learn', title: 'צפייה בכוכבים', icon: 'fa-star', description: 'שמי הלילה הם המסך הגדול ביותר. אפליקציה פשוטה תזהה את קבוצות הכוכבים. המטרה: ענווה, השראה, והבנת מקומנו ביקום.' },
-            { id: 28, category: 'learn', title: 'סדנת תיקונים', icon: 'fa-screwdriver-wrench', description: 'אל תזרקו, תקנו. מצעצוע שבור ועד כיסא מתנדנד. המטרה: קיימות, פתרון בעיות, וגאווה על עבודה עצמית.' },
-            { id: 29, category: 'learn', title: 'יום מתנדבים', icon: 'fa-hand-holding-heart', description: 'נתינה היא קבלה. עזרה לשכן, ניקיון סביבתי. המטרה: אחריות קהילתית וחיבור אנושי.' },
-            { id: 30, category: 'learn', title: 'כתיבת יומן משפחתי', icon: 'fa-pen-fancy', description: 'הזיכרון האנושי מתעתע. תעדו את החוויות. המטרה: יצירת נכס רגשי שערכו רק יעלה עם הזמן.' }
-        ];
+        document.addEventListener('DOMContentLoaded', function () {
+            const accordionToggles = document.querySelectorAll('.accordion-toggle');
 
-        const categoryStyles = {
-            home: { color: '#4A90E2', text: 'פעילויות בית' },
-            outside: { color: '#50E3C2', text: 'פעילויות חוץ' },
-            learn: { color: '#F5A623', text: 'למידה והעשרה' }
-        };
+            accordionToggles.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector('svg');
 
-        const grid = document.getElementById('activities-grid');
-        const filtersContainer = document.getElementById('filters');
-        const modalOverlay = document.getElementById('modal-overlay');
-        const modalContent = document.getElementById('modal-content');
-        const closeModalBtn = document.getElementById('close-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalIcon = document.getElementById('modal-icon');
-        const modalDescription = document.getElementById('modal-description');
-
-        // Function to render cards
-        function renderCards() {
-            grid.innerHTML = '';
-            activities.forEach(activity => {
-                const style = categoryStyles[activity.category];
-                const card = document.createElement('div');
-                card.className = 'activity-card flex flex-col items-center justify-center text-center p-6 bg-white rounded-xl shadow-md';
-                card.dataset.category = activity.category;
-                card.dataset.id = activity.id;
-                card.style.borderColor = style.color;
-                card.setAttribute('role', 'button');
-                card.setAttribute('tabindex', '0');
-                card.setAttribute('aria-label', `פרטים נוספים על ${activity.title}`);
-
-
-                card.innerHTML = `
-                    <div class="text-3xl mb-3 pointer-events-none" style="color: ${style.color};">
-                        <i class="fa-solid ${activity.icon} fa-2x"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-gray-800 pointer-events-none">${activity.title}</h4>
-                    <p class="text-sm font-semibold pointer-events-none" style="color: ${style.color};">${style.text}</p>
-                    <div class="absolute top-2 right-2 bg-gray-200 text-gray-700 w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm pointer-events-none">
-                        ${activity.id}
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // Function to handle filtering
-        function filterActivities(e) {
-            const selectedFilter = e.target.closest('button')?.dataset.filter;
-            if (!selectedFilter) return;
-
-            document.querySelectorAll('#filters button').forEach(btn => btn.classList.remove('active'));
-            e.target.closest('button').classList.add('active');
-
-            const cards = document.querySelectorAll('.activity-card');
-            cards.forEach(card => {
-                if (selectedFilter === 'all' || card.dataset.category === selectedFilter) {
-                    card.classList.remove('hidden');
-                    card.classList.add('flex');
-                } else {
-                    card.classList.remove('flex');
-                    card.classList.add('hidden');
-                }
-            });
-        }
-        
-        // Functions to open and close modal
-        function openModal(activity) {
-            const style = categoryStyles[activity.category];
-            modalTitle.textContent = activity.title;
-            modalIcon.innerHTML = `<i class="fa-solid ${activity.icon}"></i>`;
-            modalIcon.style.color = style.color;
-            modalDescription.textContent = activity.description;
-            
-            modalOverlay.classList.remove('hidden');
-            modalOverlay.classList.add('flex');
-            setTimeout(() => {
-                modalOverlay.classList.remove('opacity-0');
-                modalContent.classList.remove('scale-95');
-            }, 10); // small delay to allow display change
-        }
-
-        function closeModal() {
-            modalOverlay.classList.add('opacity-0');
-            modalContent.classList.add('scale-95');
-            setTimeout(() => {
-                modalOverlay.classList.add('hidden');
-                modalOverlay.classList.remove('flex');
-            }, 300); // matches transition duration
-        }
-
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            renderCards();
-            filtersContainer.addEventListener('click', filterActivities);
-
-            grid.addEventListener('click', (e) => {
-                const card = e.target.closest('.activity-card');
-                if (card) {
-                    const activityId = parseInt(card.dataset.id);
-                    const activity = activities.find(a => a.id === activityId);
-                    if (activity) {
-                        openModal(activity);
-                    }
-                }
-            });
-            
-            grid.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    const card = e.target.closest('.activity-card');
-                    if (card) {
-                        e.preventDefault();
-                        const activityId = parseInt(card.dataset.id);
-                        const activity = activities.find(a => a.id === activityId);
-                        if (activity) {
-                            openModal(activity);
+                    // Close other open accordions
+                    accordionToggles.forEach(otherButton => {
+                        if (otherButton !== button) {
+                            otherButton.nextElementSibling.style.maxHeight = null;
+                            otherButton.querySelector('svg').classList.remove('rotate-180');
                         }
-                    }
-                }
-            });
+                    });
 
-            closeModalBtn.addEventListener('click', closeModal);
-            modalOverlay.addEventListener('click', (e) => {
-                if (e.target === modalOverlay) {
-                    closeModal();
-                }
-            });
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && !modalOverlay.classList.contains('hidden')) {
-                    closeModal();
-                }
+                    // Toggle current accordion
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.classList.remove('rotate-180');
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.classList.add('rotate-180');
+                    }
+                });
             });
         });
-
     </script>
+
 </body>
 </html>
 
