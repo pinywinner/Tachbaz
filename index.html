@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>דשבורד אסטרטגי: מפת המדיה במגזר החרדי (v4.0)</title>
+    <title>דשבורד אסטרטגי: מפת המדיה במגזר החרדי (v5.0)</title>
     
     <!-- Strategy Brief -->
     <!-- 
-        PROPOSAL: Interactive Strategic Dashboard - v4.0 "The Definitive Edition"
+        PROPOSAL: Interactive Strategic Dashboard - v5.0 "The Command Center"
         CORE THESIS: Media consumption in the Haredi sector is not monolithic; it is deeply segmented by stream, age, and platform, demanding a tailored, multi-channel marketing strategy.
         ARCHETYPE: The Cartographer, operating from a high-stakes command center.
         
-        CHANGELOG (v4.0):
-        - BUGFIX: Fundamentally resolved the chart rendering issue by ensuring robust, on-demand initialization.
-        - CONTENT EXPANSION: Integrated missing data points from the source survey. News charts now include 'Rotter.net' & 'Haredim10'. Radio charts now include 'Galei Israel' & 'Kan Moreshet'.
-        - NEW ANALYSIS DIMENSION: Added a new "Content Analysis" view, visualizing the popularity of different content topics (current events, economy, etc.). This provides a crucial layer of psychographic data.
-        - ENRICHED INSIGHTS: Updated all strategic insight sidebars to reflect the new, more comprehensive data.
-        - UI STABILITY: Solidified the sidebar navigation as the primary, stable UX pattern.
+        CHANGELOG (v5.0):
+        - ARCHITECTURAL OVERHAUL: Replaced the loose layout with a strict, predictable 2x2 grid system for the main content views. This creates a tight, organized, and coherent structure.
+        - ENHANCED HIERARCHY: Each view now has a main header, providing a clear anchor and purpose for the section.
+        - UNIFIED CARD COMPONENT: Implemented a consistent card structure (Header, Body, Footer/Insight) across all visualizations. This builds coherence and predictability.
+        - INTEGRATED INSIGHTS: Removed the separate, "tacked-on" insights sidebar. Key insights are now directly integrated into the footer of the relevant chart card, connecting data to conclusion instantly.
+        - UI POLISH: Refined spacing, borders, and typography to create a sharp, professional, and "locked-in" analyst tool aesthetic.
     -->
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,22 +27,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --border-primary: #334155;
+            --text-primary: #E2E8F0;
+            --text-secondary: #94A3B8;
+            --accent-primary: #38BDF8;
+        }
         body {
             font-family: 'Assistant', sans-serif;
-            background-color: #0F172A;
-            color: #E2E8F0;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
         }
         .chart-container {
             position: relative;
-            margin: auto;
-            height: 45vh;
-            width: 100%;
-            min-height: 350px;
+            height: 300px;
         }
         .card {
-            background-color: #1E293B;
-            border: 1px solid #334155;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-body {
+            flex-grow: 1;
         }
         .nav-link {
             display: flex;
@@ -50,30 +60,30 @@
             gap: 0.75rem;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
-            color: #94A3B8;
+            color: var(--text-secondary);
             transition: all 0.2s ease-in-out;
             border-right: 3px solid transparent;
         }
         .nav-link:hover {
-            background-color: #334155;
-            color: #E2E8F0;
+            background-color: var(--border-primary);
+            color: var(--text-primary);
         }
         .nav-link.active {
             background-color: rgba(56, 189, 248, 0.1);
-            color: #38BDF8;
+            color: var(--accent-primary);
             font-weight: 700;
-            border-right-color: #38BDF8;
+            border-right-color: var(--accent-primary);
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-200">
+<body class="bg-slate-900">
 
     <div class="flex flex-col md:flex-row min-h-screen">
         <!-- Sidebar Navigation -->
-        <aside class="w-full md:w-72 bg-slate-800 p-4 md:p-6 border-l border-slate-700">
+        <aside class="w-full md:w-72 bg-slate-800 p-4 md:p-6 border-l border-slate-700 flex-shrink-0">
             <div class="text-center md:text-right mb-10">
                 <h2 class="text-2xl font-bold text-white">מרכז הבקרה</h2>
-                <p class="text-sm text-slate-400">מפת המדיה במגזר החרדי v4.0</p>
+                <p class="text-sm text-slate-400">מפת המדיה במגזר החרדי v5.0</p>
             </div>
             <nav class="space-y-2">
                 <a href="#" class="nav-link active" onclick="changeView(event, 'news')">
@@ -99,58 +109,90 @@
         <main class="flex-1 p-4 md:p-8 overflow-y-auto">
             <!-- News Sites View -->
             <div id="news" class="view-content">
-                <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                    <div class="xl:col-span-2 space-y-8">
-                        <div class="card p-6 rounded-lg"><h3 class="text-2xl font-bold mb-1 text-white">פופולריות אתרי חדשות לפי זרם</h3><p class="text-slate-400 mb-4">אחוז הקוראים באופן קבוע או לעיתים קרובות</p><div class="chart-container"><canvas id="newsBySectorChart"></canvas></div></div>
-                        <div class="card p-6 rounded-lg"><h3 class="text-2xl font-bold mb-1 text-white">פופולריות אתרי חדשות לפי גיל</h3><p class="text-slate-400 mb-4">אחוז הקוראים באופן קבוע או לעיתים קרובות</p><div class="chart-container"><canvas id="newsByAgeChart"></canvas></div></div>
+                <header class="mb-8">
+                    <h1 class="text-3xl font-bold text-white">ניתוח חשיפה: אתרי חדשות</h1>
+                    <p class="text-slate-400 mt-1">פילוח קהלים והעדפות באתרים המרכזיים</p>
+                </header>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="card p-6 rounded-lg">
+                        <div class="card-header mb-4">
+                            <h3 class="text-xl font-bold text-white">פופולריות לפי זרם</h3>
+                            <p class="text-sm text-slate-400">אחוז קריאה קבועה/תדירה</p>
+                        </div>
+                        <div class="card-body chart-container"><canvas id="newsBySectorChart"></canvas></div>
+                        <div class="card-footer mt-4 pt-4 border-t border-slate-700">
+                            <p class="text-sm text-slate-300"><strong class="text-sky-400">מסקנה אופרטיבית:</strong> פילוח תקציב הכרחי. 'כיכר השבת' הוא ערוץ חובה לספרדים (40%), ו-'JDN' לחסידים (38%).</p>
+                        </div>
                     </div>
-                    <div class="xl:col-span-1"><div class="card p-6 rounded-lg sticky top-8"><h4 class="text-xl font-bold mb-4 text-white">תובנות אסטרטגיות: אתרים</h4><ul class="space-y-4 text-slate-300"><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">1.</span><div><strong class="text-slate-100">פילוח חד לפי זרם:</strong> 'כיכר השבת' דומיננטי אצל ספרדים (40%), 'JDN' שולט אצל חסידים (38%). 'בחדרי חרדים' משמש כאתר שני חזק.</div></li><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">2.</span><div><strong class="text-slate-100">הצעירים מובילים בדיגיטל:</strong> גילאי 18-29 גולשים הכי הרבה בכל האתרים המרכזיים. הפער מצטמצם בגילאי 45+ שם 'המחדש' דווקא מתחזק.</div></li><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">3.</span><div><strong class="text-slate-100">המלצת פעולה:</strong> פצל תקציב. 'כיכר' לספרדים, 'JDN' לחסידים וצעירים. אתרי נישה כמו 'רוטר.נט' רלוונטיים לקהל ליטאי דעתני.</div></li></ul></div></div>
+                    <div class="card p-6 rounded-lg">
+                        <div class="card-header mb-4">
+                            <h3 class="text-xl font-bold text-white">פופולריות לפי גיל</h3>
+                            <p class="text-sm text-slate-400">אחוז קריאה קבועה/תדירה</p>
+                        </div>
+                        <div class="card-body chart-container"><canvas id="newsByAgeChart"></canvas></div>
+                         <div class="card-footer mt-4 pt-4 border-t border-slate-700">
+                            <p class="text-sm text-slate-300"><strong class="text-sky-400">מסקנה אופרטיבית:</strong> קהל צעיר (18-29) הוא הצרכן הדיגיטלי העיקרי. יש להתאים מסרים ותוכן לקהל זה באתרים המובילים.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Radio View -->
             <div id="radio" class="view-content hidden">
-                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                    <div class="xl:col-span-2 space-y-8">
-                        <div class="card p-6 rounded-lg"><h3 class="text-2xl font-bold mb-1 text-white">האזנה לרדיו לפי זרם</h3><p class="text-slate-400 mb-4">אחוז המאזינים באופן קבוע או לעיתים קרובות</p><div class="chart-container"><canvas id="radioBySectorChart"></canvas></div></div>
-                        <div class="card p-6 rounded-lg"><h3 class="text-2xl font-bold mb-1 text-white">האזנה לרדיו לפי גיל</h3><p class="text-slate-400 mb-4">אחוז המאזינים באופן קבוע או לעיתים קרובות</p><div class="chart-container"><canvas id="radioByAgeChart"></canvas></div></div>
+                <header class="mb-8">
+                    <h1 class="text-3xl font-bold text-white">ניתוח האזנה: תחנות רדיו</h1>
+                    <p class="text-slate-400 mt-1">פילוח העדפות בין אקטואליה למוזיקה</p>
+                </header>
+                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="card p-6 rounded-lg">
+                        <div class="card-header mb-4"><h3 class="text-xl font-bold text-white">האזנה לפי זרם</h3><p class="text-sm text-slate-400">אחוז האזנה קבועה/תדירה</p></div>
+                        <div class="card-body chart-container"><canvas id="radioBySectorChart"></canvas></div>
+                        <div class="card-footer mt-4 pt-4 border-t border-slate-700"><p class="text-sm text-slate-300"><strong class="text-sky-400">מסקנה אופרטיבית:</strong> 'קול ברמה' היא תחנה עם זהות ספרדית מובהקת. 'קול חי' חוצת-זרמים. 'קול חי מיוזיק' היא ערוץ ישיר לקהל הליטאי (55%).</p></div>
                     </div>
-                    <div class="xl:col-span-1"><div class="card p-6 rounded-lg sticky top-8"><h4 class="text-xl font-bold mb-4 text-white">תובנות אסטרטגיות: רדיו</h4><ul class="space-y-4 text-slate-300"><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">1.</span><div><strong class="text-slate-100">זיהוי עדתי חזק:</strong> 'קול ברמה' (43%) היא תחנה ספרדית מובהקת. 'קול חי' (49% ספרדים, 36% ליטאים) חוצה זרמים.</div></li><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">2.</span><div><strong class="text-slate-100">הקרב על המוזיקה:</strong> 'קול חי מיוזיק' היא תחנה ליטאית באופיה (55%). צעירים (18-29) הם קהל היעד המרכזי לתחנות המוזיקה.</div></li><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">3.</span><div><strong class="text-slate-100">המלצת פעולה:</strong> קמפיין לספרדים? 'קול ברמה'. קמפיין רחב? 'קול חי'. קמפיין לצעירים? 'קול חי מיוזיק' ו'קול פליי'.</div></li></ul></div></div>
+                    <div class="card p-6 rounded-lg">
+                        <div class="card-header mb-4"><h3 class="text-xl font-bold text-white">האזנה לפי גיל</h3><p class="text-sm text-slate-400">אחוז האזנה קבועה/תדירה</p></div>
+                        <div class="card-body chart-container"><canvas id="radioByAgeChart"></canvas></div>
+                        <div class="card-footer mt-4 pt-4 border-t border-slate-700"><p class="text-sm text-slate-300"><strong class="text-sky-400">מסקנה אופרטיבית:</strong> מבוגרים (45+) מאזינים לאקטואליה ('קול חי', 'קול ברמה'). צעירים (18-29) מאזינים למוזיקה. יש לפצל קמפיינים בהתאם.</p></div>
+                    </div>
                 </div>
             </div>
 
             <!-- Social Media View -->
             <div id="social" class="view-content hidden">
-                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                    <div class="xl:col-span-2"><div class="card p-6 rounded-lg"><h3 class="text-2xl font-bold mb-1 text-white">שימוש ברשתות חברתיות</h3><p class="text-slate-400 mb-4">אחוז המשתמשים באופן קבוע או לעיתים קרובות</p><div class="chart-container"><canvas id="socialUsageChart"></canvas></div></div></div>
-                    <div class="xl:col-span-1"><div class="card p-6 rounded-lg sticky top-8"><h4 class="text-xl font-bold mb-4 text-white">תובנות אסטרטגיות: סושיאל</h4><ul class="space-y-4 text-slate-300"><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">1.</span><div><strong class="text-slate-100">ווטסאפ הוא המלך:</strong> עם 57% שימוש, זו פלטפורמת התקשורת והתוכן המרכזית, בפער ניכר.</div></li><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">2.</span><div><strong class="text-slate-100">יוטיוב כבמת סמכות:</strong> עם 38%, משמש בעיקר לצפייה בתכנים של רבנים ומשפיענים, כלי למיתוג ובניית סמכות.</div></li><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">3.</span><div><strong class="text-slate-100">המלצת פעולה:</strong> כל אסטרטגיה דיגיטלית חייבת לכלול נוכחות חזקה בווטסאפ (קבוצות תוכן) וביוטיוב (תוכן ערך).</div></li></ul></div></div>
+                <header class="mb-8">
+                    <h1 class="text-3xl font-bold text-white">ניתוח מעורבות: רשתות חברתיות</h1>
+                    <p class="text-slate-400 mt-1">זיהוי הפלטפורמות הדומיננטיות לשיח והפצת תוכן</p>
+                </header>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="card p-6 rounded-lg lg:col-span-2">
+                        <div class="card-header mb-4"><h3 class="text-xl font-bold text-white">שימוש ברשתות חברתיות</h3><p class="text-sm text-slate-400">אחוז שימוש קבוע/תדיר</p></div>
+                        <div class="card-body chart-container" style="height: 400px;"><canvas id="socialUsageChart"></canvas></div>
+                        <div class="card-footer mt-4 pt-4 border-t border-slate-700"><p class="text-sm text-slate-300"><strong class="text-sky-400">מסקנה אופרטיבית:</strong> אסטרטגיה דיגיטלית חייבת להתמקד בווטסאפ (57%) כערוץ הפצה ישיר וביוטיוב (38%) כפלטפורמה לבניית סמכות ומיתוג.</p></div>
+                    </div>
                 </div>
             </div>
             
             <!-- Content Analysis View -->
             <div id="content" class="view-content hidden">
-                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                    <div class="xl:col-span-2"><div class="card p-6 rounded-lg"><h3 class="text-2xl font-bold mb-1 text-white">העדפות תוכן באתרי החדשות</h3><p class="text-slate-400 mb-4">אחוז הקוראים סוגי תוכן שונים</p><div class="chart-container"><canvas id="contentPrefChart"></canvas></div></div></div>
-                    <div class="xl:col-span-1"><div class="card p-6 rounded-lg sticky top-8"><h4 class="text-xl font-bold mb-4 text-white">תובנות אסטרטגיות: תוכן</h4><ul class="space-y-4 text-slate-300"><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">1.</span><div><strong class="text-slate-100">אקטואליה שולטת:</strong> 76% מהגולשים מגיעים לאתרים כדי לצרוך חדשות ואקטואליה. זהו הצורך המרכזי.</div></li><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">2.</span><div><strong class="text-slate-100">נישות משמעותיות:</strong> כלכלה (26%), תכנים תורניים (24%) וכתבות מגזין (22%) הן נישות תוכן חזקות עם קהל ייעודי.</div></li><li class="flex items-start"><span class="text-sky-400 font-bold text-2xl mr-3 rtl:ml-3 rtl:mr-0">3.</span><div><strong class="text-slate-100">המלצת פעולה:</strong> ניתן לבנות אסטרטגיית תוכן ממוקדת סביב הנישות. מותג פיננסי יכול להשתלב בכתבות כלכלה, ומותג לייפסטייל בכתבות מגזין.</div></li></ul></div></div>
+                <header class="mb-8">
+                    <h1 class="text-3xl font-bold text-white">ניתוח העדפות: סוגי תוכן</h1>
+                    <p class="text-slate-400 mt-1">מה הקהל החרדי באמת רוצה לקרוא</p>
+                </header>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="card p-6 rounded-lg lg:col-span-2">
+                        <div class="card-header mb-4"><h3 class="text-xl font-bold text-white">העדפות תוכן באתרי החדשות</h3><p class="text-sm text-slate-400">אחוז הקוראים סוגי תוכן שונים</p></div>
+                        <div class="card-body chart-container" style="height: 400px;"><canvas id="contentPrefChart"></canvas></div>
+                        <div class="card-footer mt-4 pt-4 border-t border-slate-700"><p class="text-sm text-slate-300"><strong class="text-sky-400">מסקנה אופרטיבית:</strong> אקטואליה (76%) היא הצורך המרכזי. עם זאת, קיימות נישות חזקות (כלכלה, תורני, מגזין) המאפשרות שיווק תוכן ממוקד לקהלים ספציפיים.</p></div>
+                    </div>
                 </div>
             </div>
-
-            <footer class="mt-16 pt-8 border-t border-slate-700">
-                <h2 class="text-center text-2xl md:text-3xl font-bold text-white mb-8">סיכום אסטרטגי למקבלי החלטות</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                    <div class="card p-6 rounded-lg hover:border-sky-400"><svg class="h-10 w-10 mx-auto mb-4 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.5h-3.046a2.25 2.25 0 01-2.121-2.121v-3.046m0 0a2.25 2.25 0 012.121-2.121h3.046a2.25 2.25 0 012.121 2.121v3.046M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg><h3 class="font-bold text-xl mb-2 text-white">פילוח חובה</h3><p class="text-slate-400">אין "שיווק למגזר". יש שיווק לספרדים, לליטאים ולחסידים.</p></div>
-                    <div class="card p-6 rounded-lg hover:border-sky-400"><svg class="h-10 w-10 mx-auto mb-4 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008h-.008v-.008z" /></svg><h3 class="font-bold text-xl mb-2 text-white">ערוצים "כשרים"</h3><p class="text-slate-400">נוכחות בפלטפורמות מסוננות היא יתרון תחרותי קריטי.</p></div>
-                    <div class="card p-6 rounded-lg hover:border-sky-400"><svg class="h-10 w-10 mx-auto mb-4 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" /></svg><h3 class="font-bold text-xl mb-2 text-white">ווטסאפ הוא הניוזלטר</h3><p class="text-slate-400">קבוצות החדשות הן ערוץ ישיר ועוקף-אתרים להפצת מסרים.</p></div>
-                    <div class="card p-6 rounded-lg hover:border-sky-400"><svg class="h-10 w-10 mx-auto mb-4 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg><h3 class="font-bold text-xl mb-2 text-white">אסטרטגיה משולבת</h3><p class="text-slate-400">הצלחה תגיע משילוב של אתר תוכן, ווטסאפ ויוטיוב אותנטי.</p></div>
-                </div>
-            </footer>
         </main>
     </div>
 
     <script>
         // --- Chart.js Global Configuration ---
         Chart.defaults.font.family = "'Assistant', sans-serif";
-        Chart.defaults.font.size = 14;
+        Chart.defaults.font.size = 12;
         Chart.defaults.color = '#94A3B8';
         Chart.defaults.plugins.tooltip.rtl = true;
         Chart.defaults.plugins.legend.rtl = true;
@@ -185,7 +227,7 @@
             else if (viewID === 'social' && !charts.socialUsage) createSocialCharts();
             else if (viewID === 'content' && !charts.contentPref) createContentCharts();
             
-            gsap.from(newView.querySelectorAll('.card, .chart-container'), {
+            gsap.from(newView.querySelectorAll('.card'), {
                 duration: 0.5, opacity: 0, y: 20, stagger: 0.1, ease: 'power3.out'
             });
 
@@ -214,7 +256,7 @@
             responsive: true, maintainAspectRatio: false,
             scales: {
                 x: { grid: { color: 'rgba(51, 65, 85, 0.5)' }, ticks: { color: '#94A3B8' }, stacked: isHorizontal },
-                y: { beginAtZero: true, grid: { color: 'rgba(51, 65, 85, 0.5)' }, ticks: { color: '#94A3B8', callback: function(value) { return isHorizontal ? this.getLabelForValue(value) : value + '%' } }, stacked: isHorizontal }
+                y: { beginAtZero: true, grid: { color: 'rgba(51, 65, 85, 0.5)' }, ticks: { color: '#94A3B8', padding: 10, callback: function(value) { return isHorizontal ? this.getLabelForValue(value) : value + '%' } }, stacked: isHorizontal }
             },
             plugins: {
                 title: { display: false },
@@ -282,7 +324,7 @@
         // --- Initial Load ---
         window.onload = function() {
             createNewsCharts();
-            gsap.from('.card, .chart-container, .nav-link', {
+            gsap.from('.card, .nav-link', {
                 duration: 0.7, opacity: 0, y: 20, stagger: 0.05, ease: 'power3.out'
             });
         };
